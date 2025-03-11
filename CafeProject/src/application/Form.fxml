@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="kullaniciAdiLabel" layoutX="89.0" layoutY="164.0" text="Kullanıcı Adı" />
-      <TextField fx:id="KullaniciAdiGiris" layoutX="166.0" layoutY="160.0" />
-      <Label layoutX="89.0" layoutY="204.0" text="Şifre" />
-      <TextField fx:id="SifreGiris" layoutX="166.0" layoutY="200.0" />
+      <Label fx:id="kullaniciAdiLabel" layoutX="103.0" layoutY="226.0" text="Kullanıcı Adı" />
+      <TextField fx:id="KullaniciAdiGiris" layoutX="77.0" layoutY="272.0" prefHeight="32.0" prefWidth="262.0" />
+      <Label layoutX="192.0" layoutY="226.0" text="Şifre" />
+      <TextField fx:id="SifreGiris" layoutX="76.0" layoutY="312.0" prefHeight="32.0" prefWidth="262.0" />
+      <Button layoutX="77.0" layoutY="355.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="262.0" text="Button" />
    </children>
 </AnchorPane>
