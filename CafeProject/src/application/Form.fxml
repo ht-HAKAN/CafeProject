@@ -23,9 +23,9 @@
             <Font size="28.0" />
          </font>
       </Text>
-      <ImageView fitHeight="147.0" fitWidth="151.0" layoutX="139.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="147.0" fitWidth="151.0" layoutX="134.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/coffee-7057030_1280.png" />
+            <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/coffee-31496_1280.png" />
          </image>
       </ImageView>
    </children>
