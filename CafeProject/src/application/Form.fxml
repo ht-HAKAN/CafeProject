@@ -12,7 +12,7 @@
    <children>
       <TextField fx:id="KullaniciAdiGiris" layoutX="67.0" layoutY="310.0" prefHeight="32.0" prefWidth="268.0" promptText="Kullanıcı Adı" />
       <TextField fx:id="SifreGiris" layoutX="67.0" layoutY="352.0" prefHeight="32.0" prefWidth="268.0" promptText="Şifre" />
-      <Button layoutX="67.0" layoutY="393.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Giriş Yap" />
+      <Button fx:id="GirisYapButton" layoutX="67.0" layoutY="393.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Giriş Yap" />
       <Text fill="WHITE" layoutX="114.0" layoutY="249.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="GELİŞİM KAFE" textAlignment="CENTER" wrappingWidth="172.865234375">
          <font>
             <Font size="28.0" />
