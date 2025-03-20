@@ -19,14 +19,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // FXML dosyasını yükle
+            // FXML dosyasını yükleme
             AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Form.fxml"));
             Scene scene = new Scene(root, 400, 400);
             scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
             
-            // Kullanıcı adı ve şifre TextField'larını bulalım
+            // Kullanıcı adı TEXTFIELD ve şifre PASSWORD_FIELD
             TextField kullaniciAdi = (TextField) root.lookup("#KullaniciAdiGiris");
             TextField sifre = (TextField) root.lookup("#SifreGiris");
 
