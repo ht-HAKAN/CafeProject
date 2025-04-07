@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="402.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="147.0" fitWidth="151.0" layoutX="135.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/coffee-31496_1280.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="113.0" layoutY="211.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="GELİŞİM KAFE" textAlignment="CENTER" wrappingWidth="172.865234375">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="77.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KULLANICI KAYIT" textAlignment="CENTER" wrappingWidth="248.865234375">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <TextField fx:id="KullaniciAdiKayit" layoutX="65.0" layoutY="300.0" prefHeight="32.0" prefWidth="268.0" promptText="Kullanıcı Adı" />
+      <PasswordField fx:id="SifreKayit" layoutX="65.0" layoutY="340.0" prefHeight="32.0" prefWidth="268.0" promptText="Şifre" />
+      <PasswordField fx:id="SifreOnayKayit" layoutX="65.0" layoutY="380.0" prefHeight="32.0" prefWidth="268.0" promptText="Şifre Onay" />
+      <Button fx:id="KayitOlButton" layoutX="65.0" layoutY="421.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Kayıt Ol">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

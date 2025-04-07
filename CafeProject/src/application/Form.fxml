@@ -9,8 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:controller="application.Form1Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="402.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="402.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Form1Controller">
    <children>
       <TextField fx:id="KullaniciAdiGiris" layoutX="67.0" layoutY="294.0" prefHeight="32.0" prefWidth="268.0" promptText="Kullanıcı Adı" />
       <Button fx:id="GirisYapButton" layoutX="67.0" layoutY="377.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Giriş Yap">
@@ -32,26 +31,21 @@
             <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/coffee-31496_1280.png" />
          </image>
       </ImageView>
-      <Button fx:id="GirisYapButton1" layoutX="67.0" layoutY="442.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Misafir Olarak Devam Et">
+      <Button fx:id="GirisYapButton1" layoutX="67.0" layoutY="481.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Misafir Olarak Devam Et">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <ImageView fitHeight="32.0" fitWidth="24.0" layoutX="302.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/avatar-1299805_1280.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="24.0" layoutX="301.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/symbole-administrateur-jaune.png" />
-         </image>
-      </ImageView>
-      <Text fill="#c99825" layoutX="184.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="veya" wrappingWidth="31.13671875">
+      <Text fill="#c99825" layoutX="185.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="veya" wrappingWidth="31.13671875">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Text>
       <PasswordField fx:id="SifreGiris" layoutX="67.0" layoutY="334.0" prefHeight="32.0" prefWidth="268.0" promptText="Şifre" />
+      <Button fx:id="KayitOlButton" layoutX="67.0" layoutY="417.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="268.0" style="-fx-background-color: #c99825;" text="Kayıt Ol">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

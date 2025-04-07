@@ -1,15 +1,17 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
 
 public class Form1Controller {
 
@@ -20,6 +22,9 @@ public class Form1Controller {
     private Button GirisYapButton1;
 
     @FXML
+    private Button KayitOlButton;  
+
+    @FXML
     private TextField KullaniciAdiGiris;
 
     @FXML
@@ -27,6 +32,7 @@ public class Form1Controller {
 
     @FXML
     void initialize() {
+        // Giriş Yap butonuna tıklama işlemi
         GirisYapButton.setOnAction(event -> {
             String kullaniciAdi = KullaniciAdiGiris.getText();
             String sifre = SifreGiris.getText();
@@ -34,7 +40,8 @@ public class Form1Controller {
             if (kullaniciAdi.isEmpty() || sifre.isEmpty()) {
                 showAlert("Hata", "Kullanıcı adı veya şifre boş olamaz!", AlertType.ERROR);
             } else {
-                if (girisKontrol(kullaniciAdi, sifre)) {
+                //  örnek
+                if (kullaniciAdi.equals("admin") && sifre.equals("1234")) {
                     showAlert("Başarılı", "Giriş başarılı!", AlertType.INFORMATION);
                 } else {
                     showAlert("Hata", "Kullanıcı adı veya şifre hatalı!", AlertType.ERROR);
@@ -42,29 +49,28 @@ public class Form1Controller {
             }
         });
 
+        // Misafir Olarak Devam Et butonu tıklama işlemi
         GirisYapButton1.setOnAction(event -> {
             showAlert("Misafir Girişi", "Misafir olarak devam ediyorsunuz.", AlertType.INFORMATION);
         });
+
+        // Kayıt Ol butonuna tıklama işlemi
+        KayitOlButton.setOnAction(event -> {
+            try {
+                // Kullanıcı kayıt ekranına geçiş
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("KullaniciKayit.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Kayıt Ol");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    private boolean girisKontrol(String kullaniciAdi, String sifre) {
-        try {
-            Connection conn = MySQLConnection.connect();
-            // SQL SORGULAMA 
-            String sql = "SELECT * FROM adminler WHERE kullanici_adi = ? AND sifre = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, kullaniciAdi);
-            stmt.setString(2, sifre);
-
-            ResultSet rs = stmt.executeQuery();
-            return rs.next(); // eşleşme varsa true döner
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
+    // Hata veya bilgi mesajlarının gösterilmesi
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
