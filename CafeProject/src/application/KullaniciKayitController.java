@@ -26,6 +26,7 @@ public class KullaniciKayitController {
 
     @FXML
     void initialize() {
+        // Butona tıklama işlemi
         KayitOlButton.setOnAction(event -> {
             String kullaniciAdi = KullaniciAdiKayit.getText();
             String sifre = SifreKayit.getText();
@@ -37,8 +38,8 @@ public class KullaniciKayitController {
             } else if (!sifre.equals(sifreOnay)) {
                 showAlert("Hata", "Şifreler uyuşmuyor!", AlertType.ERROR);
             } else {
+                // Veritabanına kaydetme
                 try {
-                    // Veritabanına kaydetme
                     Connection connection = MySQLConnection.connect();
                     String query = "INSERT INTO kullanicilar (kullanici_adi, sifre) VALUES (?, ?)";
                     PreparedStatement statement = connection.prepareStatement(query);
