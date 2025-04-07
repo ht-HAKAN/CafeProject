@@ -74,7 +74,7 @@ public class Form1Controller {
 
     private void anaEkranaGec() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel.fxml")); // Test sahnesi oluşturabilirsin
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel.fxml")); 
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Admin Panel");
