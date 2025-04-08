@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="147.0" fitWidth="151.0" layoutX="133.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../OneDrive/Masaüstü/NESNE%20TABAN/Resimler/coffee-31496_1280.png" />
+            <Image url="@../../images/coffee-31496_1280.png" />
          </image>
       </ImageView>
       <Text fill="WHITE" layoutX="113.0" layoutY="232.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="GELİŞİM KAFE" textAlignment="CENTER" wrappingWidth="172.865234375">
