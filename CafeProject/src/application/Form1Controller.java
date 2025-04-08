@@ -20,6 +20,7 @@ public class Form1Controller {
 
     @FXML
     void initialize() {
+        // Giriş Yap butonunun tıklanması
         GirisYapButton.setOnAction(event -> {
             String kullaniciAdi = KullaniciAdiGiris.getText();
             String sifre = SifreGiris.getText();
@@ -27,20 +28,26 @@ public class Form1Controller {
             if (kullaniciAdi.isEmpty() || sifre.isEmpty()) {
                 showAlert("Hata", "Kullanıcı adı veya şifre boş olamaz!", Alert.AlertType.ERROR);
             } else {
-                if (girisKontrol(kullaniciAdi, sifre)) {
-                    showAlert("Başarılı", "Giriş başarılı!", Alert.AlertType.INFORMATION);
+                // Admin ve normal kullanıcıyı kontrol et
+                if (girisKontrol(kullaniciAdi, sifre, true)) { // Admin kontrolü
+                    showAlert("Başarılı", "Admin giriş başarılı!", Alert.AlertType.INFORMATION);
                     anaEkranaGec();
+                } else if (girisKontrol(kullaniciAdi, sifre, false)) { // Kullanıcı kontrolü
+                    showAlert("Başarılı", "Kullanıcı giriş başarılı!", Alert.AlertType.INFORMATION);
+                    kullaniciEkraninaGec();
                 } else {
                     showAlert("Hata", "Kullanıcı adı veya şifre hatalı!", Alert.AlertType.ERROR);
                 }
             }
         });
 
+        // Misafir olarak devam et butonunun tıklanması
         GirisYapButton1.setOnAction(event -> {
             showAlert("Misafir Girişi", "Misafir olarak devam ediyorsunuz.", Alert.AlertType.INFORMATION);
             // Misafir ekranına yönlendirme 
         });
 
+        // Kayıt Ol butonunun tıklanması
         KayitOlButton.setOnAction(event -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("KullaniciKayit.fxml"));
@@ -55,8 +62,15 @@ public class Form1Controller {
         });
     }
 
-    private boolean girisKontrol(String kullaniciAdi, String sifre) {
-        String query = "SELECT * FROM admins WHERE admin_adi = ? AND admin_sifre = ?";
+    // Kullanıcı adı ve şifreyi kontrol eden fonksiyon (hem admin hem normal kullanıcı)
+    private boolean girisKontrol(String kullaniciAdi, String sifre, boolean isAdmin) {
+        String query;
+        if (isAdmin) {
+            query = "SELECT * FROM admins WHERE admin_adi = ? AND admin_sifre = ?";
+        } else {
+            query = "SELECT * FROM kullanicilar WHERE kullanici_adi = ? AND sifre = ?";
+        }
+
         try (Connection conn = MySQLConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -72,9 +86,10 @@ public class Form1Controller {
         }
     }
 
+    // Admin paneline geçiş
     private void anaEkranaGec() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel.fxml")); 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Admin Panel");
@@ -90,6 +105,26 @@ public class Form1Controller {
         }
     }
 
+    // Kullanıcı paneline geçiş
+    private void kullaniciEkraninaGec() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("KullaniciPanel.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Kullanıcı Paneli");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Giriş sahnesini kapat
+            Stage currentStage = (Stage) GirisYapButton.getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Hata veya başarı mesajı gösteren fonksiyon
     private void showAlert(String title, String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
