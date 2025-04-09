@@ -6,6 +6,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.sql.*;
 
@@ -18,7 +20,7 @@ public class AdminPanelController {
     private ListView<String> personelListView;
 
     @FXML
-    private Button addButton;
+    private Button addButton, deleteButton;
 
     private Connection connection;
 
@@ -39,6 +41,11 @@ public class AdminPanelController {
             loadPersonelList(); // Eklemeden sonra listeyi yenile
             clearFields();      // Alanları temizle
         });
+        
+        deleteButton.setOnAction(event -> {
+            deletePersonel();
+            loadPersonelList();
+        });
     }
 
     private void addPersonel() {
@@ -50,7 +57,7 @@ public class AdminPanelController {
         String telefon = telefonField.getText();
 
         if (ad.isEmpty() || soyad.isEmpty() || kullaniciAdi.isEmpty() || sifre.isEmpty() || rol.isEmpty() || telefon.isEmpty()) {
-            System.out.println("Tüm alanları doldurun.");
+            showAlert(AlertType.ERROR, "Hata", "Tüm alanları doldurun.");
             return;
         }
 
@@ -64,18 +71,51 @@ public class AdminPanelController {
             stmt.setString(4, sifre);
             stmt.setString(5, rol);
             stmt.setString(6, telefon);
-            stmt.executeUpdate();
-            System.out.println("Personel başarıyla eklendi.");
+            int affected = stmt.executeUpdate();
+            if (affected > 0) {
+                showAlert(AlertType.INFORMATION, "Başarılı", "Personel başarıyla eklendi!");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
+        }
+    }
+
+    private void deletePersonel() {
+        // ListView'den seçili olanı alıyoruz.
+        String selected = personelListView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(AlertType.ERROR, "Hata", "Lütfen silinecek bir personel seçin.");
+            return;
+        }
+        // Seçili satır "Ad Soyad - Kullanici_ad - Rol - Telefon" formatında.
+        // Benzersiz olması için telefon numarasını kullanıyoruz.
+        String[] parts = selected.split(" - ");
+        if (parts.length < 4) {
+            showAlert(AlertType.ERROR, "Hata", "Veri formatı hatalı.");
+            return;
+        }
+        String telefon = parts[3];
+
+        String sql = "DELETE FROM personel WHERE telefon = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, telefon);
+            int affected = stmt.executeUpdate();
+            if (affected > 0) {
+                showAlert(AlertType.INFORMATION, "Başarılı", "Personel başarıyla silindi!");
+            } else {
+                showAlert(AlertType.ERROR, "Hata", "Silme işlemi başarısız.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
         }
     }
 
     private void loadPersonelList() {
         ObservableList<String> list = FXCollections.observableArrayList();
-
         String sql = "SELECT ad, soyad, kullanici_ad, rol, telefon FROM personel";
-
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -87,7 +127,6 @@ public class AdminPanelController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         personelListView.setItems(list);
     }
 
@@ -98,5 +137,13 @@ public class AdminPanelController {
         sifreField.clear();
         rolField.clear();
         telefonField.clear();
+    }
+
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
