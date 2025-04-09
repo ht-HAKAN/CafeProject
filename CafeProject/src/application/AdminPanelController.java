@@ -38,8 +38,8 @@ public class AdminPanelController {
 
         addButton.setOnAction(event -> {
             addPersonel();
-            loadPersonelList(); // Eklemeden sonra listeyi yenile
-            clearFields();      // Alanları temizle
+            loadPersonelList(); 
+            clearFields();      
         });
         
         deleteButton.setOnAction(event -> {
@@ -61,7 +61,6 @@ public class AdminPanelController {
             return;
         }
 
-        // id sütunu AUTO_INCREMENT olduğu için onu göndermiyoruz.
         String sql = "INSERT INTO personel (ad, soyad, kullanici_ad, sifre, rol, telefon) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -82,14 +81,11 @@ public class AdminPanelController {
     }
 
     private void deletePersonel() {
-        // ListView'den seçili olanı alıyoruz.
         String selected = personelListView.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showAlert(AlertType.ERROR, "Hata", "Lütfen silinecek bir personel seçin.");
             return;
         }
-        // Seçili satır "Ad Soyad - Kullanici_ad - Rol - Telefon" formatında.
-        // Benzersiz olması için telefon numarasını kullanıyoruz.
         String[] parts = selected.split(" - ");
         if (parts.length < 4) {
             showAlert(AlertType.ERROR, "Hata", "Veri formatı hatalı.");

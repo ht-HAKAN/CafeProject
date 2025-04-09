@@ -14,7 +14,6 @@
 
 <AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
-      <!-- Üst Banner Alanı -->
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
             <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="772.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
@@ -45,10 +44,8 @@
          </children>
       </Pane>
       
-      <!-- Sol Menü Alanı (Değişmedi) -->
       <Pane layoutY="-4.0" prefHeight="616.0" prefWidth="208.0" style="-fx-background-color: #1C1C1C;">
          <children>
-            <!-- Menü içeriği -->
             <ImageView fitHeight="100.0" fitWidth="55.0" layoutX="8.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/coffee-31496_1280.png" />
@@ -59,7 +56,6 @@
                   <Font size="19.0" />
                </font>
             </Text>
-            <!-- Menü öğeleri burada yer alıyor (Ana Sayfa, Menü, Siparişler, vs.) -->
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/menu.png" />
