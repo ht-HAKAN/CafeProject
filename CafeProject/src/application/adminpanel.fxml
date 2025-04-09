@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -11,22 +12,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller="application.AdminPanelController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
       <!-- Üst Banner Alanı -->
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="770.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="772.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icones-d-administration-jaunes.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="653.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Merhaba,Admin!">
+            <Text fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba,Admin!">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="79.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADMİN PANEL" wrappingWidth="177.10546875">
+            <Text fill="WHITE" layoutX="79.0" layoutY="54.0" text="ADMİN PANEL">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -36,28 +37,35 @@
                   <Image url="@../../images/symbole-administrateur-jaune.png" />
                </image>
             </ImageView>
+            <Text fill="WHITE" layoutX="245.0" layoutY="53.0" text="- Personel Düzenle">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
-      <!-- Sol Menü Alanı -->
+      
+      <!-- Sol Menü Alanı (Değişmedi) -->
       <Pane layoutY="-4.0" prefHeight="616.0" prefWidth="208.0" style="-fx-background-color: #1C1C1C;">
          <children>
+            <!-- Menü içeriği -->
             <ImageView fitHeight="100.0" fitWidth="55.0" layoutX="8.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/coffee-31496_1280.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GELİŞİM KAFE" wrappingWidth="120.2265625">
+            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="GELİŞİM KAFE">
                <font>
                   <Font size="19.0" />
                </font>
             </Text>
-            <!-- Menü Öğeleri -->
+            <!-- Menü öğeleri burada yer alıyor (Ana Sayfa, Menü, Siparişler, vs.) -->
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/menu.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="46.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ana Sayfa">
+            <Text fill="WHITE" layoutX="46.0" layoutY="135.0" text="Ana Sayfa">
                <font>
                   <Font size="15.0" />
                </font>
@@ -67,7 +75,7 @@
                   <Image url="@../../images/shopping-cart.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="50.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menü">
+            <Text fill="WHITE" layoutX="50.0" layoutY="186.0" text="Menü">
                <font>
                   <Font size="15.0" />
                </font>
@@ -77,7 +85,7 @@
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="49.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Siparişler">
+            <Text fill="WHITE" layoutX="49.0" layoutY="241.0" text="Siparişler">
                <font>
                   <Font size="15.0" />
                </font>
@@ -87,7 +95,7 @@
                   <Image url="@../../images/symbole-administrateur-jaune.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="46.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Panel">
+            <Text fill="WHITE" layoutX="46.0" layoutY="354.0" text="Admin Panel">
                <font>
                   <Font size="15.0" />
                </font>
@@ -97,30 +105,44 @@
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="46.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezervasyonlar">
+            <Text fill="WHITE" layoutX="46.0" layoutY="298.0" text="Rezervasyonlar">
                <font>
                   <Font size="15.0" />
                </font>
             </Text>
          </children>
       </Pane>
+      
       <!-- Personel Ekleme Alanı -->
-      <Pane layoutX="250.0" layoutY="100.0" prefHeight="400.0" prefWidth="700.0">
-         <!-- TextField'ler -->
-         <TextField fx:id="adField" layoutX="100.0" layoutY="30.0" promptText="Ad" />
-         <TextField fx:id="soyadField" layoutX="100.0" layoutY="70.0" promptText="Soyad" />
-         <TextField fx:id="kullaniciAdiField" layoutX="100.0" layoutY="110.0" promptText="Kullanıcı Adı" />
-         <PasswordField fx:id="sifreField" layoutX="100.0" layoutY="150.0" promptText="Şifre" />
-         <TextField fx:id="rolField" layoutX="100.0" layoutY="190.0" promptText="Rol" />
-         <!-- Telefon alanı ekliyoruz -->
-         <TextField fx:id="telefonField" layoutX="100.0" layoutY="230.0" promptText="Telefon" />
+      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
+         <!-- Form Alanı -->
+         <TextField fx:id="adField" layoutX="30.0" layoutY="133.0" prefHeight="31.0" prefWidth="149.0" promptText="Ad" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
+         <TextField fx:id="soyadField" layoutX="30.0" layoutY="173.0" prefHeight="31.0" prefWidth="149.0" promptText="Soyad" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
+         <TextField fx:id="kullaniciAdiField" layoutX="30.0" layoutY="213.0" prefHeight="31.0" prefWidth="149.0" promptText="Kullanıcı Adı" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
+         <PasswordField fx:id="sifreField" layoutX="30.0" layoutY="253.0" prefHeight="31.0" prefWidth="149.0" promptText="Şifre" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
+         <TextField fx:id="rolField" layoutX="30.0" layoutY="293.0" prefHeight="31.0" prefWidth="149.0" promptText="Rol" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
+         <TextField fx:id="telefonField" layoutX="30.0" layoutY="333.0" prefHeight="31.0" prefWidth="149.0" promptText="Telefon" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
 
-         <!-- Personel Listeleme -->
-         <ListView fx:id="personelListView" layoutX="300.0" layoutY="30.0" prefHeight="200.0" prefWidth="380.0" />
+         <!-- Listeleme Alanı -->
+         <ListView fx:id="personelListView" layoutX="190.0" layoutY="82.0" prefHeight="284.0" prefWidth="595.0" style="-fx-background-color: #333333; -fx-border-color: #FFD700; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px; -fx-text-fill: white;">
+            <placeholder>
+               <Label style="-fx-text-fill: #AAAAAA; -fx-font-size: 14px;" text="Henüz personel eklenmedi" />
+            </placeholder>
+         </ListView>
 
-         <!-- Personel Ekleme Butonları -->
-         <Button fx:id="addButton" layoutX="100.0" layoutY="270.0" text="Personel Ekle" />
-         <Button fx:id="deleteButton" layoutX="220.0" layoutY="270.0" text="Personel Sil" />
+         <!-- Butonlar -->
+         <Button fx:id="addButton" layoutX="30.0" layoutY="393.0" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #FFD700; -fx-text-fill: black; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);" text="➕  Personel Ekle" />
+         <Button fx:id="deleteButton" layoutX="160.0" layoutY="393.0" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #FF6347; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);" text="🗑 Personel Sil" />
+         <Text fill="WHITE" layoutX="30.0" layoutY="106.0" text="Personel Bilgileri">
+            <font>
+               <Font name="System Bold" size="15.0" />
+            </font>
+         </Text>
       </Pane>
+      <Text fill="WHITE" layoutX="457.0" layoutY="-20.0" text="- Personel Düzenleme">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
