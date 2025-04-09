@@ -6,12 +6,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.sql.*;
 
 public class AdminPanelController {
 
     @FXML
-    private TextField adField, soyadField, kullaniciAdiField, sifreField, rolField;
+    private TextField adField, soyadField, kullaniciAdiField, sifreField, rolField, telefonField;
 
     @FXML
     private ListView<String> personelListView;
@@ -35,8 +36,8 @@ public class AdminPanelController {
 
         addButton.setOnAction(event -> {
             addPersonel();
-            loadPersonelList(); 
-            clearFields();      
+            loadPersonelList(); // Eklemeden sonra listeyi yenile
+            clearFields();      // Alanları temizle
         });
     }
 
@@ -46,14 +47,15 @@ public class AdminPanelController {
         String kullaniciAdi = kullaniciAdiField.getText();
         String sifre = sifreField.getText();
         String rol = rolField.getText();
+        String telefon = telefonField.getText();
 
-        if (ad.isEmpty() || soyad.isEmpty() || kullaniciAdi.isEmpty() || sifre.isEmpty() || rol.isEmpty()) {
+        if (ad.isEmpty() || soyad.isEmpty() || kullaniciAdi.isEmpty() || sifre.isEmpty() || rol.isEmpty() || telefon.isEmpty()) {
             System.out.println("Tüm alanları doldurun.");
             return;
         }
 
-        // Tablo kolonları SQL sorgusu 
-        String sql = "INSERT INTO personel (ad, soyad, kullanici_ad, sifre, rol) VALUES (?, ?, ?, ?, ?)";
+        // id sütunu AUTO_INCREMENT olduğu için onu göndermiyoruz.
+        String sql = "INSERT INTO personel (ad, soyad, kullanici_ad, sifre, rol, telefon) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, ad);
@@ -61,6 +63,7 @@ public class AdminPanelController {
             stmt.setString(3, kullaniciAdi);
             stmt.setString(4, sifre);
             stmt.setString(5, rol);
+            stmt.setString(6, telefon);
             stmt.executeUpdate();
             System.out.println("Personel başarıyla eklendi.");
         } catch (SQLException e) {
@@ -71,13 +74,15 @@ public class AdminPanelController {
     private void loadPersonelList() {
         ObservableList<String> list = FXCollections.observableArrayList();
 
-        // Sadece ad, soyad ve rol bilgileri
-        String sql = "SELECT ad, soyad, rol FROM personel";
+        String sql = "SELECT ad, soyad, kullanici_ad, rol, telefon FROM personel";
+
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                String fullName = rs.getString("ad") + " " + rs.getString("soyad") + " - " + rs.getString("rol");
-                list.add(fullName);
+                String personelBilgisi = rs.getString("ad") + " " + rs.getString("soyad") +
+                        " - " + rs.getString("kullanici_ad") + " - " + rs.getString("rol") +
+                        " - " + rs.getString("telefon");
+                list.add(personelBilgisi);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,5 +97,6 @@ public class AdminPanelController {
         kullaniciAdiField.clear();
         sifreField.clear();
         rolField.clear();
+        telefonField.clear();
     }
 }

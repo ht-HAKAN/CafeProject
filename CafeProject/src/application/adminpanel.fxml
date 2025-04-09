@@ -12,6 +12,7 @@
 
 <AnchorPane fx:controller="application.AdminPanelController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <!-- Üst Banner Alanı -->
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
             <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="770.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
@@ -36,6 +37,7 @@
             </ImageView>
          </children>
       </Pane>
+      <!-- Sol Menü Alanı -->
       <Pane layoutY="-4.0" prefHeight="616.0" prefWidth="208.0" style="-fx-background-color: #1C1C1C;">
          <children>
             <ImageView fitHeight="100.0" fitWidth="55.0" layoutX="8.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
@@ -48,6 +50,7 @@
                   <Font size="19.0" />
                </font>
             </Text>
+            <!-- Menü öğeleri (Ana Sayfa, Menü, Siparişler, vs.) -->
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/menu.png" />
@@ -100,21 +103,22 @@
             </Text>
          </children>
       </Pane>
-
       <!-- Personel Ekleme Alanı -->
-      <Pane accessibleRole="PASSWORD_FIELD" layoutX="250.0" layoutY="100.0" prefHeight="400.0" prefWidth="700.0">
+      <Pane layoutX="250.0" layoutY="100.0" prefHeight="400.0" prefWidth="700.0">
+         <!-- TextField'ler -->
          <TextField fx:id="adField" layoutX="100.0" layoutY="30.0" promptText="Ad" />
          <TextField fx:id="soyadField" layoutX="100.0" layoutY="70.0" promptText="Soyad" />
          <TextField fx:id="kullaniciAdiField" layoutX="100.0" layoutY="110.0" promptText="Kullanıcı Adı" />
-         <TextField fx:id="sifreField" accessibleRole="BUTTON" layoutX="100.0" layoutY="150.0" promptText="Şifre" />
+         <TextField fx:id="sifreField" layoutX="100.0" layoutY="150.0" promptText="Şifre" />
          <TextField fx:id="rolField" layoutX="100.0" layoutY="190.0" promptText="Rol" />
+         <!-- Telefon alanı ekliyoruz -->
+         <TextField fx:id="telefonField" layoutX="100.0" layoutY="230.0" promptText="Telefon" />
 
          <!-- Personel Listeleme -->
          <ListView fx:id="personelListView" layoutX="300.0" layoutY="30.0" prefHeight="200.0" prefWidth="380.0" />
 
          <!-- Personel Ekleme Butonu -->
-         <Button fx:id="addButton" layoutX="100.0" layoutY="230.0" text="Personel Ekle" />
+         <Button fx:id="addButton" layoutX="100.0" layoutY="270.0" text="Personel Ekle" />
       </Pane>
-
    </children>
 </AnchorPane>
