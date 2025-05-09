@@ -20,9 +20,10 @@ public class AdminPanelController {
     private ListView<String> personelListView;
 
     @FXML
-    private Button addButton, deleteButton;
+    private Button addButton, deleteButton, updateButton;
 
     private Connection connection;
+    private String selectedPersonelTelefon; // Seçilen personelin telefon numarası
 
     public AdminPanelController() {
         try {
@@ -36,16 +37,133 @@ public class AdminPanelController {
     public void initialize() {
         loadPersonelList();
 
+        // Personel listesini yükle
+        loadPersonelList();
+        
+        // ListView'a tıklama olayını ekle
+        personelListView.setOnMouseClicked(event -> {
+            String selected = personelListView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                String[] parts = selected.split(" - ");
+                if (parts.length >= 4) {
+                    // İlk kısım ad soyad birleşik
+                    String fullName = parts[0];
+                    String[] nameParts = fullName.split(" ", 2);
+                    
+                    // Ad ve soyadı ayır
+                    String ad = nameParts[0];
+                    String soyad = nameParts.length > 1 ? nameParts[1] : "";
+                    
+                    // Diğer bilgileri al
+                    String kullaniciAdi = parts[1];
+                    String rol = parts[2];
+                    String telefon = parts[3];
+                    
+                    // Telefon numarasını seçili personel olarak sakla
+                    selectedPersonelTelefon = telefon;
+                    
+                    // Şifreyi veritabanından al
+                    String sifre = getPasswordByTelefon(telefon);
+                    
+                    // Form alanlarını doldur
+                    adField.setText(ad);
+                    soyadField.setText(soyad);
+                    kullaniciAdiField.setText(kullaniciAdi);
+                    sifreField.setText(sifre);
+                    rolField.setText(rol);
+                    telefonField.setText(telefon);
+                }
+            }
+        });
+
+        // Buton olaylarını ekle
         addButton.setOnAction(event -> {
             addPersonel();
             loadPersonelList(); 
             clearFields();      
         });
         
+        updateButton.setOnAction(event -> {
+            updatePersonel();
+            loadPersonelList();
+            clearFields();
+        });
+        
         deleteButton.setOnAction(event -> {
             deletePersonel();
             loadPersonelList();
         });
+    }
+    
+    // Telefon numarasına göre şifreyi veritabanından alma
+    private String getPasswordByTelefon(String telefon) {
+        String sql = "SELECT sifre FROM personel WHERE telefon = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, telefon);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("sifre");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+    
+    // Personel bilgilerini güncelleme
+    private void updatePersonel() {
+        if (selectedPersonelTelefon == null || selectedPersonelTelefon.isEmpty()) {
+            showAlert(AlertType.ERROR, "Hata", "Lütfen önce listeden bir personel seçin.");
+            return;
+        }
+        
+        // Form alanlarından verileri al
+        String ad = adField.getText();
+        String soyad = soyadField.getText();
+        String kullaniciAdi = kullaniciAdiField.getText();
+        String sifre = sifreField.getText();
+        String rol = rolField.getText();
+        String telefon = telefonField.getText();
+
+        // Boş alan kontrolü
+        if (ad.isEmpty() || soyad.isEmpty() || kullaniciAdi.isEmpty() || sifre.isEmpty() || rol.isEmpty() || telefon.isEmpty()) {
+            showAlert(AlertType.ERROR, "Hata", "Tüm alanları doldurun.");
+            return;
+        }
+
+        try {
+            // SQL sorgusu
+            String sql = "UPDATE personel SET ad = ?, soyad = ?, kullanici_ad = ?, sifre = ?, rol = ?, telefon = ? WHERE telefon = ?";
+            
+            // Veritabanı bağlantısını kontrol et
+            if (connection == null || connection.isClosed()) {
+                connection = MySQLConnection.connect();
+            }
+            
+            // Güncelleme işlemini gerçekleştir
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, ad);
+            stmt.setString(2, soyad);
+            stmt.setString(3, kullaniciAdi);
+            stmt.setString(4, sifre);
+            stmt.setString(5, rol);
+            stmt.setString(6, telefon);
+            stmt.setString(7, selectedPersonelTelefon);
+            
+            int affected = stmt.executeUpdate();
+            if (affected > 0) {
+                showAlert(AlertType.INFORMATION, "Başarılı", "Personel bilgileri başarıyla güncellendi!");
+                selectedPersonelTelefon = null; // Seçimi sıfırla
+            } else {
+                showAlert(AlertType.ERROR, "Hata", "Güncelleme işlemi başarısız. Kayıt bulunamadı.");
+            }
+            
+            stmt.close();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
+        }
     }
 
     private void addPersonel() {
@@ -115,9 +233,14 @@ public class AdminPanelController {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                String personelBilgisi = rs.getString("ad") + " " + rs.getString("soyad") +
-                        " - " + rs.getString("kullanici_ad") + " - " + rs.getString("rol") +
-                        " - " + rs.getString("telefon");
+                String ad = rs.getString("ad");
+                String soyad = rs.getString("soyad");
+                String kullanici_ad = rs.getString("kullanici_ad");
+                String rol = rs.getString("rol");
+                String telefon = rs.getString("telefon");
+                
+                // Format: "Ad Soyad - kullaniciAdi - rol - telefon"
+                String personelBilgisi = ad + " " + soyad + " - " + kullanici_ad + " - " + rol + " - " + telefon;
                 list.add(personelBilgisi);
             }
         } catch (SQLException e) {
