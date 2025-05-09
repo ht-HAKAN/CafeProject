@@ -21,7 +21,7 @@
                   <Image url="@../../images/icones-d-administration-jaunes.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba,Admin!">
+            <Text fx:id="adminWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Admin!">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

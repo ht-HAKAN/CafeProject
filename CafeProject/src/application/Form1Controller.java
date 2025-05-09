@@ -89,8 +89,18 @@ public class Form1Controller {
     // Admin paneline geçiş
     private void anaEkranaGec() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel.fxml"));
+            // Giriş yapan kullanıcının adını doğrudan kullan
+            String adminName = KullaniciAdiGiris.getText();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("adminpanel.fxml"));
             Parent root = loader.load();
+            
+            // AdminPanelController'a erişim
+            AdminPanelController controller = loader.getController();
+            
+            // Admin adını controller'a aktar
+            controller.setAdminName(adminName);
+            
             Stage stage = new Stage();
             stage.setTitle("Admin Panel");
             stage.setScene(new Scene(root));

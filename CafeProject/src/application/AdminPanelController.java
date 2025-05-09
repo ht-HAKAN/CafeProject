@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Text;
 
 import java.sql.*;
 
@@ -18,12 +19,16 @@ public class AdminPanelController {
 
     @FXML
     private ListView<String> personelListView;
+    
+    @FXML
+    private Text adminWelcomeText; // Karşılama metni için Text nesnesi
 
     @FXML
     private Button addButton, deleteButton, updateButton;
 
     private Connection connection;
     private String selectedPersonelTelefon; // Seçilen personelin telefon numarası
+    private String adminName = "Admin"; // Varsayılan değer
 
     public AdminPanelController() {
         try {
@@ -32,15 +37,28 @@ public class AdminPanelController {
             e.printStackTrace();
         }
     }
+    
+    // Giriş yapan admin adını ayarlamak için
+    public void setAdminName(String name) {
+        this.adminName = name;
+        updateWelcomeText();
+    }
+    
+    // Karşılama metnini güncelle
+    private void updateWelcomeText() {
+        if (adminWelcomeText != null) {
+            adminWelcomeText.setText("Merhaba, " + adminName + "!");
+        }
+    }
 
     @FXML
     public void initialize() {
         loadPersonelList();
-
-        // Personel listesini yükle
-        loadPersonelList();
         
-        // ListView'a tıklama olayını ekle
+        // Karşılama metnini ayarla
+        updateWelcomeText();
+        
+        // PersonelListView tıklama olayını ekle
         personelListView.setOnMouseClicked(event -> {
             String selected = personelListView.getSelectionModel().getSelectedItem();
             if (selected != null) {
