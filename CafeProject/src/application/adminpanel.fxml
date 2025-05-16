@@ -136,10 +136,5 @@
             </font>
          </Text>
       </Pane>
-      <Text fill="WHITE" layoutX="457.0" layoutY="-20.0" text="- Personel Düzenleme">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>
