@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AnaSayfaController">
+<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
@@ -17,12 +17,12 @@
                   <Image url="@../../images/icones-d-administration-jaunes.png" />
                </image>
             </ImageView>
-            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Kullanıcı!">
+            <Text fx:id="adminWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Admin!">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="26.0" layoutY="63.0" text="Ana Sayfa" wrappingWidth="116.2265625">
+            <Text fill="WHITE" layoutX="23.0" layoutY="63.0" text="Masa Ve Rezervasyon" wrappingWidth="292.2265625">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -96,13 +96,6 @@
       </Pane>
       
       <!-- Personel Ekleme Alanı -->
-      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
-         <children>
-            <ImageView fitHeight="500.0" fitWidth="230.0" layoutX="281.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/coffee-31496_1280.png" />
-               </image>
-            </ImageView>
-         </children></Pane>
+      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;" />
    </children>
 </AnchorPane>

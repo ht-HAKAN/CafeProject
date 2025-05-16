@@ -44,20 +44,23 @@ public class Form1Controller {
         // Misafir olarak devam et butonunun tıklanması
         GirisYapButton1.setOnAction(event -> {
             showAlert("Misafir Girişi", "Misafir olarak devam ediyorsunuz.", Alert.AlertType.INFORMATION);
-            // Misafir ekranına yönlendirme 
+            misafirEkraninaGec();
         });
 
         // Kayıt Ol butonunun tıklanması
         KayitOlButton.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("KullaniciKayit.fxml"));
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(Form1Controller.class.getResource("KullaniciKayit.fxml"));
                 Parent root = loader.load();
+                
                 Stage stage = new Stage();
                 stage.setTitle("Kayıt Ol");
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
+                showAlert("Hata", "Kayıt formu açılamadı: " + e.getMessage(), Alert.AlertType.ERROR);
             }
         });
     }
@@ -92,7 +95,9 @@ public class Form1Controller {
             // Giriş yapan kullanıcının adını doğrudan kullan
             String adminName = KullaniciAdiGiris.getText();
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("adminpanel.fxml"));
+            // Form1Controller.class yerine getClass() kullanılıyor çünkü bu method instance içinde
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Form1Controller.class.getResource("adminpanel.fxml"));
             Parent root = loader.load();
             
             // AdminPanelController'a erişim
@@ -112,16 +117,30 @@ public class Form1Controller {
 
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Hata", "Admin paneli açılamadı: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     // Kullanıcı paneline geçiş
     private void kullaniciEkraninaGec() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("KullaniciPanel.fxml"));
+            // Kullanıcı adını al
+            String kullaniciAdi = KullaniciAdiGiris.getText();
+            
+            // FXMLLoader yükleme yöntemi değiştiriliyor
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
             Parent root = loader.load();
+            
+            // AnaSayfaController'a erişim
+            AnaSayfaController controller = loader.getController();
+            
+            // Kullanıcı adını controller'a aktar
+            controller.setKullaniciAdi(kullaniciAdi);
+            controller.setAdmin(false); // Normal kullanıcı, admin değil
+            
             Stage stage = new Stage();
-            stage.setTitle("Kullanıcı Paneli");
+            stage.setTitle("Ana Sayfa");
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -131,6 +150,39 @@ public class Form1Controller {
 
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Hata", "Ana sayfa açılamadı: " + e.getMessage(), Alert.AlertType.ERROR);
+            System.out.println("Hata detayı: " + e.getMessage());
+        }
+    }
+    
+    // Misafir ekranına geçiş
+    private void misafirEkraninaGec() {
+        try {
+            // FXMLLoader yükleme yöntemi değiştiriliyor
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
+            Parent root = loader.load();
+            
+            // AnaSayfaController'a erişim
+            AnaSayfaController controller = loader.getController();
+            
+            // Misafir olarak ayarla
+            controller.setKullaniciAdi("Misafir");
+            controller.setAdmin(false); // Misafir, admin değil
+            
+            Stage stage = new Stage();
+            stage.setTitle("Ana Sayfa - Misafir");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Giriş sahnesini kapat
+            Stage currentStage = (Stage) GirisYapButton.getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Hata", "Ana sayfa açılamadı: " + e.getMessage(), Alert.AlertType.ERROR);
+            System.out.println("Hata detayı: " + e.getMessage());
         }
     }
 
