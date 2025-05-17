@@ -175,12 +175,13 @@ public class AdminPanelController {
             if (controller instanceof masaverezervasyonController) {
                 ((masaverezervasyonController) controller).setKullaniciAdi(adminName);
                 ((masaverezervasyonController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
+                System.out.println("Admin yetkisi aktarıldı: true"); // Debug için
             } else if (controller instanceof rezervasyonAdminSistemiController) {
                 ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(adminName);
-                ((rezervasyonAdminSistemiController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
+                ((rezervasyonAdminSistemiController) controller).setAdmin(true);
             } else if (controller instanceof AnaSayfaController) {
                 ((AnaSayfaController) controller).setKullaniciAdi(adminName);
-                ((AnaSayfaController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
+                ((AnaSayfaController) controller).setAdmin(true);
             }
             
             Stage stage = new Stage();
@@ -388,7 +389,7 @@ public class AdminPanelController {
             updateButton.setDisable(true);
             
             // Uyarı göster
-            showAlert("Yetki Hatası", "Bu paneli görüntülemek için admin yetkisine sahip olmanız gerekiyor!", AlertType.WARNING);
+            showAlert(AlertType.WARNING, "Yetki Hatası", "Bu paneli görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
         }
     }
 }

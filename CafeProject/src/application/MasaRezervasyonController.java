@@ -20,7 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.scene.control.ListCell;
 
 import java.io.IOException;
 import java.sql.*;
@@ -28,7 +27,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class masaverezervasyonController {
+public class MasaRezervasyonController {
 
     // Sol menü butonları
     @FXML private Button anasayfa;
@@ -39,11 +38,6 @@ public class masaverezervasyonController {
     
     // Üst kısım
     @FXML private Text kullaniciWelcomeText;
-    
-    // Ana içerik butonları
-    @FXML private Button rezervasyonListesiBtn;
-    @FXML private Button rezervasyonYapBtn;
-    @FXML private Button rezervasyonSistemiBtn;
     
     // Masa Grid ve Container
     @FXML private GridPane masalarGrid;
@@ -82,7 +76,7 @@ public class masaverezervasyonController {
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
     
-    public masaverezervasyonController() {
+    public MasaRezervasyonController() {
         try {
             connection = MySQLConnection.connect();
         } catch (SQLException e) {
@@ -98,9 +92,6 @@ public class masaverezervasyonController {
         // Sol menü butonlarına tıklama olaylarını ekle
         setupMenuButtons();
         
-        // Ana içerik butonlarına tıklama olaylarını ekle
-        setupContentButtons();
-        
         // Masa butonları ve grid'i ayarla
         loadMasalar();
         
@@ -111,80 +102,20 @@ public class masaverezervasyonController {
     private void setupComboBoxes() {
         // Durum ComboBox
         ObservableList<String> durumlar = FXCollections.observableArrayList(
-            "BOŞ", "DOLU", "KİRLİ"
+            "bos", "dolu", "kirli"
         );
         if (durumComboBox != null) {
             durumComboBox.setItems(durumlar);
-            durumComboBox.setValue("BOŞ");
-            
-            // Ana ComboBox stilini ayarla
-            durumComboBox.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white; " +
-                                 "-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; " +
-                                 "-fx-border-width: 2; -fx-border-radius: 3; -fx-prompt-text-fill: white;");
-            
-            // Button cell (seçili öğe) stilini ayarla
-            durumComboBox.setButtonCell(new ListCell<String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item);
-                        setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-                    }
-                }
-            });
-            
-            // Popup liste öğelerinin stilini ayarla
-            durumComboBox.setCellFactory(listView -> new ListCell<String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item);
-                        setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-background-color: #2D2D2D; " +
-                                "-fx-padding: 5 10; -fx-font-weight: bold;");
-                    }
-                }
-            });
+            durumComboBox.setValue("bos");
         }
         
         // Konum ComboBox
         ObservableList<String> konumlar = FXCollections.observableArrayList(
-            "GİRİŞ KATI", "BAHÇE"
+            "Giriş Katı", "Bahçe"
         );
         if (konumComboBox != null) {
             konumComboBox.setItems(konumlar);
-            konumComboBox.setValue("GİRİŞ KATI");
-            
-            // Ana ComboBox stilini ayarla
-            konumComboBox.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white; " +
-                                 "-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; " +
-                                 "-fx-border-width: 2; -fx-border-radius: 3; -fx-prompt-text-fill: white;");
-            
-            // Button cell (seçili öğe) stilini ayarla
-            konumComboBox.setButtonCell(new ListCell<String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item);
-                        setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-                    }
-                }
-            });
-            
-            // Popup liste öğelerinin stilini ayarla
-            konumComboBox.setCellFactory(listView -> new ListCell<String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item);
-                        setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-background-color: #2D2D2D; " +
-                                "-fx-padding: 5 10; -fx-font-weight: bold;");
-                    }
-                }
-            });
+            konumComboBox.setValue("Giriş Katı");
         }
     }
     
@@ -239,50 +170,9 @@ public class masaverezervasyonController {
                 if (isAdmin) {
                     sayfaAc("adminpanel.fxml", "Admin Panel");
                 } else {
-                    showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
+                    showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!");
                 }
             });
-            
-            // Admin değilse butonu devre dışı bırak ve stilini ayarla
-            adminpanel.setDisable(!isAdmin);
-            if (!isAdmin) {
-                adminpanel.setStyle("-fx-background-color: #404040;");
-            } else {
-                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
-            }
-        }
-    }
-    
-    // Ana içerik butonlarını ayarlayan metod
-    private void setupContentButtons() {
-        if (rezervasyonListesiBtn != null) {
-            rezervasyonListesiBtn.setOnAction(event -> {
-                sayfaAc("rezervasyonListesi.fxml", "Rezervasyon Listesi");
-            });
-        }
-        
-        if (rezervasyonYapBtn != null) {
-            rezervasyonYapBtn.setOnAction(event -> {
-                sayfaAc("rezervasyonYap.fxml", "Rezervasyon Yap");
-            });
-        }
-        
-        if (rezervasyonSistemiBtn != null) {
-            rezervasyonSistemiBtn.setOnAction(event -> {
-                if (isAdmin) {
-                    sayfaAc("rezervasyonAdminSistemi.fxml", "Rezervasyon Sistemi");
-                } else {
-                    showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
-                }
-            });
-            
-            // Admin değilse butonu devre dışı bırak ve stilini ayarla
-            rezervasyonSistemiBtn.setDisable(!isAdmin);
-            if (!isAdmin) {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
-            } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-radius: 15; -fx-border-width: 2;");
-            }
         }
     }
     
@@ -290,42 +180,19 @@ public class masaverezervasyonController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            // Düzeltilmiş dosya adı - rezervasyonSistemi.fxml yerine rezervasyonAdminSistemi.fxml kullanılacak
-            if (fxmlDosya.equals("rezervasyonSistemi.fxml")) {
-                fxmlDosya = "rezervasyonAdminSistemi.fxml";
-            }
-            loader.setLocation(masaverezervasyonController.class.getResource(fxmlDosya));
+            loader.setLocation(MasaRezervasyonController.class.getResource(fxmlDosya));
             Parent root = loader.load();
-            
-            // Controller'a yetki ve kullanıcı bilgilerini aktar
-            Object controller = loader.getController();
-            
-            // Her controller için yetki ve kullanıcı bilgilerini kontrol et
-            if (controller instanceof masaverezervasyonController) {
-                ((masaverezervasyonController) controller).setAdmin(isAdmin);
-                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
-            } else if (controller instanceof rezervasyonAdminSistemiController) {
-                ((rezervasyonAdminSistemiController) controller).setAdmin(isAdmin);
-                ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(kullaniciAdi);
-            } else if (controller instanceof AnaSayfaController) {
-                ((AnaSayfaController) controller).setAdmin(isAdmin);
-                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
-            }
             
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
-            
-            // Eğer rezervasyon admin sistemi sayfası açılıyorsa, mevcut sayfayı kapatma
-            if (!fxmlDosya.equals("rezervasyonAdminSistemi.fxml")) {
-                // Mevcut sayfayı kapat
-                if (anasayfa != null) {
-                    Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                    currentStage.close();
-                }
-            }
-            
             stage.show();
+            
+            // Mevcut sayfayı kapat
+            if (anasayfa != null) {
+                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+                currentStage.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
@@ -449,8 +316,8 @@ public class masaverezervasyonController {
     private void formTemizle() {
         masaNoField.setText("");
         kapasiteField.setText("");
-        durumComboBox.setValue("BOŞ");
-        konumComboBox.setValue("GİRİŞ KATI");
+        durumComboBox.setValue("bos");
+        konumComboBox.setValue("Giriş Katı");
         seciliMasaId = -1;
         seciliMasaNo = "";
         
@@ -638,40 +505,18 @@ public class masaverezervasyonController {
     // Kullanıcı adını ayarla
     public void setKullaniciAdi(String kullaniciAdi) {
         this.kullaniciAdi = kullaniciAdi;
-        if (kullaniciWelcomeText != null) {
-            kullaniciWelcomeText.setText("Merhaba, " + kullaniciAdi + "!");
-        }
+        updateWelcomeText();
     }
     
     // Admin yetkisi ayarla
     public void setAdmin(boolean isAdmin) {
-        System.out.println("setAdmin çağrıldı: " + isAdmin); // Debug için
         this.isAdmin = isAdmin;
         
-        // Admin yetkisi durumuna göre butonları ayarla
-        if (rezervasyonSistemiBtn != null) {
-            rezervasyonSistemiBtn.setDisable(!isAdmin);  // Admin ise aktif, değilse pasif
-            if (!isAdmin) {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
-            } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-radius: 15; -fx-border-width: 2;");
-            }
+        // Admin değilse admin panel butonunu gizle
+        if (adminpanel != null && !isAdmin) {
+            adminpanel.setVisible(false);
+            adminpanel.setDisable(true);
         }
-        
-        // Admin paneli butonunu ayarla
-        if (adminpanel != null) {
-            adminpanel.setDisable(!isAdmin);  // Admin ise aktif, değilse pasif
-            if (!isAdmin) {
-                adminpanel.setStyle("-fx-background-color: #404040;");
-            } else {
-                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
-            }
-        }
-        
-        // Kullanıcı adını güncelle
-        updateWelcomeText();
-        
-        System.out.println("Kullanıcı adı: " + kullaniciAdi + ", Admin: " + isAdmin); // Debug için
     }
     
     // Karşılama metnini güncelle
@@ -689,4 +534,4 @@ public class masaverezervasyonController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-}
+} 
