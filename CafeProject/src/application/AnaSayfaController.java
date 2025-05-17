@@ -65,10 +65,40 @@ public class AnaSayfaController {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
         
-        // Admin değilse admin panel butonunu devre dışı bırak
-        if (adminpanel != null && !isAdmin) {
-            adminpanel.setDisable(true);
-            adminpanel.setStyle("-fx-background-color: #404040;");
+        if (adminpanel != null) {
+            if (!isAdmin) {
+                // Admin değilse butonu devre dışı bırak ve gri yap
+                adminpanel.setDisable(true);
+                adminpanel.setStyle("-fx-background-color: #404040; -fx-text-fill: #808080; -fx-opacity: 0.7;");
+                
+                // Tooltip ekle
+                javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Bu özelliği kullanmak için admin yetkisine sahip olmanız gerekiyor.");
+                tooltip.setStyle("-fx-font-size: 12px; -fx-background-color: #2D2D2D; -fx-text-fill: white;");
+                adminpanel.setTooltip(tooltip);
+            } else {
+                // Admin ise normal stil
+                adminpanel.setDisable(false);
+                adminpanel.setStyle("-fx-background-color: #1C1C1C; -fx-text-fill: white;");
+            }
+        }
+        
+        // Diğer admin-spesifik butonları kontrol et
+        if (masalarverezervasyon != null) {
+            // Rezervasyon sistemi butonunu da kontrol et
+            Button rezervasyonSistemiBtn = (Button) masalarverezervasyon.getScene().lookup("#rezervasyonSistemiBtn");
+            if (rezervasyonSistemiBtn != null) {
+                if (!isAdmin) {
+                    rezervasyonSistemiBtn.setDisable(true);
+                    rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-text-fill: #808080; -fx-opacity: 0.7;");
+                    
+                    javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Bu özelliği kullanmak için admin yetkisine sahip olmanız gerekiyor.");
+                    tooltip.setStyle("-fx-font-size: 12px; -fx-background-color: #2D2D2D; -fx-text-fill: white;");
+                    rezervasyonSistemiBtn.setTooltip(tooltip);
+                } else {
+                    rezervasyonSistemiBtn.setDisable(false);
+                    rezervasyonSistemiBtn.setStyle("-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5; -fx-text-fill: white;");
+                }
+            }
         }
     }
 
@@ -86,6 +116,16 @@ public class AnaSayfaController {
             loader.setLocation(AnaSayfaController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             
+            // Controller'a yetki ve kullanıcı bilgilerini aktar
+            Object controller = loader.getController();
+            if (controller instanceof masaverezervasyonController) {
+                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
+                ((masaverezervasyonController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof AdminPanelController) {
+                ((AdminPanelController) controller).setAdminName(kullaniciAdi);
+                ((AdminPanelController) controller).setAdmin(isAdmin);
+            }
+            
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
@@ -96,7 +136,7 @@ public class AnaSayfaController {
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
+            showAlert("Hata", "Sayfa açılamadı: " + e.getMessage(), AlertType.ERROR);
         }
     }
     
