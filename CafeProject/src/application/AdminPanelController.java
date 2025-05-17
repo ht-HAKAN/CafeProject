@@ -170,19 +170,29 @@ public class AdminPanelController {
             loader.setLocation(AdminPanelController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             
+            // Controller'a yetki ve kullanıcı bilgilerini aktar
+            Object controller = loader.getController();
+            if (controller instanceof masaverezervasyonController) {
+                ((masaverezervasyonController) controller).setKullaniciAdi(adminName);
+                ((masaverezervasyonController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
+            } else if (controller instanceof rezervasyonAdminSistemiController) {
+                ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(adminName);
+                ((rezervasyonAdminSistemiController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
+            } else if (controller instanceof AnaSayfaController) {
+                ((AnaSayfaController) controller).setKullaniciAdi(adminName);
+                ((AnaSayfaController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
+            }
+            
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             stage.show();
             
             // Mevcut sayfayı kapat
-            if (anasayfa != null) {
-                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                currentStage.close();
-            }
+            Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
             showAlert(AlertType.ERROR, "Hata", "Sayfa açılamadı: " + e.getMessage());
         }
     }
@@ -359,5 +369,26 @@ public class AdminPanelController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // Admin yetkisi ayarla
+    public void setAdmin(boolean isAdmin) {
+        // Admin paneline sadece adminler girebilir
+        if (!isAdmin) {
+            // Eğer admin değilse, tüm kontrolleri devre dışı bırak
+            adField.setDisable(true);
+            soyadField.setDisable(true);
+            kullaniciAdiField.setDisable(true);
+            sifreField.setDisable(true);
+            rolField.setDisable(true);
+            telefonField.setDisable(true);
+            personelListView.setDisable(true);
+            addButton.setDisable(true);
+            deleteButton.setDisable(true);
+            updateButton.setDisable(true);
+            
+            // Uyarı göster
+            showAlert("Yetki Hatası", "Bu paneli görüntülemek için admin yetkisine sahip olmanız gerekiyor!", AlertType.WARNING);
+        }
     }
 }

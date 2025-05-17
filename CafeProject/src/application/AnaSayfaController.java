@@ -64,6 +64,12 @@ public class AnaSayfaController {
     // Admin yetkisi ayarla
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+        
+        // Admin değilse admin panel butonunu devre dışı bırak
+        if (adminpanel != null && !isAdmin) {
+            adminpanel.setDisable(true);
+            adminpanel.setStyle("-fx-background-color: #404040;");
+        }
     }
 
     // Karşılama metnini güncelle
