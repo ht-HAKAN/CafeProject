@@ -5,11 +5,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.masaverezervasyonController">
    <children>
+      <!-- Üst Panel -->
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
             <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="772.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
@@ -17,12 +19,12 @@
                   <Image url="@../../images/icones-d-administration-jaunes.png" />
                </image>
             </ImageView>
-            <Text fx:id="adminWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Admin!">
+            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Admin!">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="33.0" layoutY="63.0" text="Masa Ve Rezervasyon" wrappingWidth="292.2265625">
+            <Text fill="WHITE" layoutX="26.0" layoutY="63.0" text="Masa Ve Rezervasyon" wrappingWidth="243.2265625">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -30,6 +32,7 @@
          </children>
       </Pane>
       
+      <!-- Sol Menü -->
       <Pane layoutY="-4.0" prefHeight="616.0" prefWidth="208.0" style="-fx-background-color: #1C1C1C;">
          <children>
             <ImageView fitHeight="100.0" fitWidth="55.0" layoutX="8.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
@@ -95,7 +98,25 @@
          </children>
       </Pane>
       
-      <!-- Personel Ekleme Alanı -->
-      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;" />
+      <!-- Ana İçerik - Alt Kısımdaki Butonlar -->
+      <HBox alignment="CENTER" layoutX="208.0" layoutY="520.0" prefHeight="50.0" prefWidth="818.0" spacing="20">
+         <children>
+            <Button fx:id="rezervasyonListesiBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Rezervasyon Listesi" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="rezervasyonYapBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Rezervasyon Yap" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="rezervasyonSistemiBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Rezervasyon Sistemi (Admin)" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

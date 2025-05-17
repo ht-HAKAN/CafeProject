@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.rezervasyonAdminSistemiController">
+   <children>
+      <!-- Üst Panel -->
+      <Pane layoutX="0.0" layoutY="0.0" prefHeight="80.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;">
+         <children>
+            <Text fill="WHITE" layoutX="26.0" layoutY="63.0" text="Rezervasyon Yönetim Sistemi" wrappingWidth="400.0">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+
+      <!-- Sol Panel - Masa Yönetimi -->
+      <VBox layoutX="20.0" layoutY="100.0" prefHeight="480.0" prefWidth="300.0" spacing="15" style="-fx-background-color: #2C2C2C; -fx-padding: 15; -fx-background-radius: 10;">
+         <children>
+            <Text fill="WHITE" text="Masa Yönetimi">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            
+            <Label text="Masa No:" textFill="WHITE" />
+            <TextField fx:id="masaNoField" promptText="Masa numarası giriniz" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
+            
+            <Label text="Kapasite:" textFill="WHITE" />
+            <TextField fx:id="kapasiteField" promptText="Masa kapasitesi giriniz" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
+            
+            <Label text="Durum:" textFill="WHITE" />
+            <ComboBox fx:id="durumComboBox" prefWidth="150.0" promptText="Durum seçiniz" style="-fx-background-color: #3C3C3C;" />
+            
+            <Label text="Konum:" textFill="WHITE" />
+            <ComboBox fx:id="konumComboBox" prefWidth="150.0" promptText="Konum seçiniz" style="-fx-background-color: #3C3C3C;" />
+            
+            <HBox spacing="10">
+               <children>
+                  <Button fx:id="ekleButton" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #4CAF50;" text="Ekle" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="guncelleButton" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #2196F3;" text="Güncelle" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="silButton" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #F44336;" text="Sil" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            
+            <Button fx:id="temizleButton" mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #FF9800;" text="Formu Temizle" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+
+      <!-- Sağ Panel - Masa Grid -->
+      <Pane layoutX="340.0" layoutY="100.0" prefHeight="480.0" prefWidth="666.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
+         <children>
+            <Text fill="WHITE" layoutX="20.0" layoutY="40.0" text="Masalar">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <GridPane fx:id="masalarGrid" hgap="10" layoutX="20.0" layoutY="60.0" prefHeight="350.0" prefWidth="626.0" vgap="10" />
+            
+            <!-- Renk Kılavuzu -->
+            <VBox layoutX="20.0" layoutY="420.0" spacing="10">
+               <children>
+                  <Text fill="WHITE" text="Renk Kılavuzu:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <HBox spacing="20">
+                     <children>
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                           <children>
+                              <Rectangle width="20" height="20" fill="GREEN" arcWidth="5" arcHeight="5" />
+                              <Text fill="WHITE" text="Boş" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                           <children>
+                              <Rectangle width="20" height="20" fill="RED" arcWidth="5" arcHeight="5" />
+                              <Text fill="WHITE" text="Dolu" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                           <children>
+                              <Rectangle width="20" height="20" fill="YELLOW" arcWidth="5" arcHeight="5" />
+                              <Text fill="WHITE" text="Kirli" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <Text fill="WHITE" text="* Masa üzerine tıklayarak düzenleme yapabilirsiniz." />
+                  <Text fill="WHITE" text="* Daha sonra bu ekrandan sipariş yönetimi de yapılabilecek." />
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,14 +1,9 @@
 package application;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -19,34 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-public class masaverezervasyonController {
-
-    // Sol menü butonları
-    @FXML private Button anasayfa;
-    @FXML private Button menu;
-    @FXML private Button siparisler;
-    @FXML private Button masalarverezervasyon;
-    @FXML private Button adminpanel;
-    
-    // Üst kısım
-    @FXML private Text kullaniciWelcomeText;
-    
-    // Ana içerik butonları
-    @FXML private Button rezervasyonListesiBtn;
-    @FXML private Button rezervasyonYapBtn;
-    @FXML private Button rezervasyonSistemiBtn;
-    
-    // Masa Grid ve Container
-    @FXML private GridPane masalarGrid;
-    @FXML private VBox masaDetayContainer;
+public class rezervasyonAdminSistemiController {
     
     // Masa Ekleme/Güncelleme formları
     @FXML private TextField masaNoField;
@@ -60,15 +31,8 @@ public class masaverezervasyonController {
     @FXML private Button silButton;
     @FXML private Button temizleButton;
     
-    // Rezervasyon alanları
-    @FXML private TextField musteriAdiField;
-    @FXML private TextField musteriSoyadiField;
-    @FXML private TextField telefonField;
-    @FXML private DatePicker tarihPicker;
-    @FXML private TextField saatField;
-    @FXML private TextField kisiSayisiField;
-    @FXML private TextField notlarField;
-    @FXML private Button rezervasyonEkleButton;
+    // Masa Grid
+    @FXML private GridPane masalarGrid;
     
     // Veritabanı bağlantısı
     private Connection connection;
@@ -81,7 +45,7 @@ public class masaverezervasyonController {
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
     
-    public masaverezervasyonController() {
+    public rezervasyonAdminSistemiController() {
         try {
             connection = MySQLConnection.connect();
         } catch (SQLException e) {
@@ -94,17 +58,11 @@ public class masaverezervasyonController {
         // Combobox'ları doldur
         setupComboBoxes();
         
-        // Sol menü butonlarına tıklama olaylarını ekle
-        setupMenuButtons();
-        
-        // Ana içerik butonlarına tıklama olaylarını ekle
-        setupContentButtons();
-        
-        // Masa butonları ve grid'i ayarla
-        loadMasalar();
-        
         // Buton olaylarını ayarla
         setupButtonActions();
+        
+        // Masaları yükle
+        loadMasalar();
     }
     
     private void setupComboBoxes() {
@@ -142,115 +100,6 @@ public class masaverezervasyonController {
         
         if (temizleButton != null) {
             temizleButton.setOnAction(event -> formTemizle());
-        }
-        
-        if (rezervasyonEkleButton != null) {
-            rezervasyonEkleButton.setOnAction(event -> rezervasyonEkle());
-        }
-    }
-    
-    // Sol menü butonlarını ayarlayan metod
-    private void setupMenuButtons() {
-        if (anasayfa != null) {
-            anasayfa.setOnAction(event -> {
-                sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
-            });
-        }
-        
-        if (menu != null) {
-            menu.setOnAction(event -> {
-                sayfaAc("menu.fxml", "Menü");
-            });
-        }
-        
-        if (siparisler != null) {
-            siparisler.setOnAction(event -> {
-                sayfaAc("siparis.fxml", "Siparişler");
-            });
-        }
-        
-        if (masalarverezervasyon != null) {
-            // Zaten bu sayfadayız
-        }
-        
-        if (adminpanel != null) {
-            adminpanel.setOnAction(event -> {
-                if (isAdmin) {
-                    sayfaAc("adminpanel.fxml", "Admin Panel");
-                } else {
-                    showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!");
-                }
-            });
-        }
-    }
-    
-    // Ana içerik butonlarını ayarlayan metod
-    private void setupContentButtons() {
-        if (rezervasyonListesiBtn != null) {
-            rezervasyonListesiBtn.setOnAction(event -> {
-                sayfaAc("rezervasyonListesi.fxml", "Rezervasyon Listesi");
-            });
-        }
-        
-        if (rezervasyonYapBtn != null) {
-            rezervasyonYapBtn.setOnAction(event -> {
-                sayfaAc("rezervasyonYap.fxml", "Rezervasyon Yap");
-            });
-        }
-        
-        if (rezervasyonSistemiBtn != null) {
-            rezervasyonSistemiBtn.setOnAction(event -> {
-                if (isAdmin) {
-                    sayfaAc("rezervasyonSistemi.fxml", "Rezervasyon Sistemi");
-                } else {
-                    showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
-                }
-            });
-            
-            // Admin değilse butonu devre dışı bırak
-            if (!isAdmin) {
-                rezervasyonSistemiBtn.setDisable(true);
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
-            }
-        }
-    }
-    
-    // Sayfa açma yardımcı fonksiyonu
-    private void sayfaAc(String fxmlDosya, String baslik) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(masaverezervasyonController.class.getResource(fxmlDosya));
-            Parent root = loader.load();
-            
-            // Controller'a yetki ve kullanıcı bilgilerini aktar
-            Object controller = loader.getController();
-            
-            // Her controller için yetki ve kullanıcı bilgilerini kontrol et
-            if (controller instanceof masaverezervasyonController) {
-                ((masaverezervasyonController) controller).setAdmin(isAdmin);
-                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
-            } else if (controller instanceof rezervasyonAdminSistemiController) {
-                ((rezervasyonAdminSistemiController) controller).setAdmin(isAdmin);
-                ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(kullaniciAdi);
-            } else if (controller instanceof AnaSayfaController) {
-                ((AnaSayfaController) controller).setAdmin(isAdmin);
-                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
-            }
-            
-            Stage stage = new Stage();
-            stage.setTitle(baslik);
-            stage.setScene(new Scene(root));
-            stage.show();
-            
-            // Mevcut sayfayı kapat
-            if (anasayfa != null) {
-                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                currentStage.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
-            showAlert(AlertType.ERROR, "Hata", "Sayfa açılamadı: " + e.getMessage());
         }
     }
     
@@ -374,74 +223,6 @@ public class masaverezervasyonController {
         konumComboBox.setValue("Giriş Katı");
         seciliMasaId = -1;
         seciliMasaNo = "";
-        
-        // Rezervasyon formunu da temizle
-        if (musteriAdiField != null) musteriAdiField.setText("");
-        if (musteriSoyadiField != null) musteriSoyadiField.setText("");
-        if (telefonField != null) telefonField.setText("");
-        if (tarihPicker != null) tarihPicker.setValue(LocalDate.now());
-        if (saatField != null) saatField.setText("");
-        if (kisiSayisiField != null) kisiSayisiField.setText("");
-        if (notlarField != null) notlarField.setText("");
-    }
-    
-    // Rezervasyon ekle
-    private void rezervasyonEkle() {
-        if (seciliMasaId == -1) {
-            showAlert(AlertType.ERROR, "Hata", "Lütfen önce bir masa seçin!");
-            return;
-        }
-        
-        if (musteriAdiField.getText().isEmpty() || musteriSoyadiField.getText().isEmpty() || 
-            telefonField.getText().isEmpty() || tarihPicker.getValue() == null || 
-            saatField.getText().isEmpty() || kisiSayisiField.getText().isEmpty()) {
-            showAlert(AlertType.ERROR, "Hata", "Lütfen gerekli tüm alanları doldurun!");
-            return;
-        }
-        
-        String musteriAdi = musteriAdiField.getText();
-        String musteriSoyadi = musteriSoyadiField.getText();
-        String telefon = telefonField.getText();
-        LocalDate tarih = tarihPicker.getValue();
-        String saat = saatField.getText();
-        int kisiSayisi;
-        try {
-            kisiSayisi = Integer.parseInt(kisiSayisiField.getText());
-        } catch (NumberFormatException e) {
-            showAlert(AlertType.ERROR, "Hata", "Kişi sayısı sayısal bir değer olmalıdır!");
-            return;
-        }
-        String notlar = notlarField.getText() != null ? notlarField.getText() : "";
-        
-        try {
-            String sql = "INSERT INTO rezervasyonlar (masa_id, musteri_adi, musteri_soyadi, telefon, tarih, saat, kisi_sayisi, notlar) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, seciliMasaId);
-            stmt.setString(2, musteriAdi);
-            stmt.setString(3, musteriSoyadi);
-            stmt.setString(4, telefon);
-            stmt.setDate(5, Date.valueOf(tarih));
-            stmt.setString(6, saat);
-            stmt.setInt(7, kisiSayisi);
-            stmt.setString(8, notlar);
-            
-            int affected = stmt.executeUpdate();
-            if (affected > 0) {
-                // Masanın durumunu dolu olarak güncelle
-                String updateSql = "UPDATE masalar SET durum = 'dolu' WHERE masa_id = ?";
-                PreparedStatement updateStmt = connection.prepareStatement(updateSql);
-                updateStmt.setInt(1, seciliMasaId);
-                updateStmt.executeUpdate();
-                
-                showAlert(AlertType.INFORMATION, "Başarılı", "Rezervasyon başarıyla eklendi!");
-                formTemizle();
-                loadMasalar(); // Masaları yeniden yükle
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
-        }
     }
     
     // Veritabanından masaları yükle ve grid'e ekle
@@ -556,47 +337,6 @@ public class masaverezervasyonController {
         return stackPane;
     }
     
-    // Kullanıcı adını ayarla
-    public void setKullaniciAdi(String kullaniciAdi) {
-        this.kullaniciAdi = kullaniciAdi;
-        updateWelcomeText();
-    }
-    
-    // Admin yetkisi ayarla
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-        
-        // Admin yetkisi durumuna göre butonları ayarla
-        if (rezervasyonSistemiBtn != null) {
-            rezervasyonSistemiBtn.setDisable(!isAdmin);  // Admin ise aktif, değilse pasif
-            if (!isAdmin) {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
-            } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-radius: 15; -fx-border-width: 2;");
-            }
-        }
-        
-        // Admin paneli butonunu ayarla
-        if (adminpanel != null) {
-            adminpanel.setDisable(!isAdmin);  // Admin ise aktif, değilse pasif
-            if (!isAdmin) {
-                adminpanel.setStyle("-fx-background-color: #404040;");
-            } else {
-                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
-            }
-        }
-        
-        // Kullanıcı adını güncelle
-        updateWelcomeText();
-    }
-    
-    // Karşılama metnini güncelle
-    private void updateWelcomeText() {
-        if (kullaniciWelcomeText != null) {
-            kullaniciWelcomeText.setText("Merhaba, " + kullaniciAdi + "!");
-        }
-    }
-    
     // Uyarı mesajı gösteren fonksiyon
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -604,5 +344,15 @@ public class masaverezervasyonController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    // Admin yetkisi ayarla
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+    
+    // Kullanıcı adını ayarla
+    public void setKullaniciAdi(String kullaniciAdi) {
+        this.kullaniciAdi = kullaniciAdi;
     }
 }
