@@ -61,51 +61,51 @@
                   <Image url="@../../images/menu.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="46.0" layoutY="135.0" text="Ana Sayfa">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
             <ImageView fitHeight="35.0" fitWidth="55.0" layoutX="-1.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/shopping-cart.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="50.0" layoutY="186.0" text="Menü">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="8.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="49.0" layoutY="241.0" text="Siparişler">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/symbole-administrateur-jaune.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="46.0" layoutY="354.0" text="Admin Panel">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="46.0" layoutY="298.0" text="Rezervasyonlar">
+            <Button fx:id="anasayfa" layoutX="54.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: #1C1C1C;" text="Ana Sayfa" textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
-            </Text>
+            </Button>
+            <Button fx:id="menu" layoutX="46.0" layoutY="169.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Menü" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="siparisler" layoutX="46.0" layoutY="221.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Siparişler" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="masalarverezervasyon" layoutX="46.0" layoutY="279.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Masalar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="adminpanel" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Admin Panel" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       

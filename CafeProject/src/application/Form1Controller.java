@@ -28,13 +28,19 @@ public class Form1Controller {
             if (kullaniciAdi.isEmpty() || sifre.isEmpty()) {
                 showAlert("Hata", "Kullanıcı adı veya şifre boş olamaz!", Alert.AlertType.ERROR);
             } else {
-                // Admin ve normal kullanıcıyı kontrol et
-                if (girisKontrol(kullaniciAdi, sifre, true)) { // Admin kontrolü
+                // Sırasıyla admin, personel ve normal kullanıcı girişini kontrol et
+                if (girisKontrol(kullaniciAdi, sifre, "admins", "admin_adi", "admin_sifre")) { 
+                    // Admin kontrolü
                     showAlert("Başarılı", "Admin giriş başarılı!", Alert.AlertType.INFORMATION);
-                    anaEkranaGec();
-                } else if (girisKontrol(kullaniciAdi, sifre, false)) { // Kullanıcı kontrolü
+                    anaEkranaGec(kullaniciAdi, true); // Admin girişi
+                } else if (girisKontrol(kullaniciAdi, sifre, "personel", "kullanici_ad", "sifre")) { 
+                    // Personel kontrolü
+                    showAlert("Başarılı", "Personel giriş başarılı!", Alert.AlertType.INFORMATION);
+                    anaEkranaGec(kullaniciAdi, true); // Personel de admin yetkisine sahip olsun
+                } else if (girisKontrol(kullaniciAdi, sifre, "kullanicilar", "kullanici_adi", "sifre")) { 
+                    // Normal kullanıcı kontrolü
                     showAlert("Başarılı", "Kullanıcı giriş başarılı!", Alert.AlertType.INFORMATION);
-                    kullaniciEkraninaGec();
+                    kullaniciEkraninaGec(kullaniciAdi);
                 } else {
                     showAlert("Hata", "Kullanıcı adı veya şifre hatalı!", Alert.AlertType.ERROR);
                 }
@@ -65,14 +71,9 @@ public class Form1Controller {
         });
     }
 
-    // Kullanıcı adı ve şifreyi kontrol eden fonksiyon (hem admin hem normal kullanıcı)
-    private boolean girisKontrol(String kullaniciAdi, String sifre, boolean isAdmin) {
-        String query;
-        if (isAdmin) {
-            query = "SELECT * FROM admins WHERE admin_adi = ? AND admin_sifre = ?";
-        } else {
-            query = "SELECT * FROM kullanicilar WHERE kullanici_adi = ? AND sifre = ?";
-        }
+    // Giriş kontrolü - herhangi bir tablo için
+    private boolean girisKontrol(String kullaniciAdi, String sifre, String tablo, String kullaniciAdiKolonu, String sifreKolonu) {
+        String query = "SELECT * FROM " + tablo + " WHERE " + kullaniciAdiKolonu + " = ? AND " + sifreKolonu + " = ?";
 
         try (Connection conn = MySQLConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -89,12 +90,9 @@ public class Form1Controller {
         }
     }
 
-    // Admin paneline geçiş
-    private void anaEkranaGec() {
+    // Admin paneline geçiş - parametreli
+    private void anaEkranaGec(String kullaniciAdi, boolean isAdmin) {
         try {
-            // Giriş yapan kullanıcının adını doğrudan kullan
-            String adminName = KullaniciAdiGiris.getText();
-            
             // Form1Controller.class yerine getClass() kullanılıyor çünkü bu method instance içinde
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Form1Controller.class.getResource("adminpanel.fxml"));
@@ -104,7 +102,7 @@ public class Form1Controller {
             AdminPanelController controller = loader.getController();
             
             // Admin adını controller'a aktar
-            controller.setAdminName(adminName);
+            controller.setAdminName(kullaniciAdi);
             
             Stage stage = new Stage();
             stage.setTitle("Admin Panel");
@@ -121,12 +119,9 @@ public class Form1Controller {
         }
     }
 
-    // Kullanıcı paneline geçiş
-    private void kullaniciEkraninaGec() {
+    // Kullanıcı paneline geçiş - parametreli 
+    private void kullaniciEkraninaGec(String kullaniciAdi) {
         try {
-            // Kullanıcı adını al
-            String kullaniciAdi = KullaniciAdiGiris.getText();
-            
             // FXMLLoader yükleme yöntemi değiştiriliyor
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));

@@ -1,6 +1,9 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -9,7 +12,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class AdminPanelController {
@@ -25,6 +30,13 @@ public class AdminPanelController {
 
     @FXML
     private Button addButton, deleteButton, updateButton;
+    
+    // Sol menü butonları
+    @FXML private Button anasayfa;
+    @FXML private Button menu;
+    @FXML private Button siparisler;
+    @FXML private Button masalarverezervasyon;
+    @FXML private Button adminpanel;
 
     private Connection connection;
     private String selectedPersonelTelefon; // Seçilen personelin telefon numarası
@@ -57,6 +69,9 @@ public class AdminPanelController {
         
         // Karşılama metnini ayarla
         updateWelcomeText();
+        
+        // Sol menü butonlarına tıklama olaylarını ayarla
+        setupMenuButtons();
         
         // PersonelListView tıklama olayını ekle
         personelListView.setOnMouseClicked(event -> {
@@ -111,6 +126,65 @@ public class AdminPanelController {
             deletePersonel();
             loadPersonelList();
         });
+    }
+    
+    // Sol menü butonlarını ayarlayan metod
+    private void setupMenuButtons() {
+        if (anasayfa != null) {
+            anasayfa.setOnAction(event -> {
+                sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
+            });
+        }
+        
+        if (menu != null) {
+            menu.setOnAction(event -> {
+                sayfaAc("menu.fxml", "Menü");
+            });
+        }
+        
+        if (siparisler != null) {
+            siparisler.setOnAction(event -> {
+                sayfaAc("siparis.fxml", "Siparişler");
+            });
+        }
+        
+        if (masalarverezervasyon != null) {
+            masalarverezervasyon.setOnAction(event -> {
+                sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon");
+            });
+        }
+        
+        if (adminpanel != null) {
+            adminpanel.setOnAction(event -> {
+                // Zaten admin paneldeyiz, bir şey yapmaya gerek yok
+                // veya sayfayı yenilemek istiyorsak:
+                sayfaAc("adminpanel.fxml", "Admin Panel");
+            });
+        }
+    }
+    
+    // Sayfa açma yardımcı fonksiyonu
+    private void sayfaAc(String fxmlDosya, String baslik) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AdminPanelController.class.getResource(fxmlDosya));
+            Parent root = loader.load();
+            
+            Stage stage = new Stage();
+            stage.setTitle(baslik);
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+            // Mevcut sayfayı kapat
+            if (anasayfa != null) {
+                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+                currentStage.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
+            showAlert(AlertType.ERROR, "Hata", "Sayfa açılamadı: " + e.getMessage());
+        }
     }
     
     // Telefon numarasına göre şifreyi veritabanından alma
@@ -250,23 +324,25 @@ public class AdminPanelController {
         String sql = "SELECT ad, soyad, kullanici_ad, rol, telefon FROM personel";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+            
             while (rs.next()) {
                 String ad = rs.getString("ad");
                 String soyad = rs.getString("soyad");
-                String kullanici_ad = rs.getString("kullanici_ad");
+                String kullaniciAd = rs.getString("kullanici_ad");
                 String rol = rs.getString("rol");
                 String telefon = rs.getString("telefon");
                 
-                // Format: "Ad Soyad - kullaniciAdi - rol - telefon"
-                String personelBilgisi = ad + " " + soyad + " - " + kullanici_ad + " - " + rol + " - " + telefon;
-                list.add(personelBilgisi);
+                list.add(ad + " " + soyad + " - " + kullaniciAd + " - " + rol + " - " + telefon);
             }
+            
+            personelListView.setItems(list);
+            
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
         }
-        personelListView.setItems(list);
     }
-
+    
     private void clearFields() {
         adField.clear();
         soyadField.clear();
@@ -274,8 +350,9 @@ public class AdminPanelController {
         sifreField.clear();
         rolField.clear();
         telefonField.clear();
+        selectedPersonelTelefon = null;
     }
-
+    
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

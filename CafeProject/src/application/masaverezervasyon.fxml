@@ -22,7 +22,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="23.0" layoutY="63.0" text="Masa Ve Rezervasyon" wrappingWidth="292.2265625">
+            <Text fill="WHITE" layoutX="33.0" layoutY="63.0" text="Masa Ve Rezervasyon" wrappingWidth="292.2265625">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>

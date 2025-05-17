@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -44,17 +46,13 @@ public class AnaSayfaController {
             if (isAdmin) {
                 sayfaAc("adminpanel.fxml", "Admin Panel");
             } else {
-                // Admin yetkisi yoksa butonu gizle veya devre dışı bırak
-                adminpanel.setVisible(false);
-                adminpanel.setDisable(true);
+                // Admin yetkisi yoksa uyarı göster
+                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
             }
         });
 
-        // Admin değilse admin panel butonunu gizle
-        if (!isAdmin) {
-            adminpanel.setVisible(false);
-            adminpanel.setDisable(true);
-        }
+        // Admin değilse admin panel butonunu gizleme kısmını kaldırdık
+        // Artık tüm kullanıcılar butonu görecek, ama tıkladıklarında sadece adminler girebilecek
     }
 
     // Kullanıcı adını ayarla
@@ -66,8 +64,6 @@ public class AnaSayfaController {
     // Admin yetkisi ayarla
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
-        adminpanel.setVisible(isAdmin);
-        adminpanel.setDisable(!isAdmin);
     }
 
     // Karşılama metnini güncelle
@@ -96,5 +92,14 @@ public class AnaSayfaController {
             e.printStackTrace();
             System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
         }
+    }
+    
+    // Uyarı mesajı gösteren fonksiyon
+    private void showAlert(String title, String message, AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
