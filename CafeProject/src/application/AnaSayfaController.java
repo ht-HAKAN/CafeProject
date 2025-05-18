@@ -65,6 +65,15 @@ public class AnaSayfaController {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
         
+        // Admin panel butonunu güncelle
+        updateAdminPanelButton();
+        
+        // Scene hazır olduğunda rezervasyon butonunu güncelle
+        updateReservationButton();
+    }
+
+    // Admin panel butonunu güncelleme
+    private void updateAdminPanelButton() {
         if (adminpanel != null) {
             if (!isAdmin) {
                 // Admin değilse butonu devre dışı bırak ve gri yap
@@ -81,23 +90,29 @@ public class AnaSayfaController {
                 adminpanel.setStyle("-fx-background-color: #1C1C1C; -fx-text-fill: white;");
             }
         }
-        
-        // Diğer admin-spesifik butonları kontrol et
-        if (masalarverezervasyon != null) {
-            // Rezervasyon sistemi butonunu da kontrol et
-            Button rezervasyonSistemiBtn = (Button) masalarverezervasyon.getScene().lookup("#rezervasyonSistemiBtn");
-            if (rezervasyonSistemiBtn != null) {
-                if (!isAdmin) {
-                    rezervasyonSistemiBtn.setDisable(true);
-                    rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-text-fill: #808080; -fx-opacity: 0.7;");
-                    
-                    javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Bu özelliği kullanmak için admin yetkisine sahip olmanız gerekiyor.");
-                    tooltip.setStyle("-fx-font-size: 12px; -fx-background-color: #2D2D2D; -fx-text-fill: white;");
-                    rezervasyonSistemiBtn.setTooltip(tooltip);
-                } else {
-                    rezervasyonSistemiBtn.setDisable(false);
-                    rezervasyonSistemiBtn.setStyle("-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5; -fx-text-fill: white;");
+    }
+
+    // Rezervasyon butonunu güncelleme
+    private void updateReservationButton() {
+        if (masalarverezervasyon != null && masalarverezervasyon.getScene() != null) {
+            try {
+                Button rezervasyonSistemiBtn = (Button) masalarverezervasyon.getScene().lookup("#rezervasyonSistemiBtn");
+                if (rezervasyonSistemiBtn != null) {
+                    if (!isAdmin) {
+                        rezervasyonSistemiBtn.setDisable(true);
+                        rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-text-fill: #808080; -fx-opacity: 0.7;");
+                        
+                        javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Bu özelliği kullanmak için admin yetkisine sahip olmanız gerekiyor.");
+                        tooltip.setStyle("-fx-font-size: 12px; -fx-background-color: #2D2D2D; -fx-text-fill: white;");
+                        rezervasyonSistemiBtn.setTooltip(tooltip);
+                    } else {
+                        rezervasyonSistemiBtn.setDisable(false);
+                        rezervasyonSistemiBtn.setStyle("-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5; -fx-text-fill: white;");
+                    }
                 }
+            } catch (Exception e) {
+                // Hata durumunda sessizce devam et
+                System.out.println("Rezervasyon butonu güncellenirken hata: " + e.getMessage());
             }
         }
     }
