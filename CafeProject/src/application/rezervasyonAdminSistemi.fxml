@@ -24,6 +24,11 @@
                   <Font name="System Bold" size="23.0" />
                </font>
             </Text>
+            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="800.0" layoutY="40.0" text="Merhaba, Admin!">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
 

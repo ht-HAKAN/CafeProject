@@ -34,6 +34,9 @@ public class rezervasyonAdminSistemiController {
     // Masa Grid
     @FXML private GridPane masalarGrid;
     
+    // Kullanıcı bilgisi
+    @FXML private Text kullaniciWelcomeText;
+    
     // Veritabanı bağlantısı
     private Connection connection;
     
@@ -55,6 +58,9 @@ public class rezervasyonAdminSistemiController {
     
     @FXML
     public void initialize() {
+        // Başlangıçta welcome text'i güncelle
+        updateWelcomeText();
+        
         // Combobox'ları doldur
         setupComboBoxes();
         
@@ -349,10 +355,18 @@ public class rezervasyonAdminSistemiController {
     // Kullanıcı adını ayarla
     public void setKullaniciAdi(String kullaniciAdi) {
         this.kullaniciAdi = kullaniciAdi;
+        updateWelcomeText();
     }
     
     // Admin yetkisi ayarla
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    // Karşılama metnini güncelle
+    private void updateWelcomeText() {
+        if (kullaniciWelcomeText != null) {
+            kullaniciWelcomeText.setText("Merhaba, " + kullaniciAdi + "!");
+        }
     }
 }
