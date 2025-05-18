@@ -178,9 +178,13 @@ public class AdminPanelController {
             } else if (controller instanceof menuController) {
                 ((menuController) controller).setKullaniciAdi(adminName);
                 ((menuController) controller).setAdmin(true);
+                ((menuController) controller).updateWelcomeText();
+                ((menuController) controller).updateAdminPanelButton();
             } else if (controller instanceof siparisController) {
                 ((siparisController) controller).setKullaniciAdi(adminName);
                 ((siparisController) controller).setAdmin(true);
+                ((siparisController) controller).updateWelcomeText();
+                ((siparisController) controller).updateAdminPanelButton();
             } else if (controller instanceof AnaSayfaController) {
                 ((AnaSayfaController) controller).setKullaniciAdi(adminName);
                 ((AnaSayfaController) controller).setAdmin(true);

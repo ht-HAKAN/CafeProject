@@ -290,10 +290,6 @@ public class masaverezervasyonController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            // Düzeltilmiş dosya adı - rezervasyonSistemi.fxml yerine rezervasyonAdminSistemi.fxml kullanılacak
-            if (fxmlDosya.equals("rezervasyonSistemi.fxml")) {
-                fxmlDosya = "rezervasyonAdminSistemi.fxml";
-            }
             loader.setLocation(masaverezervasyonController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             
@@ -302,27 +298,34 @@ public class masaverezervasyonController {
             
             // Her controller için yetki ve kullanıcı bilgilerini kontrol et
             if (controller instanceof masaverezervasyonController) {
-                ((masaverezervasyonController) controller).setAdmin(isAdmin);
                 ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
+                ((masaverezervasyonController) controller).setAdmin(isAdmin);
             } else if (controller instanceof rezervasyonAdminSistemiController) {
-                ((rezervasyonAdminSistemiController) controller).setAdmin(isAdmin);
                 ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(kullaniciAdi);
+                ((rezervasyonAdminSistemiController) controller).setAdmin(isAdmin);
             } else if (controller instanceof AnaSayfaController) {
-                ((AnaSayfaController) controller).setAdmin(isAdmin);
                 ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
+                ((AnaSayfaController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof menuController) {
+                ((menuController) controller).setKullaniciAdi(kullaniciAdi);
+                ((menuController) controller).setAdmin(isAdmin);
+                ((menuController) controller).updateWelcomeText();
+                ((menuController) controller).updateAdminPanelButton();
+            } else if (controller instanceof siparisController) {
+                ((siparisController) controller).setKullaniciAdi(kullaniciAdi);
+                ((siparisController) controller).setAdmin(isAdmin);
+                ((siparisController) controller).updateWelcomeText();
+                ((siparisController) controller).updateAdminPanelButton();
             }
             
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             
-            // Eğer rezervasyon admin sistemi sayfası açılıyorsa, mevcut sayfayı kapatma
-            if (!fxmlDosya.equals("rezervasyonAdminSistemi.fxml")) {
-                // Mevcut sayfayı kapat
-                if (anasayfa != null) {
-                    Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                    currentStage.close();
-                }
+            // Mevcut sayfayı kapat
+            if (anasayfa != null) {
+                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+                currentStage.close();
             }
             
             stage.show();

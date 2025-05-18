@@ -24,6 +24,10 @@ public class siparisController {
     private boolean isAdmin = false;
 
     public void initialize() {
+        // Başlangıçta welcome text ve admin panel butonunu güncelle
+        updateWelcomeText();
+        updateAdminPanelButton();
+
         anasayfa.setOnAction(event -> {
             sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
         });
@@ -59,23 +63,19 @@ public class siparisController {
         updateAdminPanelButton();
     }
 
-    private void updateAdminPanelButton() {
+    public void updateAdminPanelButton() {
         if (adminpanel != null) {
+            // Admin değilse butonu devre dışı bırak ve stilini ayarla
+            adminpanel.setDisable(!isAdmin);
             if (!isAdmin) {
-                adminpanel.setDisable(true);
-                adminpanel.setStyle("-fx-background-color: #404040; -fx-text-fill: #808080; -fx-opacity: 0.7;");
-                
-                javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Bu özelliği kullanmak için admin yetkisine sahip olmanız gerekiyor.");
-                tooltip.setStyle("-fx-font-size: 12px; -fx-background-color: #2D2D2D; -fx-text-fill: white;");
-                adminpanel.setTooltip(tooltip);
+                adminpanel.setStyle("-fx-background-color: #404040;");
             } else {
-                adminpanel.setDisable(false);
-                adminpanel.setStyle("-fx-background-color: #1C1C1C; -fx-text-fill: white;");
+                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
             }
         }
     }
 
-    private void updateWelcomeText() {
+    public void updateWelcomeText() {
         if (kullaniciWelcomeText != null) {
             kullaniciWelcomeText.setText("Merhaba, " + kullaniciAdi + "!");
         }
@@ -103,6 +103,7 @@ public class siparisController {
                 ((menuController) controller).setAdmin(isAdmin);
             }
             
+            // Yeni sayfayı göster
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));

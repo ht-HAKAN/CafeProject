@@ -346,13 +346,13 @@ public class rezervasyonAdminSistemiController {
         alert.showAndWait();
     }
     
-    // Admin yetkisi ayarla
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-    
     // Kullanıcı adını ayarla
     public void setKullaniciAdi(String kullaniciAdi) {
         this.kullaniciAdi = kullaniciAdi;
+    }
+    
+    // Admin yetkisi ayarla
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }
