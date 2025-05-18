@@ -248,7 +248,7 @@ public class masaverezervasyonController {
             if (!isAdmin) {
                 adminpanel.setStyle("-fx-background-color: #404040;");
             } else {
-                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
+                adminpanel.setStyle("-fx-background-color: #2D2D2D;");
             }
         }
     }
@@ -667,7 +667,7 @@ public class masaverezervasyonController {
             if (!isAdmin) {
                 adminpanel.setStyle("-fx-background-color: #404040;");
             } else {
-                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
+                adminpanel.setStyle("-fx-background-color: #2D2D2D;");
             }
         }
         
