@@ -281,7 +281,7 @@ public class masaverezervasyonController {
             if (!isAdmin) {
                 rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
             } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-radius: 15; -fx-border-width: 2;");
+                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15;");
             }
         }
     }
@@ -657,7 +657,7 @@ public class masaverezervasyonController {
             if (!isAdmin) {
                 rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
             } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-radius: 15; -fx-border-width: 2;");
+                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15;");
             }
         }
         

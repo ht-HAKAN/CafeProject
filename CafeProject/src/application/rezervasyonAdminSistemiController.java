@@ -1,6 +1,9 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
@@ -14,10 +17,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class rezervasyonAdminSistemiController {
+    
+    // Sol menü butonları
+    @FXML private Button anasayfa;
+    @FXML private Button menu;
+    @FXML private Button siparisler;
+    @FXML private Button masalarverezervasyon;
+    @FXML private Button adminpanel;
     
     // Masa Ekleme/Güncelleme formları
     @FXML private TextField masaNoField;
@@ -67,6 +79,9 @@ public class rezervasyonAdminSistemiController {
         // Buton olaylarını ayarla
         setupButtonActions();
         
+        // Sol menü butonlarını ayarla
+        setupMenuButtons();
+        
         // Masaları yükle
         loadMasalar();
     }
@@ -106,6 +121,92 @@ public class rezervasyonAdminSistemiController {
         
         if (temizleButton != null) {
             temizleButton.setOnAction(event -> formTemizle());
+        }
+    }
+    
+    // Sol menü butonlarını ayarlayan metod
+    private void setupMenuButtons() {
+        String buttonStyle = "-fx-background-color: #2D2D2D; -fx-border-color: #c99825; -fx-border-width: 2;";
+        
+        if (anasayfa != null) {
+            anasayfa.setStyle(buttonStyle);
+            anasayfa.setOnAction(event -> {
+                sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
+            });
+        }
+        
+        if (menu != null) {
+            menu.setStyle(buttonStyle);
+            menu.setOnAction(event -> {
+                sayfaAc("menu.fxml", "Menü");
+            });
+        }
+        
+        if (siparisler != null) {
+            siparisler.setStyle(buttonStyle);
+            siparisler.setOnAction(event -> {
+                sayfaAc("siparis.fxml", "Siparişler");
+            });
+        }
+        
+        if (masalarverezervasyon != null) {
+            masalarverezervasyon.setStyle(buttonStyle);
+            masalarverezervasyon.setOnAction(event -> {
+                sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon");
+            });
+        }
+        
+        if (adminpanel != null) {
+            adminpanel.setStyle(buttonStyle);
+            adminpanel.setOnAction(event -> {
+                sayfaAc("adminpanel.fxml", "Admin Panel");
+            });
+        }
+    }
+    
+    // Sayfa açma yardımcı fonksiyonu
+    private void sayfaAc(String fxmlDosya, String baslik) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(rezervasyonAdminSistemiController.class.getResource(fxmlDosya));
+            Parent root = loader.load();
+            
+            // Controller'a yetki ve kullanıcı bilgilerini aktar
+            Object controller = loader.getController();
+            if (controller instanceof masaverezervasyonController) {
+                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
+                ((masaverezervasyonController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof AdminPanelController) {
+                ((AdminPanelController) controller).setAdminName(kullaniciAdi);
+                ((AdminPanelController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof menuController) {
+                ((menuController) controller).setKullaniciAdi(kullaniciAdi);
+                ((menuController) controller).setAdmin(isAdmin);
+                ((menuController) controller).updateWelcomeText();
+                ((menuController) controller).updateAdminPanelButton();
+            } else if (controller instanceof siparisController) {
+                ((siparisController) controller).setKullaniciAdi(kullaniciAdi);
+                ((siparisController) controller).setAdmin(isAdmin);
+                ((siparisController) controller).updateWelcomeText();
+                ((siparisController) controller).updateAdminPanelButton();
+            } else if (controller instanceof AnaSayfaController) {
+                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
+                ((AnaSayfaController) controller).setAdmin(isAdmin);
+            }
+            
+            Stage stage = new Stage();
+            stage.setTitle(baslik);
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+            // Mevcut sayfayı kapat
+            if (anasayfa != null && anasayfa.getScene() != null) {
+                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+                currentStage.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Hata", "Sayfa açılamadı: " + e.getMessage());
         }
     }
     
