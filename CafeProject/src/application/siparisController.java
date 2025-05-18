@@ -28,24 +28,18 @@ public class siparisController {
         updateWelcomeText();
         updateAdminPanelButton();
 
-        String buttonStyle = "-fx-background-color: #2D2D2D; -fx-border-color: #c99825; -fx-border-width: 2;";
-
-        anasayfa.setStyle(buttonStyle);
         anasayfa.setOnAction(event -> {
             sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
         });
 
-        menu.setStyle(buttonStyle);
         menu.setOnAction(event -> {
             sayfaAc("menu.fxml", "Menü");
         });
 
-        siparisler.setStyle(buttonStyle);
         siparisler.setOnAction(event -> {
             // Zaten siparişler sayfasındayız
         });
 
-        masalarverezervasyon.setStyle(buttonStyle);
         masalarverezervasyon.setOnAction(event -> {
             sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon");
         });
@@ -63,7 +57,7 @@ public class siparisController {
         if (!isAdmin) {
             adminpanel.setStyle("-fx-background-color: #404040;");
         } else {
-            adminpanel.setStyle(buttonStyle);
+            adminpanel.setStyle("-fx-background-color: #2D2D2D;");
         }
     }
 
