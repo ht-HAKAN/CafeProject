@@ -28,18 +28,24 @@ public class siparisController {
         updateWelcomeText();
         updateAdminPanelButton();
 
+        String buttonStyle = "-fx-background-color: #2D2D2D; -fx-border-color: #c99825; -fx-border-width: 2;";
+
+        anasayfa.setStyle(buttonStyle);
         anasayfa.setOnAction(event -> {
             sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
         });
 
+        menu.setStyle(buttonStyle);
         menu.setOnAction(event -> {
             sayfaAc("menu.fxml", "Menü");
         });
 
+        siparisler.setStyle(buttonStyle);
         siparisler.setOnAction(event -> {
             // Zaten siparişler sayfasındayız
         });
 
+        masalarverezervasyon.setStyle(buttonStyle);
         masalarverezervasyon.setOnAction(event -> {
             sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon");
         });
@@ -51,6 +57,14 @@ public class siparisController {
                 showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
             }
         });
+
+        // Admin değilse butonu devre dışı bırak ve stilini ayarla
+        adminpanel.setDisable(!isAdmin);
+        if (!isAdmin) {
+            adminpanel.setStyle("-fx-background-color: #404040;");
+        } else {
+            adminpanel.setStyle(buttonStyle);
+        }
     }
 
     public void setKullaniciAdi(String kullaniciAdi) {
@@ -60,7 +74,19 @@ public class siparisController {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
-        updateAdminPanelButton();
+        
+        // Admin yetkisi durumuna göre butonları ayarla
+        if (adminpanel != null) {
+            adminpanel.setDisable(!isAdmin);  // Admin ise aktif, değilse pasif
+            if (!isAdmin) {
+                adminpanel.setStyle("-fx-background-color: #404040;");
+            } else {
+                adminpanel.setStyle("-fx-background-color: #2D2D2D;");
+            }
+        }
+        
+        // Kullanıcı adını güncelle
+        updateWelcomeText();
     }
 
     public void updateAdminPanelButton() {
@@ -70,7 +96,7 @@ public class siparisController {
             if (!isAdmin) {
                 adminpanel.setStyle("-fx-background-color: #404040;");
             } else {
-                adminpanel.setStyle("-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; -fx-border-width: 2;");
+                adminpanel.setStyle("-fx-background-color: #2D2D2D;");
             }
         }
     }
