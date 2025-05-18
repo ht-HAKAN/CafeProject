@@ -174,11 +174,13 @@ public class AdminPanelController {
             Object controller = loader.getController();
             if (controller instanceof masaverezervasyonController) {
                 ((masaverezervasyonController) controller).setKullaniciAdi(adminName);
-                ((masaverezervasyonController) controller).setAdmin(true);  // Admin panelden geldiği için her zaman true
-                System.out.println("Admin yetkisi aktarıldı: true"); // Debug için
-            } else if (controller instanceof rezervasyonAdminSistemiController) {
-                ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(adminName);
-                ((rezervasyonAdminSistemiController) controller).setAdmin(true);
+                ((masaverezervasyonController) controller).setAdmin(true);
+            } else if (controller instanceof menuController) {
+                ((menuController) controller).setKullaniciAdi(adminName);
+                ((menuController) controller).setAdmin(true);
+            } else if (controller instanceof siparisController) {
+                ((siparisController) controller).setKullaniciAdi(adminName);
+                ((siparisController) controller).setAdmin(true);
             } else if (controller instanceof AnaSayfaController) {
                 ((AnaSayfaController) controller).setKullaniciAdi(adminName);
                 ((AnaSayfaController) controller).setAdmin(true);

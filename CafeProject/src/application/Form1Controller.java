@@ -93,19 +93,19 @@ public class Form1Controller {
     // Admin paneline geçiş - parametreli
     private void anaEkranaGec(String kullaniciAdi, boolean isAdmin) {
         try {
-            // Form1Controller.class yerine getClass() kullanılıyor çünkü bu method instance içinde
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Form1Controller.class.getResource("adminpanel.fxml"));
+            loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
             Parent root = loader.load();
             
-            // AdminPanelController'a erişim
-            AdminPanelController controller = loader.getController();
+            // AnaSayfaController'a erişim
+            AnaSayfaController controller = loader.getController();
             
-            // Admin adını controller'a aktar
-            controller.setAdminName(kullaniciAdi);
+            // Admin adını ve yetkisini controller'a aktar
+            controller.setKullaniciAdi(kullaniciAdi);
+            controller.setAdmin(isAdmin);
             
             Stage stage = new Stage();
-            stage.setTitle("Admin Panel");
+            stage.setTitle("Ana Sayfa");
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -115,14 +115,14 @@ public class Form1Controller {
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Hata", "Admin paneli açılamadı: " + e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Hata", "Ana sayfa açılamadı: " + e.getMessage(), Alert.AlertType.ERROR);
+            System.out.println("Hata detayı: " + e.getMessage());
         }
     }
 
     // Kullanıcı paneline geçiş - parametreli 
     private void kullaniciEkraninaGec(String kullaniciAdi) {
         try {
-            // FXMLLoader yükleme yöntemi değiştiriliyor
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
             Parent root = loader.load();
@@ -130,7 +130,7 @@ public class Form1Controller {
             // AnaSayfaController'a erişim
             AnaSayfaController controller = loader.getController();
             
-            // Kullanıcı adını controller'a aktar
+            // Kullanıcı adını ve yetkisini controller'a aktar
             controller.setKullaniciAdi(kullaniciAdi);
             controller.setAdmin(false); // Normal kullanıcı, admin değil
             
@@ -153,7 +153,6 @@ public class Form1Controller {
     // Misafir ekranına geçiş
     private void misafirEkraninaGec() {
         try {
-            // FXMLLoader yükleme yöntemi değiştiriliyor
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
             Parent root = loader.load();
