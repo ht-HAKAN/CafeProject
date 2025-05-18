@@ -14,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ListCell;
 
 import java.sql.*;
 
@@ -69,44 +68,20 @@ public class rezervasyonAdminSistemiController {
     private void setupComboBoxes() {
         // Durum ComboBox
         ObservableList<String> durumlar = FXCollections.observableArrayList(
-            "BOŞ", "DOLU", "KİRLİ"
+            "bos", "dolu", "kirli"
         );
         if (durumComboBox != null) {
             durumComboBox.setItems(durumlar);
-            durumComboBox.setValue("BOŞ");
-            
-            // ComboBox'ın görünümünü ayarla
-            durumComboBox.setButtonCell(new ListCell<String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item);
-                        setTextFill(javafx.scene.paint.Color.WHITE);
-                    }
-                }
-            });
+            durumComboBox.setValue("bos");
         }
         
         // Konum ComboBox
         ObservableList<String> konumlar = FXCollections.observableArrayList(
-            "GİRİŞ KATI", "BAHÇE"
+            "Giriş Katı", "Bahçe"
         );
         if (konumComboBox != null) {
             konumComboBox.setItems(konumlar);
-            konumComboBox.setValue("GİRİŞ KATI");
-            
-            // ComboBox'ın görünümünü ayarla
-            konumComboBox.setButtonCell(new ListCell<String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item != null) {
-                        setText(item);
-                        setTextFill(javafx.scene.paint.Color.WHITE);
-                    }
-                }
-            });
+            konumComboBox.setValue("Giriş Katı");
         }
     }
     
@@ -244,8 +219,8 @@ public class rezervasyonAdminSistemiController {
     private void formTemizle() {
         masaNoField.setText("");
         kapasiteField.setText("");
-        durumComboBox.setValue("BOŞ");
-        konumComboBox.setValue("GİRİŞ KATI");
+        durumComboBox.setValue("bos");
+        konumComboBox.setValue("Giriş Katı");
         seciliMasaId = -1;
         seciliMasaNo = "";
     }

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.rezervasyonAdminSistemiController">
    <children>
@@ -43,12 +43,10 @@
             <TextField fx:id="kapasiteField" promptText="Masa kapasitesi giriniz" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
             
             <Label text="Durum:" textFill="WHITE" />
-            <ComboBox fx:id="durumComboBox" layoutX="20" layoutY="100" prefWidth="200"
-                      style="-fx-font-family: 'Arial'; -fx-font-size: 14px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+            <ComboBox fx:id="durumComboBox" prefWidth="150.0" promptText="Durum seçiniz" style="-fx-background-color: #3C3C3C;" />
             
             <Label text="Konum:" textFill="WHITE" />
-            <ComboBox fx:id="konumComboBox" layoutX="20" layoutY="150" prefWidth="200"
-                      style="-fx-font-family: 'Arial'; -fx-font-size: 14px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+            <ComboBox fx:id="konumComboBox" prefWidth="150.0" promptText="Konum seçiniz" style="-fx-background-color: #3C3C3C;" />
             
             <HBox spacing="10">
                <children>
@@ -98,21 +96,21 @@
                   </Text>
                   <HBox spacing="20">
                      <children>
-                        <HBox alignment="CENTER_LEFT" spacing="5">
+                        <HBox spacing="5" alignment="CENTER_LEFT">
                            <children>
-                              <Rectangle arcHeight="5" arcWidth="5" fill="GREEN" height="20" width="20" />
+                              <Rectangle width="20" height="20" fill="GREEN" arcWidth="5" arcHeight="5" />
                               <Text fill="WHITE" text="Boş" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="5">
+                        <HBox spacing="5" alignment="CENTER_LEFT">
                            <children>
-                              <Rectangle arcHeight="5" arcWidth="5" fill="RED" height="20" width="20" />
+                              <Rectangle width="20" height="20" fill="RED" arcWidth="5" arcHeight="5" />
                               <Text fill="WHITE" text="Dolu" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="5">
+                        <HBox spacing="5" alignment="CENTER_LEFT">
                            <children>
-                              <Rectangle arcHeight="5" arcWidth="5" fill="YELLOW" height="20" width="20" />
+                              <Rectangle width="20" height="20" fill="YELLOW" arcWidth="5" arcHeight="5" />
                               <Text fill="WHITE" text="Kirli" />
                            </children>
                         </HBox>
