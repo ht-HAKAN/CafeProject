@@ -23,9 +23,21 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.DatePicker;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Date;
 
 import java.io.IOException;
-import java.sql.*;
 
 public class rezervasyonAdminSistemiController {
     
@@ -42,6 +54,11 @@ public class rezervasyonAdminSistemiController {
     @FXML private TextField kapasiteField;
     @FXML private ComboBox<String> durumComboBox;
     @FXML private ComboBox<String> konumComboBox;
+    @FXML private TextField rezAdField;
+    @FXML private TextField rezSoyadField;
+    @FXML private TextField rezTelefonField;
+    @FXML private DatePicker rezTarihPicker;
+    @FXML private ComboBox<String> rezSaatComboBox;
     
     // Butonlar
     @FXML private Button ekleButton;
@@ -91,6 +108,13 @@ public class rezervasyonAdminSistemiController {
         // Masaları yükle
         loadMasalar();
         setupBekleyenRezervasyonlarButton();
+        
+        // Saat ComboBox'u doldur
+        if (rezSaatComboBox != null) {
+            rezSaatComboBox.setItems(FXCollections.observableArrayList(
+                "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
+            ));
+        }
     }
     
     private void setupComboBoxes() {
@@ -254,17 +278,43 @@ public class rezervasyonAdminSistemiController {
         
         try {
             String sql = "INSERT INTO masalar (masa_no, kapasite, durum, konum) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, masaNo);
             stmt.setInt(2, kapasite);
             stmt.setString(3, durum);
             stmt.setString(4, konum);
             
             int affected = stmt.executeUpdate();
+            int masaId = -1;
             if (affected > 0) {
-                showAlert(AlertType.INFORMATION, "Başarılı", "Masa başarıyla eklendi!");
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) masaId = rs.getInt(1);
+                // Rezervasyon bilgileri girilmişse rezervasyonlar tablosuna da ekle
+                String ad = rezAdField.getText().trim();
+                String soyad = rezSoyadField.getText().trim();
+                String telefon = rezTelefonField.getText().trim();
+                LocalDate tarih = rezTarihPicker.getValue();
+                String saat = rezSaatComboBox.getValue();
+                if (!ad.isEmpty() && !soyad.isEmpty() && !telefon.isEmpty() && tarih != null && saat != null && masaId != -1) {
+                    try {
+                        String sqlRez = "INSERT INTO rezervasyonlar (masa_id, musteri_adi, musteri_soyadi, telefon, tarih, saat, kisi_sayisi, notlar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement stmtRez = connection.prepareStatement(sqlRez);
+                        stmtRez.setInt(1, masaId);
+                        stmtRez.setString(2, ad);
+                        stmtRez.setString(3, soyad);
+                        stmtRez.setString(4, telefon);
+                        stmtRez.setDate(5, Date.valueOf(tarih));
+                        stmtRez.setString(6, saat);
+                        stmtRez.setInt(7, kapasite); // Kişi sayısı olarak masa kapasitesi
+                        stmtRez.setString(8, ""); // Notlar boş
+                        stmtRez.executeUpdate();
+                    } catch (SQLException e) {
+                        showAlert(AlertType.ERROR, "Hata", "Rezervasyon eklenirken hata: " + e.getMessage());
+                    }
+                }
+                showAlert(AlertType.INFORMATION, "Başarılı", "Masa ve rezervasyon başarıyla eklendi!");
                 formTemizle();
-                loadMasalar(); // Masaları yeniden yükle
+                loadMasalar();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -353,6 +403,11 @@ public class rezervasyonAdminSistemiController {
         konumComboBox.setValue("Giriş Katı");
         seciliMasaId = -1;
         seciliMasaNo = "";
+        rezAdField.setText("");
+        rezSoyadField.setText("");
+        rezTelefonField.setText("");
+        rezTarihPicker.setValue(null);
+        rezSaatComboBox.setValue(null);
     }
     
     // Veritabanından masaları yükle ve grid'e ekle

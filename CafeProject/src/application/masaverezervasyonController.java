@@ -208,6 +208,22 @@ public class masaverezervasyonController {
         if (rezervasyonEkleButton != null) {
             rezervasyonEkleButton.setOnAction(event -> rezervasyonEkle());
         }
+        
+        if (rezervasyonListesiBtn != null) {
+            rezervasyonListesiBtn.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("rezervasyonListesi.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = new Stage();
+                    stage.setTitle("Rezervasyon Listesi");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert(AlertType.ERROR, "Hata", "Rezervasyon Listesi ekranı açılamadı: " + e.getMessage());
+                }
+            });
+        }
     }
     
     // Sol menü butonlarını ayarlayan metod
@@ -257,7 +273,17 @@ public class masaverezervasyonController {
     private void setupContentButtons() {
         if (rezervasyonListesiBtn != null) {
             rezervasyonListesiBtn.setOnAction(event -> {
-                sayfaAc("rezervasyonListesi.fxml", "Rezervasyon Listesi");
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("rezervasyonListesi.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = new Stage();
+                    stage.setTitle("Rezervasyon Listesi");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert(AlertType.ERROR, "Hata", "Rezervasyon Listesi ekranı açılamadı: " + e.getMessage());
+                }
             });
         }
         if (rezervasyonYapBtn != null) {
@@ -278,7 +304,17 @@ public class masaverezervasyonController {
         if (rezervasyonSistemiBtn != null) {
             rezervasyonSistemiBtn.setOnAction(event -> {
                 if (isAdmin) {
-                    sayfaAc("rezervasyonAdminSistemi.fxml", "Rezervasyon Sistemi");
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("rezervasyonAdminSistemi.fxml"));
+                        Parent root = loader.load();
+                        Stage stage = new Stage();
+                        stage.setTitle("Rezervasyon Sistemi (Admin)");
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert(AlertType.ERROR, "Hata", "Rezervasyon Sistemi (Admin) ekranı açılamadı: " + e.getMessage());
+                    }
                 } else {
                     showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
                 }
