@@ -12,15 +12,15 @@ public class Rezervasyon {
     private String notlar;
     private String masaNo;
 
-    public Rezervasyon(String ad, String soyad, String telefon, LocalDate tarih, String saat, int kisiSayisi, String notlar, String masaNo) {
+    public Rezervasyon(String ad, String soyad, String telefon, LocalDate tarih, String saat, int kisiSayisi, String masaNo) {
         this.ad = ad;
         this.soyad = soyad;
         this.telefon = telefon;
         this.tarih = tarih;
         this.saat = saat;
         this.kisiSayisi = kisiSayisi;
-        this.notlar = notlar;
         this.masaNo = masaNo;
+        this.notlar = null;
     }
 
     public String getAd() { return ad; }

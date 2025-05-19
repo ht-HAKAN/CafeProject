@@ -18,7 +18,6 @@ public class RezervasyonListesiController {
     @FXML private TableColumn<Rezervasyon, LocalDate> tarihColumn;
     @FXML private TableColumn<Rezervasyon, String> saatColumn;
     @FXML private TableColumn<Rezervasyon, Integer> kisiSayisiColumn;
-    @FXML private TableColumn<Rezervasyon, String> notColumn;
     @FXML private TableColumn<Rezervasyon, String> masaNoColumn;
 
     @FXML
@@ -29,7 +28,6 @@ public class RezervasyonListesiController {
         tarihColumn.setCellValueFactory(new PropertyValueFactory<>("tarih"));
         saatColumn.setCellValueFactory(new PropertyValueFactory<>("saat"));
         kisiSayisiColumn.setCellValueFactory(new PropertyValueFactory<>("kisiSayisi"));
-        notColumn.setCellValueFactory(new PropertyValueFactory<>("notlar"));
         masaNoColumn.setCellValueFactory(new PropertyValueFactory<>("masaNo"));
         loadRezervasyonlar();
     }
@@ -48,7 +46,6 @@ public class RezervasyonListesiController {
                     rs.getDate("tarih").toLocalDate(),
                     rs.getString("saat"),
                     rs.getInt("kisi_sayisi"),
-                    rs.getString("notlar"),
                     rs.getString("masa_no")
                 ));
             }

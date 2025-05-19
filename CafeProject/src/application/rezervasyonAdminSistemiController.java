@@ -65,6 +65,7 @@ public class rezervasyonAdminSistemiController {
     @FXML private Button guncelleButton;
     @FXML private Button silButton;
     @FXML private Button temizleButton;
+    @FXML private Button rezervasyonSilButton;
     
     // Masa Grid
     @FXML private GridPane masalarGrid;
@@ -114,6 +115,10 @@ public class rezervasyonAdminSistemiController {
             rezSaatComboBox.setItems(FXCollections.observableArrayList(
                 "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
             ));
+        }
+        
+        if (rezervasyonSilButton != null) {
+            rezervasyonSilButton.setOnAction(event -> rezervasyonSil());
         }
     }
     
@@ -591,6 +596,41 @@ public class rezervasyonAdminSistemiController {
                     showAlert(AlertType.ERROR, "Hata", "Bekleyen rezervasyonlar ekranı açılamadı: " + e.getMessage());
                 }
             });
+        }
+    }
+
+    private void rezervasyonSil() {
+        if (seciliMasaId == -1) {
+            showAlert(AlertType.ERROR, "Hata", "Lütfen önce bir masa seçin!");
+            return;
+        }
+        try (Connection conn = MySQLConnection.connect()) {
+            // En güncel rezervasyonu bul
+            String sql = "SELECT rezervasyon_id FROM rezervasyonlar WHERE masa_id = ? ORDER BY olusturma_tarihi DESC LIMIT 1";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, seciliMasaId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int rezervasyonId = rs.getInt("rezervasyon_id");
+                // Rezervasyonu sil
+                String deleteSql = "DELETE FROM rezervasyonlar WHERE rezervasyon_id = ?";
+                PreparedStatement deleteStmt = conn.prepareStatement(deleteSql);
+                deleteStmt.setInt(1, rezervasyonId);
+                deleteStmt.executeUpdate();
+                // Masanın durumunu boş yap
+                String updateMasaSql = "UPDATE masalar SET durum = 'bos' WHERE masa_id = ?";
+                PreparedStatement updateMasaStmt = conn.prepareStatement(updateMasaSql);
+                updateMasaStmt.setInt(1, seciliMasaId);
+                updateMasaStmt.executeUpdate();
+                showAlert(AlertType.INFORMATION, "Başarılı", "Rezervasyon başarıyla silindi ve masa boşaltıldı!");
+                formTemizle();
+                loadMasalar();
+            } else {
+                showAlert(AlertType.ERROR, "Hata", "Bu masada silinecek aktif rezervasyon yok!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
         }
     }
 }
