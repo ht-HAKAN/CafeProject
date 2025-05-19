@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuGoruntuleController">
+    <children>
+        <Text text="Menü" layoutX="40.0" layoutY="50.0" style="-fx-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" />
+        <GridPane fx:id="urunGrid" layoutX="40.0" layoutY="70.0" hgap="30.0" vgap="30.0" style="-fx-background-color: transparent;" />
+    </children>
+</AnchorPane> 

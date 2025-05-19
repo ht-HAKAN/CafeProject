@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class menuController {
@@ -19,31 +18,20 @@ public class menuController {
     @FXML private Button siparisler;
     @FXML private Button masalarverezervasyon;
     @FXML private Button adminpanel;
+    @FXML private Button menuGoruntuleButton;
+    @FXML private Button menuYonetButton;
 
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
 
     public void initialize() {
-        // Başlangıçta welcome text ve admin panel butonunu güncelle
         updateWelcomeText();
         updateAdminPanelButton();
 
-        anasayfa.setOnAction(event -> {
-            sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
-        });
-
-        menu.setOnAction(event -> {
-            // Zaten menü sayfasındayız
-        });
-
-        siparisler.setOnAction(event -> {
-            sayfaAc("siparis.fxml", "Siparişler");
-        });
-
-        masalarverezervasyon.setOnAction(event -> {
-            sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon");
-        });
-
+        anasayfa.setOnAction(event -> sayfaAc("AnaSayfa.fxml", "Ana Sayfa"));
+        menu.setOnAction(event -> {});
+        siparisler.setOnAction(event -> sayfaAc("siparis.fxml", "Siparişler"));
+        masalarverezervasyon.setOnAction(event -> sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon"));
         adminpanel.setOnAction(event -> {
             if (isAdmin) {
                 sayfaAc("adminpanel.fxml", "Admin Panel");
@@ -51,14 +39,21 @@ public class menuController {
                 showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
             }
         });
-
-        // Admin değilse butonu devre dışı bırak ve stilini ayarla
         adminpanel.setDisable(!isAdmin);
         if (!isAdmin) {
             adminpanel.setStyle("-fx-background-color: #404040;");
         } else {
             adminpanel.setStyle("-fx-background-color: #2D2D2D;");
         }
+        menuGoruntuleButton.setOnAction(e -> sayfaAc("menuGoruntule.fxml", "Menüyü Görüntüle"));
+        menuYonetButton.setOnAction(e -> {
+            if (isAdmin) {
+                sayfaAc("menuYonet.fxml", "Menü Yönetimi");
+            } else {
+                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
+            }
+        });
+        menuYonetButton.setDisable(!isAdmin);
     }
 
     public void setKullaniciAdi(String kullaniciAdi) {
@@ -69,11 +64,13 @@ public class menuController {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
         updateAdminPanelButton();
+        if (menuYonetButton != null) {
+            menuYonetButton.setDisable(!isAdmin);
+        }
     }
 
     public void updateAdminPanelButton() {
         if (adminpanel != null) {
-            // Admin değilse butonu devre dışı bırak ve stilini ayarla
             adminpanel.setDisable(!isAdmin);
             if (!isAdmin) {
                 adminpanel.setStyle("-fx-background-color: #404040;");
@@ -94,8 +91,6 @@ public class menuController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(menuController.class.getResource(fxmlDosya));
             Parent root = loader.load();
-            
-            // Controller'a yetki ve kullanıcı bilgilerini aktar
             Object controller = loader.getController();
             if (controller instanceof masaverezervasyonController) {
                 ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
@@ -110,16 +105,14 @@ public class menuController {
                 ((siparisController) controller).setKullaniciAdi(kullaniciAdi);
                 ((siparisController) controller).setAdmin(isAdmin);
             }
-            
-            // Yeni sayfayı göster
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             stage.show();
-            
-            // Mevcut sayfayı kapat
-            Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-            currentStage.close();
+            if (!fxmlDosya.equals("menuGoruntule.fxml") && !fxmlDosya.equals("menuYonet.fxml")) {
+                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+                currentStage.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Hata", "Sayfa açılamadı: " + e.getMessage(), AlertType.ERROR);
