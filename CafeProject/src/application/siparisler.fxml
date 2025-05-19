@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparislerController">
+    <children>
+        <Text text="Siparişler" layoutX="40.0" layoutY="50.0" style="-fx-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" />
+        <ScrollPane fx:id="masaScrollPane" layoutX="40.0" layoutY="70.0" prefWidth="820.0" prefHeight="500.0" fitToWidth="true" fitToHeight="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <GridPane fx:id="masaGrid" hgap="30.0" vgap="30.0" style="-fx-background-color: transparent;" />
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane> 

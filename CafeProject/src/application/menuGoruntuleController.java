@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import java.sql.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.layout.BorderPane;
 
 public class menuGoruntuleController implements Initializable {
     @FXML private GridPane urunGrid;
@@ -27,33 +28,43 @@ public class menuGoruntuleController implements Initializable {
             ResultSet rs = stmt.executeQuery();
             int col = 0, row = 0;
             while (rs.next()) {
-                VBox kart = new VBox(10);
-                kart.setAlignment(Pos.CENTER);
-                kart.setStyle("-fx-background-color: #2C2C2C; -fx-background-radius: 16; -fx-padding: 16; -fx-effect: dropshadow(gaussian, #00000055, 8,0,0,2);");
+                BorderPane kart = new BorderPane();
+                kart.setStyle("-fx-background-color: #2C2C2C; -fx-background-radius: 16; -fx-padding: 10; -fx-effect: dropshadow(gaussian, #00000055, 8,0,0,2);");
                 kart.setPrefWidth(180);
-                kart.setPrefHeight(220);
+                kart.setPrefHeight(260);
 
+                // Üst kısım: resim veya gri kutu
+                VBox ustKisim = new VBox();
+                ustKisim.setAlignment(Pos.CENTER);
+                ustKisim.setPrefHeight(100);
+                ustKisim.setMinHeight(100);
+                ustKisim.setMaxHeight(100);
                 String resimYolu = rs.getString("resim_yolu");
-                ImageView img = new ImageView();
                 if (resimYolu != null && !resimYolu.isEmpty()) {
-                    img.setImage(new Image("file:" + resimYolu, 120, 90, true, true));
+                    ImageView img = new ImageView(new Image("file:" + resimYolu, 120, 90, true, true));
+                    img.setFitWidth(120);
+                    img.setFitHeight(90);
+                    img.setPreserveRatio(true);
+                    ustKisim.getChildren().add(img);
                 } else {
                     Rectangle rect = new Rectangle(120, 90, Color.web("#444"));
-                    kart.getChildren().add(rect);
+                    ustKisim.getChildren().add(rect);
                 }
-                img.setFitWidth(120);
-                img.setFitHeight(90);
-                img.setPreserveRatio(true);
-                kart.getChildren().add(img);
+                kart.setTop(ustKisim);
 
+                // Alt kısım: yazılar
+                VBox altKisim = new VBox(6);
+                altKisim.setAlignment(Pos.CENTER);
                 Text ad = new Text(rs.getString("ad"));
                 ad.setStyle("-fx-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
                 Text fiyat = new Text(String.format("%.2f ₺", rs.getDouble("fiyat")));
                 fiyat.setStyle("-fx-fill: #FFD700; -fx-font-size: 15px; -fx-font-weight: bold;");
                 String aciklamaStr = rs.getString("aciklama");
                 Text aciklamaText = new Text(aciklamaStr != null ? aciklamaStr : "");
-                aciklamaText.setStyle("-fx-fill: #CCCCCC; -fx-font-size: 13px; -fx-font-style: italic; -fx-wrap-text: true;");
-                kart.getChildren().addAll(ad, fiyat, aciklamaText);
+                aciklamaText.setStyle("-fx-fill: #BBBBBB; -fx-font-size: 12px; -fx-font-style: italic;");
+                altKisim.getChildren().addAll(ad, fiyat, aciklamaText);
+                altKisim.setPrefHeight(80);
+                kart.setBottom(altKisim);
 
                 urunGrid.add(kart, col, row);
                 col++;

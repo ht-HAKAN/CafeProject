@@ -3,10 +3,15 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuYonetController">
+<?import javafx.scene.control.ScrollPane?>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #232323; -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuYonetController">
     <children>
         <Text text="Menü Yönetimi" layoutX="40.0" layoutY="50.0" style="-fx-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" />
         <Button fx:id="urunEkleButton" text="Ürün Ekle" layoutX="700.0" layoutY="35.0" prefWidth="140.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;" />
-        <GridPane fx:id="urunGrid" layoutX="40.0" layoutY="70.0" hgap="30.0" vgap="30.0" style="-fx-background-color: transparent;" />
+        <ScrollPane fx:id="urunScrollPane" layoutX="40.0" layoutY="70.0" prefWidth="820.0" prefHeight="500.0" fitToWidth="true" fitToHeight="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <GridPane fx:id="urunGrid" hgap="30.0" vgap="30.0" style="-fx-background-color: transparent; -fx-padding: 20 20 20 20;" />
+            </content>
+        </ScrollPane>
     </children>
 </AnchorPane> 
