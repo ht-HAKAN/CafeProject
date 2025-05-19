@@ -63,9 +63,12 @@ public class menuYonetController implements Initializable {
 
                 Text ad = new Text(rs.getString("ad"));
                 ad.setStyle("-fx-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-                Text fiyat = new Text(String.format("₺%.2f", rs.getDouble("fiyat")));
+                Text fiyat = new Text(String.format("%.2f ₺", rs.getDouble("fiyat")));
                 fiyat.setStyle("-fx-fill: #FFD700; -fx-font-size: 15px; -fx-font-weight: bold;");
-                kart.getChildren().addAll(ad, fiyat);
+                String aciklamaStr = rs.getString("aciklama");
+                Text aciklamaText = new Text(aciklamaStr != null ? aciklamaStr : "");
+                aciklamaText.setStyle("-fx-fill: #CCCCCC; -fx-font-size: 13px; -fx-font-style: italic; -fx-wrap-text: true;");
+                kart.getChildren().addAll(ad, fiyat, aciklamaText);
 
                 int urunId = rs.getInt("urun_id");
                 String adStr = rs.getString("ad");
@@ -74,7 +77,7 @@ public class menuYonetController implements Initializable {
 
                 Button duzenleBtn = new Button("Düzenle");
                 duzenleBtn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
-                duzenleBtn.setOnAction(ev -> urunGuncellePopup(urunId, adStr, fiyatVal, resimYoluStr));
+                duzenleBtn.setOnAction(ev -> urunGuncellePopup(urunId, adStr, fiyatVal, resimYoluStr, aciklamaStr));
                 Button silBtn = new Button("Sil");
                 silBtn.setStyle("-fx-background-color: #FF6347; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
                 silBtn.setOnAction(ev -> urunSil(urunId));
@@ -94,16 +97,17 @@ public class menuYonetController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UrunForm.fxml"));
             Parent root = loader.load();
             UrunFormController formController = loader.getController();
-            formController.setFormData("", 0.0, null, null);
+            formController.setFormData("", 0.0, null, "", null);
             formController.setListener(new UrunFormController.UrunFormListener() {
                 @Override
-                public void onKaydet(String ad, double fiyat, String resimYolu, Integer urunId) {
+                public void onKaydet(String ad, double fiyat, String resimYolu, String aciklama, Integer urunId) {
                     try (Connection conn = MySQLConnection.connect()) {
-                        String sql = "INSERT INTO menu_urunler (ad, fiyat, resim_yolu) VALUES (?, ?, ?)";
+                        String sql = "INSERT INTO menu_urunler (ad, fiyat, resim_yolu, aciklama) VALUES (?, ?, ?, ?)";
                         PreparedStatement stmt = conn.prepareStatement(sql);
                         stmt.setString(1, ad);
                         stmt.setDouble(2, fiyat);
                         stmt.setString(3, resimYolu);
+                        stmt.setString(4, aciklama);
                         stmt.executeUpdate();
                         urunleriYenile();
                     } catch (Exception e) {
@@ -125,22 +129,23 @@ public class menuYonetController implements Initializable {
         }
     }
 
-    private void urunGuncellePopup(int urunId, String mevcutAd, double mevcutFiyat, String mevcutResim) {
+    private void urunGuncellePopup(int urunId, String mevcutAd, double mevcutFiyat, String mevcutResim, String mevcutAciklama) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("UrunForm.fxml"));
             Parent root = loader.load();
             UrunFormController formController = loader.getController();
-            formController.setFormData(mevcutAd, mevcutFiyat, mevcutResim, urunId);
+            formController.setFormData(mevcutAd, mevcutFiyat, mevcutResim, mevcutAciklama, urunId);
             formController.setListener(new UrunFormController.UrunFormListener() {
                 @Override
-                public void onKaydet(String ad, double fiyat, String resimYolu, Integer guncelUrunId) {
+                public void onKaydet(String ad, double fiyat, String resimYolu, String aciklama, Integer guncelUrunId) {
                     try (Connection conn = MySQLConnection.connect()) {
-                        String sql = "UPDATE menu_urunler SET ad=?, fiyat=?, resim_yolu=? WHERE urun_id=?";
+                        String sql = "UPDATE menu_urunler SET ad=?, fiyat=?, resim_yolu=?, aciklama=? WHERE urun_id=?";
                         PreparedStatement stmt = conn.prepareStatement(sql);
                         stmt.setString(1, ad);
                         stmt.setDouble(2, fiyat);
                         stmt.setString(3, resimYolu);
-                        stmt.setInt(4, guncelUrunId);
+                        stmt.setString(4, aciklama);
+                        stmt.setInt(5, guncelUrunId);
                         stmt.executeUpdate();
                         urunleriYenile();
                     } catch (Exception e) {
@@ -148,9 +153,7 @@ public class menuYonetController implements Initializable {
                     }
                 }
                 @Override
-                public void onIptal() {
-                    // Gerekirse pencereyi kapatabilirsin, şimdilik boş bırakıldı.
-                }
+                public void onIptal() {}
             });
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

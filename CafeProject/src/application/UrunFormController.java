@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 public class UrunFormController implements Initializable {
     @FXML private TextField adField;
     @FXML private TextField fiyatField;
+    @FXML private TextField aciklamaField;
     @FXML private ImageView urunImageView;
     @FXML private Button resimSecButton;
     @FXML private Button kaydetButton;
@@ -28,15 +29,16 @@ public class UrunFormController implements Initializable {
     private int guncellenenUrunId = -1;
 
     public static interface UrunFormListener {
-        void onKaydet(String ad, double fiyat, String resimYolu, Integer urunId);
+        void onKaydet(String ad, double fiyat, String resimYolu, String aciklama, Integer urunId);
         void onIptal();
     }
     private UrunFormListener listener;
     public void setListener(UrunFormListener listener) { this.listener = listener; }
 
-    public void setFormData(String ad, double fiyat, String resimYolu, Integer urunId) {
+    public void setFormData(String ad, double fiyat, String resimYolu, String aciklama, Integer urunId) {
         adField.setText(ad);
         fiyatField.setText(String.valueOf(fiyat));
+        aciklamaField.setText(aciklama != null ? aciklama : "");
         if (resimYolu != null && !resimYolu.isEmpty()) {
             urunImageView.setImage(new Image("file:" + resimYolu));
             seciliResimYolu = resimYolu;
@@ -86,8 +88,9 @@ public class UrunFormController implements Initializable {
         String ad = adField.getText();
         double fiyat = 0.0;
         try { fiyat = Double.parseDouble(fiyatField.getText()); } catch (Exception ignored) {}
+        String aciklama = aciklamaField.getText();
         if (listener != null) {
-            listener.onKaydet(ad, fiyat, seciliResimYolu, guncellemeModu ? guncellenenUrunId : null);
+            listener.onKaydet(ad, fiyat, seciliResimYolu, aciklama, guncellemeModu ? guncellenenUrunId : null);
         }
         pencereyiKapat();
     }

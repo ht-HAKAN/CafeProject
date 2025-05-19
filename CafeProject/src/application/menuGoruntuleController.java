@@ -48,9 +48,12 @@ public class menuGoruntuleController implements Initializable {
 
                 Text ad = new Text(rs.getString("ad"));
                 ad.setStyle("-fx-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-                Text fiyat = new Text(String.format("₺%.2f", rs.getDouble("fiyat")));
+                Text fiyat = new Text(String.format("%.2f ₺", rs.getDouble("fiyat")));
                 fiyat.setStyle("-fx-fill: #FFD700; -fx-font-size: 15px; -fx-font-weight: bold;");
-                kart.getChildren().addAll(ad, fiyat);
+                String aciklamaStr = rs.getString("aciklama");
+                Text aciklamaText = new Text(aciklamaStr != null ? aciklamaStr : "");
+                aciklamaText.setStyle("-fx-fill: #CCCCCC; -fx-font-size: 13px; -fx-font-style: italic; -fx-wrap-text: true;");
+                kart.getChildren().addAll(ad, fiyat, aciklamaText);
 
                 urunGrid.add(kart, col, row);
                 col++;
