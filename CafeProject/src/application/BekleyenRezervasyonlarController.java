@@ -100,25 +100,50 @@ public class BekleyenRezervasyonlarController {
 
     private void onaylaRezervasyon(BekleyenRezervasyon rez) {
         try (Connection conn = MySQLConnection.connect()) {
-            // Onaylanan rezervasyonu ana tabloya ekle
-            String insertSql = "INSERT INTO rezervasyonlar (musteri_adi, musteri_soyadi, telefon, tarih, saat, kisi_sayisi, notlar) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            // 1. Boş bir masa bul
+            String masaSql = "SELECT masa_id FROM masalar WHERE durum = 'bos' LIMIT 1";
+            PreparedStatement masaStmt = conn.prepareStatement(masaSql);
+            ResultSet masaRs = masaStmt.executeQuery();
+            int masaId = -1;
+            if (masaRs.next()) {
+                masaId = masaRs.getInt("masa_id");
+            } else {
+                showAlert(AlertType.ERROR, "Hata", "Boş masa bulunamadı! Lütfen önce bir masa boşaltın.");
+                return;
+            }
+
+            // 2. Rezervasyonu ana tabloya ekle
+            String insertSql = "INSERT INTO rezervasyonlar (masa_id, musteri_adi, musteri_soyadi, telefon, tarih, saat, kisi_sayisi, notlar) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement insertStmt = conn.prepareStatement(insertSql);
-            insertStmt.setString(1, rez.getAd());
-            insertStmt.setString(2, rez.getSoyad());
-            insertStmt.setString(3, rez.getTelefon());
-            insertStmt.setDate(4, java.sql.Date.valueOf(rez.getTarih()));
-            insertStmt.setString(5, rez.getSaat());
-            insertStmt.setInt(6, Integer.parseInt(rez.getKisiSayisi()));
-            insertStmt.setString(7, rez.getNotlar());
+            insertStmt.setInt(1, masaId);
+            insertStmt.setString(2, rez.getAd());
+            insertStmt.setString(3, rez.getSoyad());
+            insertStmt.setString(4, rez.getTelefon());
+            insertStmt.setDate(5, java.sql.Date.valueOf(rez.getTarih()));
+            insertStmt.setString(6, rez.getSaat());
+            insertStmt.setInt(7, Integer.parseInt(rez.getKisiSayisi()));
+            insertStmt.setString(8, rez.getNotlar());
             insertStmt.executeUpdate();
-            // Bekleyen rezervasyondan sil
+
+            // 3. Masanın durumunu 'dolu' yap
+            String updateMasaSql = "UPDATE masalar SET durum = 'dolu' WHERE masa_id = ?";
+            PreparedStatement updateMasaStmt = conn.prepareStatement(updateMasaSql);
+            updateMasaStmt.setInt(1, masaId);
+            updateMasaStmt.executeUpdate();
+
+            // 4. Bekleyen rezervasyondan sil
             String deleteSql = "DELETE FROM bekleyen_rezervasyonlar WHERE talep_id = ?";
             PreparedStatement deleteStmt = conn.prepareStatement(deleteSql);
             deleteStmt.setInt(1, rez.getId());
             deleteStmt.executeUpdate();
+
+            // 5. Kullanıcıya bilgi ver
+            showAlert(AlertType.INFORMATION, "Başarılı", "Rezervasyon onaylandı ve uygun bir masaya atandı!");
+
             loadBekleyenRezervasyonlar();
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert(AlertType.ERROR, "Veritabanı Hatası", e.getMessage());
         }
     }
 
