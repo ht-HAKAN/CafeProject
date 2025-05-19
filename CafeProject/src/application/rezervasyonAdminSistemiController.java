@@ -411,7 +411,7 @@ public class rezervasyonAdminSistemiController {
     }
     
     // Veritabanından masaları yükle ve grid'e ekle
-    private void loadMasalar() {
+    public void loadMasalar() {
         if (masalarGrid == null) return;
         
         // Grid'i temizle
@@ -517,9 +517,36 @@ public class rezervasyonAdminSistemiController {
             // Seçili masayı belirginleştir
             rect.setStroke(Color.WHITE);
             rect.setStrokeWidth(3);
+            
+            masaDetayGoster(masaId);
         });
         
         return stackPane;
+    }
+    
+    // Masa seçildiğinde detayları göster
+    private void masaDetayGoster(int masaId) {
+        try (Connection conn = MySQLConnection.connect()) {
+            String sql = "SELECT * FROM rezervasyonlar WHERE masa_id = ? ORDER BY olusturma_tarihi DESC LIMIT 1";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, masaId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                rezAdField.setText(rs.getString("musteri_adi"));
+                rezSoyadField.setText(rs.getString("musteri_soyadi"));
+                rezTelefonField.setText(rs.getString("telefon"));
+                rezTarihPicker.setValue(rs.getDate("tarih").toLocalDate());
+                rezSaatComboBox.setValue(rs.getString("saat"));
+            } else {
+                rezAdField.setText("");
+                rezSoyadField.setText("");
+                rezTelefonField.setText("");
+                rezTarihPicker.setValue(null);
+                rezSaatComboBox.setValue(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     // Uyarı mesajı gösteren fonksiyon

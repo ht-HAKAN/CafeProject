@@ -10,8 +10,9 @@ public class Rezervasyon {
     private String saat;
     private int kisiSayisi;
     private String notlar;
+    private String masaNo;
 
-    public Rezervasyon(String ad, String soyad, String telefon, LocalDate tarih, String saat, int kisiSayisi, String notlar) {
+    public Rezervasyon(String ad, String soyad, String telefon, LocalDate tarih, String saat, int kisiSayisi, String notlar, String masaNo) {
         this.ad = ad;
         this.soyad = soyad;
         this.telefon = telefon;
@@ -19,6 +20,7 @@ public class Rezervasyon {
         this.saat = saat;
         this.kisiSayisi = kisiSayisi;
         this.notlar = notlar;
+        this.masaNo = masaNo;
     }
 
     public String getAd() { return ad; }
@@ -28,4 +30,5 @@ public class Rezervasyon {
     public String getSaat() { return saat; }
     public int getKisiSayisi() { return kisiSayisi; }
     public String getNotlar() { return notlar; }
+    public String getMasaNo() { return masaNo; }
 } 

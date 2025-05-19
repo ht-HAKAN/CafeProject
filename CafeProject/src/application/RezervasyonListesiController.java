@@ -19,6 +19,7 @@ public class RezervasyonListesiController {
     @FXML private TableColumn<Rezervasyon, String> saatColumn;
     @FXML private TableColumn<Rezervasyon, Integer> kisiSayisiColumn;
     @FXML private TableColumn<Rezervasyon, String> notColumn;
+    @FXML private TableColumn<Rezervasyon, String> masaNoColumn;
 
     @FXML
     public void initialize() {
@@ -29,13 +30,14 @@ public class RezervasyonListesiController {
         saatColumn.setCellValueFactory(new PropertyValueFactory<>("saat"));
         kisiSayisiColumn.setCellValueFactory(new PropertyValueFactory<>("kisiSayisi"));
         notColumn.setCellValueFactory(new PropertyValueFactory<>("notlar"));
+        masaNoColumn.setCellValueFactory(new PropertyValueFactory<>("masaNo"));
         loadRezervasyonlar();
     }
 
     private void loadRezervasyonlar() {
         ObservableList<Rezervasyon> list = FXCollections.observableArrayList();
         try (Connection conn = MySQLConnection.connect()) {
-            String sql = "SELECT * FROM rezervasyonlar";
+            String sql = "SELECT r.*, m.masa_no FROM rezervasyonlar r LEFT JOIN masalar m ON r.masa_id = m.masa_id";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -46,7 +48,8 @@ public class RezervasyonListesiController {
                     rs.getDate("tarih").toLocalDate(),
                     rs.getString("saat"),
                     rs.getInt("kisi_sayisi"),
-                    rs.getString("notlar")
+                    rs.getString("notlar"),
+                    rs.getString("masa_no")
                 ));
             }
         } catch (Exception e) {

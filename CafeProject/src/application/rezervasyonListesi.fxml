@@ -22,6 +22,7 @@
                 <TableColumn fx:id="saatColumn" text="Saat" prefWidth="80.0" />
                 <TableColumn fx:id="kisiSayisiColumn" text="Kişi Sayısı" prefWidth="80.0" />
                 <TableColumn fx:id="notColumn" text="Not" prefWidth="200.0" />
+                <TableColumn fx:id="masaNoColumn" text="Masa No" prefWidth="100.0" />
             </columns>
         </TableView>
     </children>
