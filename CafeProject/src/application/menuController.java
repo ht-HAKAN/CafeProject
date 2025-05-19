@@ -30,7 +30,28 @@ public class menuController {
 
         anasayfa.setOnAction(event -> sayfaAc("AnaSayfa.fxml", "Ana Sayfa"));
         menu.setOnAction(event -> {});
-        siparisler.setOnAction(event -> sayfaAc("siparis.fxml", "Siparişler"));
+        siparisler.setOnAction(event -> {
+            if (isAdmin) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(menuController.class.getResource("siparislerAdmin.fxml"));
+                    Parent root = loader.load();
+                    Object controller = loader.getController();
+                    if (controller instanceof siparislerAdminController) {
+                        // Gerekirse kullanıcı adı/rol aktar
+                    }
+                    Stage stage = new Stage();
+                    stage.setTitle("Siparişler");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert("Hata", "Siparişler ekranı açılamadı: " + e.getMessage(), AlertType.ERROR);
+                }
+            } else {
+                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
+            }
+        });
         masalarverezervasyon.setOnAction(event -> sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon"));
         adminpanel.setOnAction(event -> {
             if (isAdmin) {
@@ -89,6 +110,9 @@ public class menuController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
+            if (fxmlDosya.equals("siparisler.fxml") || fxmlDosya.equals("siparis.fxml")) {
+                fxmlDosya = "siparislerAdmin.fxml";
+            }
             loader.setLocation(menuController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             Object controller = loader.getController();

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefWidth="480.0" prefHeight="400.0" style="-fx-background-color: #232323; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox alignment="CENTER" spacing="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <Text text="Masa Siparişleri" style="-fx-font-size: 22px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+        <TableView fx:id="siparisTable" prefHeight="220.0" prefWidth="420.0" style="-fx-background-color: #2D2D2D; -fx-text-fill: white;">
+            <columns>
+                <TableColumn fx:id="urunCol" text="Ürün" prefWidth="140.0" />
+                <TableColumn fx:id="miktarCol" text="Miktar" prefWidth="80.0" />
+                <TableColumn fx:id="tutarCol" text="Tutar" prefWidth="100.0" />
+            </columns>
+        </TableView>
+        <HBox alignment="CENTER_RIGHT" spacing="10.0" prefWidth="420.0">
+            <Text text="Toplam:" style="-fx-font-size: 16px; -fx-fill: white;" />
+            <Text fx:id="toplamTutarText" text="0 TL" style="-fx-font-size: 18px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+        </HBox>
+        <HBox alignment="CENTER" spacing="18.0">
+            <Button fx:id="hesapKesButton" text="Hesap Kes" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" />
+            <Button fx:id="temizleButton" text="Temizle" style="-fx-background-color: #404040; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" />
+            <Button fx:id="kapatButton" text="Kapat" style="-fx-background-color: #232323; -fx-text-fill: #FFD700; -fx-font-size: 15px; -fx-background-radius: 8; -fx-border-color: #FFD700; -fx-border-width: 2;" />
+        </HBox>
+    </VBox>
+</AnchorPane> 

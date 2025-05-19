@@ -242,7 +242,7 @@ public class masaverezervasyonController {
         
         if (siparisler != null) {
             siparisler.setOnAction(event -> {
-                sayfaAc("siparis.fxml", "Siparişler");
+                sayfaAc("siparislerAdmin.fxml", "Siparişler");
             });
         }
         
@@ -332,6 +332,9 @@ public class masaverezervasyonController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
+            if (fxmlDosya.equals("siparisler.fxml") || fxmlDosya.equals("siparis.fxml")) {
+                fxmlDosya = "siparislerAdmin.fxml";
+            }
             loader.setLocation(masaverezervasyonController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             

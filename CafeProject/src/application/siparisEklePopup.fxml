@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefWidth="400.0" prefHeight="320.0" style="-fx-background-color: #232323; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox alignment="CENTER" spacing="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <Text text="Sipariş Ekle" style="-fx-font-size: 22px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+        <ComboBox fx:id="urunComboBox" promptText="Ürün Seç" prefWidth="260" style="-fx-font-size: 16px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+        <TextField fx:id="miktarField" promptText="Miktar" prefWidth="260" style="-fx-font-size: 16px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+        <HBox spacing="16.0" alignment="CENTER">
+            <Button fx:id="ekleButton" text="Sipariş Ekle" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" />
+            <Button fx:id="iptalButton" text="İptal" style="-fx-background-color: #404040; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" />
+        </HBox>
+    </VBox>
+</AnchorPane> 

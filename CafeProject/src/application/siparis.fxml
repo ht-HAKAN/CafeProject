@@ -96,6 +96,6 @@
       </Pane>
       
       <!-- Personel Ekleme Alanı -->
-      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;" />
+      <Pane fx:id="icerikPanel" layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;" />
    </children>
 </AnchorPane>

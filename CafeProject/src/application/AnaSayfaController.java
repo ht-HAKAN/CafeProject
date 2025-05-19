@@ -35,7 +35,26 @@ public class AnaSayfaController {
         });
 
         siparisler.setOnAction(event -> {
-            sayfaAc("siparis.fxml", "Siparişler");
+            if (isAdmin) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(AnaSayfaController.class.getResource("siparislerAdmin.fxml"));
+                    Parent root = loader.load();
+                    Object controller = loader.getController();
+                    if (controller instanceof siparislerAdminController) {
+                        // Gerekirse kullanıcı adı/rol aktar
+                    }
+                    Stage stage = new Stage();
+                    stage.setTitle("Siparişler");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert("Hata", "Siparişler ekranı açılamadı: " + e.getMessage(), AlertType.ERROR);
+                }
+            } else {
+                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
+            }
         });
 
         masalarverezervasyon.setOnAction(event -> {
@@ -128,6 +147,9 @@ public class AnaSayfaController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
+            if (fxmlDosya.equals("siparisler.fxml") || fxmlDosya.equals("siparis.fxml")) {
+                fxmlDosya = "siparislerAdmin.fxml";
+            }
             loader.setLocation(AnaSayfaController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             

@@ -11,42 +11,89 @@ import javafx.scene.shape.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.sql.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 public class siparislerController implements Initializable {
     @FXML private GridPane masaGrid;
+    @FXML private Pane icerikPanel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         masaGrid.getChildren().clear();
+        if (icerikPanel != null) {
+            masaGrid.setPrefWidth(icerikPanel.getWidth());
+        }
+        masaGrid.setHgap(30);
+        masaGrid.setVgap(30);
         try (Connection conn = MySQLConnection.connect()) {
             String sql = "SELECT * FROM masalar";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             int col = 0, row = 0;
             while (rs.next()) {
-                VBox kart = new VBox(10);
+                final int masaId = rs.getInt("masa_id");
+                final String masaAdi = rs.getString("masa_no");
+                final String durum = rs.getString("durum");
+                String arkaRenk;
+                switch (durum.toLowerCase()) {
+                    case "dolu": arkaRenk = "#4CAF50"; break;
+                    case "kirli": arkaRenk = "#FF6347"; break;
+                    default: arkaRenk = "#444"; break;
+                }
+                VBox kart = new VBox(12);
                 kart.setAlignment(Pos.CENTER);
-                kart.setStyle("-fx-background-color: #2C2C2C; -fx-background-radius: 16; -fx-padding: 16; -fx-effect: dropshadow(gaussian, #00000055, 8,0,0,2);");
                 kart.setPrefWidth(120);
                 kart.setPrefHeight(120);
-                String masaAdi = rs.getString("masa_adi");
-                String durum = rs.getString("durum");
-                Color renk;
-                switch (durum) {
-                    case "DOLU": renk = Color.web("#4CAF50"); break;
-                    case "KIRLI": renk = Color.web("#FF6347"); break;
-                    default: renk = Color.web("#888"); break;
-                }
-                Rectangle durumRect = new Rectangle(40, 40, renk);
-                durumRect.setArcWidth(12);
-                durumRect.setArcHeight(12);
+                kart.setStyle("-fx-background-color: " + arkaRenk + "; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, #00000055, 8,0,0,2);");
                 Text masaText = new Text(masaAdi);
-                masaText.setStyle("-fx-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-                kart.getChildren().addAll(durumRect, masaText);
+                masaText.setStyle("-fx-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
+                kart.getChildren().addAll(masaText);
+                kart.setOnMouseClicked(ev -> {
+                    if ("bos".equals(durum.toLowerCase())) {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("siparisAcPopup.fxml"));
+                            Parent root = loader.load();
+                            siparisAcPopupController popupController = loader.getController();
+                            popupController.setMasaId(masaId);
+                            Stage stage = new Stage();
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.setTitle("Sipariş Aç");
+                            stage.setScene(new Scene(root));
+                            stage.showAndWait();
+                            initialize(null, null);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else if ("dolu".equals(durum.toLowerCase())) {
+                        System.out.println("Sipariş detayı popup: " + masaAdi);
+                        // siparisDetayPopup(masaId, masaAdi);
+                    } else if ("kirli".equals(durum.toLowerCase())) {
+                        System.out.println("Masayı temizle popup: " + masaAdi);
+                        // masaTemizlePopup(masaId, masaAdi);
+                    }
+                });
                 masaGrid.add(kart, col, row);
                 col++;
                 if (col > 5) { col = 0; row++; }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleSiparislerButton() {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("siparislerAdmin.fxml"));
+            javafx.scene.Parent root = loader.load();
+            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+            javafx.stage.Stage stage = (javafx.stage.Stage) masaGrid.getScene().getWindow();
+            stage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
         }

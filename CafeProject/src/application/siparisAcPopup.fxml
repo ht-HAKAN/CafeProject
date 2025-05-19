@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<AnchorPane prefHeight="260.0" prefWidth="350.0" style="-fx-background-color: #232323; -fx-background-radius: 12;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparisAcPopupController">
+    <children>
+        <Text text="Sipariş Aç" layoutX="30.0" layoutY="40.0" style="-fx-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" />
+        <Text text="Ürün:" layoutX="30.0" layoutY="80.0" style="-fx-fill: white; -fx-font-size: 15px;" />
+        <ComboBox fx:id="urunCombo" layoutX="100.0" layoutY="65.0" prefWidth="200.0" />
+        <Text text="Miktar:" layoutX="30.0" layoutY="130.0" style="-fx-fill: white; -fx-font-size: 15px;" />
+        <TextField fx:id="miktarField" layoutX="100.0" layoutY="115.0" prefWidth="200.0" promptText="Adet" />
+        <Button fx:id="ekleButton" text="Ekle" layoutX="100.0" layoutY="180.0" prefWidth="90.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 8;" />
+        <Button fx:id="iptalButton" text="İptal" layoutX="210.0" layoutY="180.0" prefWidth="90.0" style="-fx-background-color: #FF6347; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 8;" />
+    </children>
+</AnchorPane> 

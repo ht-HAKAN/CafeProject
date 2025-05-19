@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparislerAdminController">
+    <HBox spacing="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <!-- Sol Panel: Masa Detay & Sipariş Yönetimi -->
+        <VBox spacing="18.0" alignment="TOP_CENTER" prefWidth="340.0" style="-fx-background-color: #232323; -fx-background-radius: 16; -fx-border-radius: 16; -fx-padding: 24;">
+            <Text fx:id="panelBaslik" text="Sipariş Yönetimi" style="-fx-font-size: 22px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+            <VBox spacing="8.0" style="-fx-background-color: #232323;">
+                <Text text="Masa Bilgisi" style="-fx-font-size: 16px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+                <Text fx:id="masaBilgiText" text="Masa seçiniz..." style="-fx-font-size: 15px; -fx-fill: white;" wrappingWidth="280.0" />
+                <HBox spacing="8.0" alignment="CENTER_LEFT">
+                    <ComboBox fx:id="durumComboBox" promptText="Durum" prefWidth="120.0" style="-fx-font-size: 14px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+                    <Button fx:id="durumGuncelleButton" text="Durumu Güncelle" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-size: 13px; -fx-background-radius: 8;" />
+                </HBox>
+            </VBox>
+            <Separator />
+            <VBox spacing="8.0">
+                <Text text="Siparişler" style="-fx-font-size: 16px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+                <TableView fx:id="siparisTable" prefHeight="160.0" style="-fx-background-color: #2D2D2D; -fx-text-fill: white;">
+                    <columns>
+                        <TableColumn fx:id="urunCol" text="Ürün" prefWidth="120.0" />
+                        <TableColumn fx:id="miktarCol" text="Miktar" prefWidth="60.0" />
+                        <TableColumn fx:id="tutarCol" text="Tutar" prefWidth="80.0" />
+                        <TableColumn fx:id="silCol" text="Sil" prefWidth="60.0" />
+                    </columns>
+                </TableView>
+                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                    <Text text="Toplam:" style="-fx-font-size: 15px; -fx-fill: white;" />
+                    <Text fx:id="toplamTutarText" text="0 TL" style="-fx-font-size: 16px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+                </HBox>
+            </VBox>
+            <Separator />
+            <VBox spacing="8.0">
+                <Text text="Sipariş Ekle" style="-fx-font-size: 16px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+                <ComboBox fx:id="urunComboBox" promptText="Ürün Seç" prefWidth="220.0" style="-fx-font-size: 15px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+                <TextField fx:id="miktarField" promptText="Miktar" prefWidth="220.0" style="-fx-font-size: 15px; -fx-background-color: #2D2D2D; -fx-text-fill: white;" />
+                <Button fx:id="siparisEkleButton" text="Sipariş Ekle" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" />
+            </VBox>
+            <HBox spacing="16.0" alignment="CENTER">
+                <Button fx:id="hesapKesButton" text="Hesap Kes" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-weight: bold; -fx-font-size: 15px; -fx-background-radius: 8;" />
+                <Button fx:id="temizleButton" text="Temizle" style="-fx-background-color: #404040; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" />
+            </HBox>
+        </VBox>
+        <!-- Sağ Panel: Masa Kartları -->
+        <VBox spacing="10.0" alignment="TOP_LEFT" prefWidth="820.0">
+            <Text text="Masalar" style="-fx-font-size: 20px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+            <GridPane fx:id="masalarGrid" hgap="18.0" vgap="18.0" style="-fx-padding: 10;" />
+        </VBox>
+    </HBox>
+</AnchorPane> 

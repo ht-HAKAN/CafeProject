@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -19,6 +20,7 @@ public class siparisController {
     @FXML private Button siparisler;
     @FXML private Button masalarverezervasyon;
     @FXML private Button adminpanel;
+    @FXML private Pane icerikPanel;
 
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
@@ -27,6 +29,14 @@ public class siparisController {
         // Başlangıçta welcome text ve admin panel butonunu güncelle
         updateWelcomeText();
         updateAdminPanelButton();
+
+        // Siparişler panelini yükle
+        try {
+            Parent siparislerRoot = FXMLLoader.load(getClass().getResource("siparislerAdmin.fxml"));
+            icerikPanel.getChildren().setAll(siparislerRoot);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         anasayfa.setOnAction(event -> {
             sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
@@ -37,7 +47,7 @@ public class siparisController {
         });
 
         siparisler.setOnAction(event -> {
-            // Zaten siparişler sayfasındayız
+            sayfaAc("siparislerAdmin.fxml", "Siparişler");
         });
 
         masalarverezervasyon.setOnAction(event -> {
@@ -104,6 +114,9 @@ public class siparisController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
+            if (fxmlDosya.equals("siparisler.fxml") || fxmlDosya.equals("siparis.fxml")) {
+                fxmlDosya = "siparislerAdmin.fxml";
+            }
             loader.setLocation(siparisController.class.getResource(fxmlDosya));
             Parent root = loader.load();
             
