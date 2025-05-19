@@ -18,6 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import javafx.scene.control.TableCell;
 
 import java.io.IOException;
 import java.sql.*;
@@ -30,6 +35,7 @@ public class rezervasyonAdminSistemiController {
     @FXML private Button siparisler;
     @FXML private Button masalarverezervasyon;
     @FXML private Button adminpanel;
+    @FXML private Button bekleyenRezervasyonlarBtn;
     
     // Masa Ekleme/Güncelleme formları
     @FXML private TextField masaNoField;
@@ -84,6 +90,7 @@ public class rezervasyonAdminSistemiController {
         
         // Masaları yükle
         loadMasalar();
+        setupBekleyenRezervasyonlarButton();
     }
     
     private void setupComboBoxes() {
@@ -160,6 +167,22 @@ public class rezervasyonAdminSistemiController {
             adminpanel.setStyle(buttonStyle);
             adminpanel.setOnAction(event -> {
                 sayfaAc("adminpanel.fxml", "Admin Panel");
+            });
+        }
+        
+        if (bekleyenRezervasyonlarBtn != null) {
+            bekleyenRezervasyonlarBtn.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("BekleyenRezervasyonlar.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = new Stage();
+                    stage.setTitle("Bekleyen Rezervasyonlar");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert(AlertType.ERROR, "Hata", "Bekleyen rezervasyonlar ekranı açılamadı: " + e.getMessage());
+                }
             });
         }
     }
@@ -468,6 +491,24 @@ public class rezervasyonAdminSistemiController {
     private void updateWelcomeText() {
         if (kullaniciWelcomeText != null) {
             kullaniciWelcomeText.setText("Merhaba, " + kullaniciAdi + "!");
+        }
+    }
+
+    private void setupBekleyenRezervasyonlarButton() {
+        if (bekleyenRezervasyonlarBtn != null) {
+            bekleyenRezervasyonlarBtn.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("BekleyenRezervasyonlar.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = new Stage();
+                    stage.setTitle("Bekleyen Rezervasyonlar");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert(AlertType.ERROR, "Hata", "Bekleyen rezervasyonlar ekranı açılamadı: " + e.getMessage());
+                }
+            });
         }
     }
 }

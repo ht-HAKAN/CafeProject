@@ -13,6 +13,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 
 <AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.rezervasyonAdminSistemiController">
    <children>
@@ -78,6 +80,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+            <Button fx:id="bekleyenRezervasyonlarBtn" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #c99825; -fx-text-fill: white; -fx-font-weight: bold;" text="Bekleyen Rezervasyonlar" />
          </children>
       </VBox>
 
