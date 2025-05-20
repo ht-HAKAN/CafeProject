@@ -26,6 +26,9 @@ import javafx.scene.control.TableCell;
 import javafx.util.Callback;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class siparislerAdminController implements Initializable {
     @FXML private GridPane masalarGrid;
@@ -75,10 +78,22 @@ public class siparislerAdminController implements Initializable {
 
     private void loadUrunler() {
         urunComboBox.getItems().clear();
-        try (Connection conn = MySQLConnection.connect(); Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("SELECT urun_adi FROM menu");
-            while (rs.next()) {
-                urunComboBox.getItems().add(rs.getString("urun_adi"));
+        try (Connection conn = MySQLConnection.connect()) {
+            String sql = "SELECT ad FROM menu_urunler";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    urunComboBox.getItems().add(rs.getString("ad"));
+                }
+                rs.close();
+            } catch (Exception e) {
+                try (PreparedStatement stmt2 = conn.prepareStatement("SELECT urun_adi FROM menu")) {
+                    ResultSet rs2 = stmt2.executeQuery();
+                    while (rs2.next()) {
+                        urunComboBox.getItems().add(rs2.getString("urun_adi"));
+                    }
+                    rs2.close();
+                }
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -165,18 +180,27 @@ public class siparislerAdminController implements Initializable {
         toplamTutar = 0;
         if (seciliMasaId == -1) return;
         try (Connection conn = MySQLConnection.connect()) {
-            String sql = "SELECT s.siparis_id, m.urun_adi, s.miktar, s.toplam_tutar FROM siparisler s JOIN menu m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND s.durum = 'aktif'";
+            String sql = "SELECT s.siparis_id, m.ad as urun_adi, s.adet, s.adet * m.fiyat as toplam_tutar FROM siparisler s JOIN menu_urunler m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND s.durum = 'aktif'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, seciliMasaId);
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = null;
+            try {
+                rs = stmt.executeQuery();
+            } catch (SQLException e) {
+                sql = "SELECT s.siparis_id, m.urun_adi, s.adet, s.adet * m.fiyat as toplam_tutar FROM siparisler s JOIN menu m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND s.durum = 'aktif'";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, seciliMasaId);
+                rs = stmt.executeQuery();
+            }
             while (rs.next()) {
                 String urunAdi = rs.getString("urun_adi");
-                int miktar = rs.getInt("miktar");
+                int adet = rs.getInt("adet");
                 double tutar = rs.getDouble("toplam_tutar");
                 toplamTutar += tutar;
-                siparisList.add(new SiparisRow(urunAdi, miktar, tutar));
+                siparisList.add(new SiparisRow(urunAdi, adet, tutar));
             }
-            rs.close(); stmt.close();
+            if (rs != null) rs.close();
+            stmt.close();
         } catch (Exception e) { e.printStackTrace(); }
         toplamTutarText.setText(String.format("%.2f TL", toplamTutar));
     }
@@ -217,43 +241,49 @@ public class siparislerAdminController implements Initializable {
             showAlert("Hata", "Ürün ve miktar alanları boş olamaz!");
             return;
         }
-        int miktar;
-        try { miktar = Integer.parseInt(miktarStr); } catch (NumberFormatException ex) { showAlert("Hata", "Miktar sayısal olmalı!"); return; }
-        if (miktar <= 0) { showAlert("Hata", "Miktar sıfırdan büyük olmalı!"); return; }
+        int adet;
+        try { adet = Integer.parseInt(miktarStr); } catch (NumberFormatException ex) { showAlert("Hata", "Miktar sayısal olmalı!"); return; }
+        if (adet <= 0) { showAlert("Hata", "Miktar sıfırdan büyük olmalı!"); return; }
         try (Connection conn = MySQLConnection.connect()) {
-            PreparedStatement checkStmt = conn.prepareStatement("SELECT siparis_id, miktar, toplam_tutar FROM siparisler s JOIN menu m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND m.urun_adi = ? AND s.durum = 'aktif'");
+            int urunId = -1; double fiyat = 0;
+            try (PreparedStatement urunStmt = conn.prepareStatement("SELECT urun_id, fiyat FROM menu_urunler WHERE ad = ?")) {
+                urunStmt.setString(1, urun);
+                ResultSet urunRS = urunStmt.executeQuery();
+                if (urunRS.next()) {
+                    urunId = urunRS.getInt("urun_id");
+                    fiyat = urunRS.getDouble("fiyat");
+                }
+                urunRS.close();
+            }
+            if (urunId == -1) {
+                try (PreparedStatement urunStmt2 = conn.prepareStatement("SELECT urun_id, fiyat FROM menu WHERE urun_adi = ?")) {
+                    urunStmt2.setString(1, urun);
+                    ResultSet urunRS2 = urunStmt2.executeQuery();
+                    if (urunRS2.next()) {
+                        urunId = urunRS2.getInt("urun_id");
+                        fiyat = urunRS2.getDouble("fiyat");
+                    }
+                    urunRS2.close();
+                }
+            }
+            if (urunId == -1) { showAlert("Hata", "Ürün bulunamadı!"); return; }
+            PreparedStatement checkStmt = conn.prepareStatement("SELECT siparis_id, adet FROM siparisler WHERE masa_id = ? AND urun_id = ? AND durum = 'aktif'");
             checkStmt.setInt(1, seciliMasaId);
-            checkStmt.setString(2, urun);
+            checkStmt.setInt(2, urunId);
             ResultSet checkRS = checkStmt.executeQuery();
             if (checkRS.next()) {
                 int siparisId = checkRS.getInt("siparis_id");
-                int eskiMiktar = checkRS.getInt("miktar");
-                double eskiTutar = checkRS.getDouble("toplam_tutar");
-                PreparedStatement urunStmt = conn.prepareStatement("SELECT fiyat FROM menu WHERE urun_adi = ?");
-                urunStmt.setString(1, urun);
-                ResultSet urunRS = urunStmt.executeQuery();
-                if (!urunRS.next()) return;
-                double fiyat = urunRS.getDouble("fiyat");
-                urunRS.close(); urunStmt.close();
-                PreparedStatement updateStmt = conn.prepareStatement("UPDATE siparisler SET miktar = ?, toplam_tutar = ? WHERE siparis_id = ?");
-                updateStmt.setInt(1, eskiMiktar + miktar);
-                updateStmt.setDouble(2, fiyat * (eskiMiktar + miktar));
-                updateStmt.setInt(3, siparisId);
+                int eskiAdet = checkRS.getInt("adet");
+                PreparedStatement updateStmt = conn.prepareStatement("UPDATE siparisler SET adet = ?, aciklama = NULL WHERE siparis_id = ?");
+                updateStmt.setInt(1, eskiAdet + adet);
+                updateStmt.setInt(2, siparisId);
                 updateStmt.executeUpdate();
                 updateStmt.close();
             } else {
-                PreparedStatement urunStmt = conn.prepareStatement("SELECT urun_id, fiyat FROM menu WHERE urun_adi = ?");
-                urunStmt.setString(1, urun);
-                ResultSet urunRS = urunStmt.executeQuery();
-                if (!urunRS.next()) return;
-                int urunId = urunRS.getInt("urun_id");
-                double fiyat = urunRS.getDouble("fiyat");
-                urunRS.close(); urunStmt.close();
-                PreparedStatement stmt = conn.prepareStatement("INSERT INTO siparisler (masa_id, urun_id, miktar, toplam_tutar, durum) VALUES (?, ?, ?, ?, 'aktif')");
+                PreparedStatement stmt = conn.prepareStatement("INSERT INTO siparisler (masa_id, urun_id, adet, durum) VALUES (?, ?, ?, 'aktif')");
                 stmt.setInt(1, seciliMasaId);
                 stmt.setInt(2, urunId);
-                stmt.setInt(3, miktar);
-                stmt.setDouble(4, fiyat * miktar);
+                stmt.setInt(3, adet);
                 stmt.executeUpdate();
                 stmt.close();
             }
@@ -271,7 +301,7 @@ public class siparislerAdminController implements Initializable {
     private void hesapKes() {
         if (seciliMasaId == -1) return;
         try (Connection conn = MySQLConnection.connect()) {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE siparisler SET durum = 'kapali' WHERE masa_id = ? AND durum = 'aktif'");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE siparisler SET durum = 'hesap_kesildi' WHERE masa_id = ? AND durum = 'aktif'");
             stmt.setInt(1, seciliMasaId);
             stmt.executeUpdate();
             stmt.close();
@@ -282,6 +312,7 @@ public class siparislerAdminController implements Initializable {
         } catch (Exception e) { e.printStackTrace(); }
         loadMasalar();
         updatePanel(new MasaSecim(seciliMasaId, seciliMasaNo, seciliMasaKapasite, "kirli", seciliMasaKonum));
+        showAlert("Hesap Kesildi", String.format("Toplam: %.2f TL\nFişinizi teslim alınız!", toplamTutar));
     }
 
     private void temizleMasa() {
@@ -291,10 +322,6 @@ public class siparislerAdminController implements Initializable {
             masaStmt.setInt(1, seciliMasaId);
             masaStmt.executeUpdate();
             masaStmt.close();
-            PreparedStatement silStmt = conn.prepareStatement("DELETE FROM siparisler WHERE masa_id = ? AND durum = 'kapali'");
-            silStmt.setInt(1, seciliMasaId);
-            silStmt.executeUpdate();
-            silStmt.close();
         } catch (Exception e) { e.printStackTrace(); }
         loadMasalar();
         updatePanel(new MasaSecim(seciliMasaId, seciliMasaNo, seciliMasaKapasite, "bos", seciliMasaKonum));
@@ -318,12 +345,18 @@ public class siparislerAdminController implements Initializable {
     private void siparisSil(SiparisRow row) {
         if (seciliMasaId == -1 || row == null) return;
         try (Connection conn = MySQLConnection.connect()) {
-            // Sipariş id'sini bul
-            String sql = "SELECT s.siparis_id FROM siparisler s JOIN menu m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND m.urun_adi = ? AND s.durum = 'aktif'";
+            String sql = "SELECT s.siparis_id FROM siparisler s JOIN menu_urunler m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND m.ad = ? AND s.durum = 'aktif'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, seciliMasaId);
             stmt.setString(2, row.urunAdiProperty().get());
             ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                sql = "SELECT s.siparis_id FROM siparisler s JOIN menu m ON s.urun_id = m.urun_id WHERE s.masa_id = ? AND m.urun_adi = ? AND s.durum = 'aktif'";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, seciliMasaId);
+                stmt.setString(2, row.urunAdiProperty().get());
+                rs = stmt.executeQuery();
+            }
             if (rs.next()) {
                 int siparisId = rs.getInt("siparis_id");
                 PreparedStatement delStmt = conn.prepareStatement("DELETE FROM siparisler WHERE siparis_id = ?");
@@ -332,7 +365,6 @@ public class siparislerAdminController implements Initializable {
                 delStmt.close();
             }
             rs.close(); stmt.close();
-            // Masada başka aktif sipariş var mı kontrol et
             PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM siparisler WHERE masa_id = ? AND durum = 'aktif'");
             checkStmt.setInt(1, seciliMasaId);
             ResultSet checkRS = checkStmt.executeQuery();
