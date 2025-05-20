@@ -311,20 +311,11 @@ public class masaverezervasyonController {
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            if (fxmlDosya.equals("siparisler.fxml") || fxmlDosya.equals("siparis.fxml")) {
-                fxmlDosya = "siparislerAdmin.fxml";
-            }
             loader.setLocation(masaverezervasyonController.class.getResource(fxmlDosya));
             Parent root = loader.load();
-            
             // Controller'a yetki ve kullanıcı bilgilerini aktar
             Object controller = loader.getController();
-            
-            // Her controller için yetki ve kullanıcı bilgilerini kontrol et
-            if (controller instanceof masaverezervasyonController) {
-                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
-                ((masaverezervasyonController) controller).setAdmin(isAdmin);
-            } else if (controller instanceof rezervasyonAdminSistemiController) {
+            if (controller instanceof rezervasyonAdminSistemiController) {
                 ((rezervasyonAdminSistemiController) controller).setKullaniciAdi(kullaniciAdi);
                 ((rezervasyonAdminSistemiController) controller).setAdmin(isAdmin);
             } else if (controller instanceof AnaSayfaController) {
@@ -341,12 +332,13 @@ public class masaverezervasyonController {
                 ((siparisController) controller).updateWelcomeText();
                 ((siparisController) controller).updateAdminPanelButton();
             }
-            
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
-            
             stage.show();
+            // Mevcut pencereyi kapat
+            Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);

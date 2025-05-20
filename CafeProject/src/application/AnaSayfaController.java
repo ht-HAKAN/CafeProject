@@ -131,6 +131,9 @@ public class AnaSayfaController {
             } else if (controller instanceof siparisController) {
                 ((siparisController) controller).setKullaniciAdi(kullaniciAdi);
                 ((siparisController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof AnaSayfaController) {
+                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
+                ((AnaSayfaController) controller).setAdmin(isAdmin);
             }
             
             Stage stage = new Stage();
