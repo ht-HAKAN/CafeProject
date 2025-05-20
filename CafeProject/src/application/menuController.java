@@ -10,12 +10,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.scene.layout.AnchorPane;
 
 public class menuController {
     @FXML private Text kullaniciWelcomeText;
     @FXML private Button anasayfa;
     @FXML private Button menu;
-    @FXML private Button siparisler;
     @FXML private Button masalarverezervasyon;
     @FXML private Button adminpanel;
     @FXML private Button menuGoruntuleButton;
@@ -26,31 +26,8 @@ public class menuController {
     public void initialize() {
         updateWelcomeText();
         updateAdminPanelButton();
-
         anasayfa.setOnAction(event -> sayfaAc("AnaSayfa.fxml", "Ana Sayfa"));
         menu.setOnAction(event -> {});
-        siparisler.setOnAction(event -> {
-            if (isAdmin) {
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(menuController.class.getResource("siparislerAdmin.fxml"));
-                    Parent root = loader.load();
-                    Object controller = loader.getController();
-                    if (controller instanceof siparislerAdminController) {
-                        // Gerekirse kullanıcı adı/rol aktar
-                    }
-                    Stage stage = new Stage();
-                    stage.setTitle("Siparişler");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    showAlert("Hata", "Siparişler ekranı açılamadı: " + e.getMessage(), AlertType.ERROR);
-                }
-            } else {
-                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
-            }
-        });
         masalarverezervasyon.setOnAction(event -> sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon"));
         adminpanel.setOnAction(event -> {
             if (isAdmin) {
@@ -65,8 +42,6 @@ public class menuController {
         } else {
             adminpanel.setStyle("-fx-background-color: #2D2D2D;");
         }
-        // Menü sekmesi açılır açılmaz ürünler penceresini aç
-        sayfaAc("menuGoruntule.fxml", "Menüyü Görüntüle");
     }
 
     public void setKullaniciAdi(String kullaniciAdi) {
@@ -96,6 +71,14 @@ public class menuController {
         }
     }
 
+    private void showAlert(String title, String message, AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     private void sayfaAc(String fxml, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
@@ -107,13 +90,5 @@ public class menuController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void showAlert(String title, String message, AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

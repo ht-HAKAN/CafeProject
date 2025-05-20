@@ -79,17 +79,12 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="siparisler" layoutX="41.0" layoutY="221.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Siparişler" textFill="WHITE">
+            <Button fx:id="masalarverezervasyon" layoutX="41.0" layoutY="221.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Masalar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="masalarverezervasyon" layoutX="41.0" layoutY="279.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Masalar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="adminpanel" layoutX="41.0" layoutY="335.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Admin Panel" textFill="WHITE">
+            <Button fx:id="adminpanel" layoutX="41.0" layoutY="279.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Admin Panel" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

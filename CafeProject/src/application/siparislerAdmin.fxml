@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,16 +14,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparislerAdminController">
+<AnchorPane prefHeight="741.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparislerAdminController">
    <children>
       <!-- Üst Panel -->
       <Pane layoutX="0.0" layoutY="0.0" prefHeight="80.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;">
          <children>
-            <Text fill="WHITE" layoutX="26.0" layoutY="63.0" text="Sipariş Yönetim Sistemi" wrappingWidth="400.0">
+            <Text fill="WHITE" layoutX="23.0" layoutY="39.0" text="Sipariş Yönetim Sistemi" wrappingWidth="400.0">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -29,14 +29,14 @@
       </Pane>
 
       <!-- Sol Panel - Sipariş Yönetimi -->
-      <VBox layoutX="20.0" layoutY="100.0" prefHeight="580.0" prefWidth="340.0" spacing="18" style="-fx-background-color: #2C2C2C; -fx-padding: 20; -fx-background-radius: 10;">
+      <VBox layoutX="20.0" layoutY="51.0" prefHeight="681.0" prefWidth="354.0" spacing="18" style="-fx-background-color: #2C2C2C; -fx-padding: 20; -fx-background-radius: 10;">
          <children>
             <Text fill="WHITE" text="Sipariş Yönetimi">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="masaBilgiText" text="Masa seçiniz..." fill="WHITE" wrappingWidth="300.0" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+            <Text fx:id="masaBilgiText" fill="WHITE" style="-fx-font-size: 15px; -fx-font-weight: bold;" text="Masa seçiniz..." wrappingWidth="300.0" />
             <HBox spacing="10">
                <children>
                   <ComboBox fx:id="durumComboBox" prefWidth="120.0" promptText="Durum seçiniz" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
@@ -49,17 +49,18 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <TableView fx:id="siparisTable" prefHeight="120.0" style="-fx-background-color: #232323; -fx-text-fill: white; -fx-background-radius: 10;">
+            <TableView fx:id="siparisTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="128.0" prefWidth="314.0" style="-fx-background-color: #232323; -fx-text-fill: white; -fx-background-radius: 10;">
                <columns>
-                  <TableColumn fx:id="urunCol" text="Ürün" prefWidth="110.0" />
-                  <TableColumn fx:id="miktarCol" text="Adet" prefWidth="60.0" />
-                  <TableColumn fx:id="tutarCol" text="Tutar" prefWidth="80.0" />
-                  <TableColumn fx:id="silCol" text="Sil" prefWidth="50.0" />
+                  <TableColumn fx:id="urunCol" prefWidth="110.0" text="Ürün" />
+                  <TableColumn fx:id="miktarCol" prefWidth="106.0" text="Adet" />
+                  <TableColumn fx:id="tutarCol" prefWidth="97.0" text="Tutar" />
+                  <TableColumn fx:id="silCol" minWidth="0.0" prefWidth="0.0" text="Sil" />
                </columns>
             </TableView>
+            <Button fx:id="tumSiparisleriSilButton" mnemonicParsing="false" prefWidth="220.0" style="-fx-background-color: #FF5252; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Tüm Siparişleri Sil" />
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
-               <Text text="Toplam:" fill="WHITE" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
-               <Text fx:id="toplamTutarText" text="0 TL" style="-fx-font-size: 16px; -fx-fill: #FFD700; -fx-font-weight: bold;" />
+               <Text fill="WHITE" style="-fx-font-size: 15px; -fx-font-weight: bold;" text="Toplam:" />
+               <Text fx:id="toplamTutarText" style="-fx-font-size: 16px; -fx-fill: #FFD700; -fx-font-weight: bold;" text="0 TL" />
             </HBox>
             <Separator />
             <Text fill="WHITE" text="Sipariş Ekle">
@@ -67,8 +68,8 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <ComboBox fx:id="urunComboBox" promptText="Ürün Seç" prefWidth="220.0" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
-            <TextField fx:id="miktarField" promptText="Adet" prefWidth="220.0" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
+            <ComboBox fx:id="urunComboBox" prefWidth="220.0" promptText="Ürün Seç" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
+            <TextField fx:id="miktarField" prefWidth="220.0" promptText="Adet" style="-fx-background-color: #3C3C3C; -fx-text-fill: white;" />
             <Button fx:id="siparisEkleButton" mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-weight: bold; -fx-background-radius: 8;" text="Sipariş Ekle" />
             <HBox spacing="10">
                <children>
@@ -80,7 +81,7 @@
       </VBox>
 
       <!-- Sağ Panel - Masa Grid ve Renk Kılavuzu -->
-      <Pane layoutX="380.0" layoutY="100.0" prefHeight="509.0" prefWidth="780.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
+      <Pane layoutX="382.0" layoutY="80.0" prefHeight="554.0" prefWidth="801.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
          <children>
             <Text fill="WHITE" layoutX="20.0" layoutY="40.0" text="Masalar">
                <font>
@@ -89,7 +90,7 @@
             </Text>
             <GridPane fx:id="masalarGrid" hgap="10" layoutX="20.0" layoutY="60.0" prefHeight="350.0" prefWidth="750.0" vgap="10" />
             <!-- Renk Kılavuzu -->
-            <VBox layoutX="20.0" layoutY="420.0" spacing="10">
+            <VBox layoutX="14.0" layoutY="465.0" spacing="10">
                <children>
                   <Text fill="WHITE" text="Renk Kılavuzu:">
                      <font>
@@ -124,4 +125,4 @@
          </children>
       </Pane>
    </children>
-</AnchorPane> 
+</AnchorPane>

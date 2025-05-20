@@ -47,6 +47,7 @@ public class siparislerAdminController implements Initializable {
     @FXML private ComboBox<String> durumComboBox;
     @FXML private Button durumGuncelleButton;
     @FXML private TableColumn<SiparisRow, Void> silCol;
+    @FXML private Button tumSiparisleriSilButton;
 
     private int seciliMasaId = -1;
     private String seciliMasaNo = "";
@@ -72,7 +73,9 @@ public class siparislerAdminController implements Initializable {
         siparisEkleButton.setOnAction(e -> siparisEkle());
         hesapKesButton.setOnAction(e -> hesapKes());
         temizleButton.setOnAction(e -> temizleMasa());
-        addSilButtonToTable();
+        if (tumSiparisleriSilButton != null) {
+            tumSiparisleriSilButton.setOnAction(e -> tumSiparisleriSil());
+        }
         updatePanel(null);
     }
 
@@ -203,6 +206,7 @@ public class siparislerAdminController implements Initializable {
             stmt.close();
         } catch (Exception e) { e.printStackTrace(); }
         toplamTutarText.setText(String.format("%.2f TL", toplamTutar));
+        siparisTable.refresh();
     }
 
     private void addSilButtonToTable() {
@@ -300,6 +304,7 @@ public class siparislerAdminController implements Initializable {
 
     private void hesapKes() {
         if (seciliMasaId == -1) return;
+        double hesapTutari = toplamTutar; // Toplamı kaydet
         try (Connection conn = MySQLConnection.connect()) {
             PreparedStatement stmt = conn.prepareStatement("UPDATE siparisler SET durum = 'hesap_kesildi' WHERE masa_id = ? AND durum = 'aktif'");
             stmt.setInt(1, seciliMasaId);
@@ -311,8 +316,9 @@ public class siparislerAdminController implements Initializable {
             masaStmt.close();
         } catch (Exception e) { e.printStackTrace(); }
         loadMasalar();
+        showAlert("Hesap Kesildi", String.format(
+            "Toplam: %.2f TL\nHesap başarıyla kesildi.\nLütfen müşteriye fişini teslim edin.", hesapTutari));
         updatePanel(new MasaSecim(seciliMasaId, seciliMasaNo, seciliMasaKapasite, "kirli", seciliMasaKonum));
-        showAlert("Hesap Kesildi", String.format("Toplam: %.2f TL\nFişinizi teslim alınız!", toplamTutar));
     }
 
     private void temizleMasa() {
@@ -368,20 +374,42 @@ public class siparislerAdminController implements Initializable {
             PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM siparisler WHERE masa_id = ? AND durum = 'aktif'");
             checkStmt.setInt(1, seciliMasaId);
             ResultSet checkRS = checkStmt.executeQuery();
+            boolean masaBos = false;
             if (checkRS.next() && checkRS.getInt(1) == 0) {
+                masaBos = true;
                 PreparedStatement masaStmt = conn.prepareStatement("UPDATE masalar SET durum = 'bos' WHERE masa_id = ?");
                 masaStmt.setInt(1, seciliMasaId);
                 masaStmt.executeUpdate();
                 masaStmt.close();
             }
             checkRS.close(); checkStmt.close();
+            loadSiparisler();
+            siparisTable.refresh();
+            if (masaBos) {
+                updatePanel(new MasaSecim(seciliMasaId, seciliMasaNo, seciliMasaKapasite, "bos", seciliMasaKonum));
+            }
         } catch (Exception e) { e.printStackTrace(); }
-        loadMasalar();
+    }
+
+    private void tumSiparisleriSil() {
+        if (seciliMasaId == -1) return;
+        try (Connection conn = MySQLConnection.connect()) {
+            PreparedStatement delStmt = conn.prepareStatement("DELETE FROM siparisler WHERE masa_id = ? AND durum = 'aktif'");
+            delStmt.setInt(1, seciliMasaId);
+            delStmt.executeUpdate();
+            delStmt.close();
+            PreparedStatement masaStmt = conn.prepareStatement("UPDATE masalar SET durum = 'bos' WHERE masa_id = ?");
+            masaStmt.setInt(1, seciliMasaId);
+            masaStmt.executeUpdate();
+            masaStmt.close();
+        } catch (Exception e) { e.printStackTrace(); }
+        loadSiparisler();
+        siparisTable.refresh();
         updatePanel(new MasaSecim(seciliMasaId, seciliMasaNo, seciliMasaKapasite, "bos", seciliMasaKonum));
     }
 
     private void showAlert(String baslik, String mesaj) {
-        Alert alert = new Alert(AlertType.ERROR);
+        Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(baslik);
         alert.setHeaderText(null);
         alert.setContentText(mesaj);

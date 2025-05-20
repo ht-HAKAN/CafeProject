@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
@@ -17,61 +18,24 @@ public class AnaSayfaController {
     @FXML private Text kullaniciWelcomeText;
     @FXML private Button anasayfa;
     @FXML private Button menu;
-    @FXML private Button siparisler;
     @FXML private Button masalarverezervasyon;
     @FXML private Button adminpanel;
+    @FXML private AnchorPane rootPane;
 
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
 
     public void initialize() {
-        // Button click olaylarını ayarla
-        anasayfa.setOnAction(event -> {
-            // Zaten ana sayfadayız, bir şey yapmaya gerek yok
-        });
-
-        menu.setOnAction(event -> {
-            sayfaAc("menuGoruntule.fxml", "Menü");
-        });
-
-        siparisler.setOnAction(event -> {
-            if (isAdmin) {
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(AnaSayfaController.class.getResource("siparislerAdmin.fxml"));
-                    Parent root = loader.load();
-                    Object controller = loader.getController();
-                    if (controller instanceof siparislerAdminController) {
-                        // Gerekirse kullanıcı adı/rol aktar
-                    }
-                    Stage stage = new Stage();
-                    stage.setTitle("Siparişler");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    showAlert("Hata", "Siparişler ekranı açılamadı: " + e.getMessage(), AlertType.ERROR);
-                }
-            } else {
-                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
-            }
-        });
-
-        masalarverezervasyon.setOnAction(event -> {
-            sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon");
-        });
-
+        anasayfa.setOnAction(event -> sayfaAc("AnaSayfa.fxml", "Ana Sayfa"));
+        menu.setOnAction(event -> sayfaAc("menuGoruntule.fxml", "Menüyü Görüntüle"));
+        masalarverezervasyon.setOnAction(event -> sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon"));
         adminpanel.setOnAction(event -> {
             if (isAdmin) {
                 sayfaAc("adminpanel.fxml", "Admin Panel");
             } else {
-                // Admin yetkisi yoksa uyarı göster
                 showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
             }
         });
-
-        // Admin değilse admin panel butonunu gizleme kısmını kaldırdık
-        // Artık tüm kullanıcılar butonu görecek, ama tıkladıklarında sadece adminler girebilecek
     }
 
     // Kullanıcı adını ayarla
