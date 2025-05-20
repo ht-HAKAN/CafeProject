@@ -96,9 +96,5 @@
             </Button>
          </children>
       </Pane>
-      
-      <!-- TableView ve eski butonlar kaldırıldı, sadece iki ana buton kaldı -->
-      <Button fx:id="menuGoruntuleButton" layoutX="80.0" layoutY="470.0" prefWidth="300.0" prefHeight="50.0" text="Menüyü Görüntüle" style="-fx-background-color: #FFD700; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 12;" />
-      <Button fx:id="menuYonetButton" layoutX="420.0" layoutY="470.0" prefWidth="300.0" prefHeight="50.0" text="Menü Yönetimi" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 12;" />
    </children>
 </AnchorPane>

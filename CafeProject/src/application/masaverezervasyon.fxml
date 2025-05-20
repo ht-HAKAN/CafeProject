@@ -111,11 +111,6 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="rezervasyonSistemiBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Rezervasyon Sistemi (Admin)" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
          </children>
       </HBox>
    </children>

@@ -236,7 +236,7 @@ public class masaverezervasyonController {
         
         if (menu != null) {
             menu.setOnAction(event -> {
-                sayfaAc("menu.fxml", "Menü");
+                sayfaAc("menuGoruntule.fxml", "Menü");
             });
         }
         
@@ -302,29 +302,8 @@ public class masaverezervasyonController {
             });
         }
         if (rezervasyonSistemiBtn != null) {
-            rezervasyonSistemiBtn.setOnAction(event -> {
-                if (isAdmin) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("rezervasyonAdminSistemi.fxml"));
-                        Parent root = loader.load();
-                        Stage stage = new Stage();
-                        stage.setTitle("Rezervasyon Sistemi (Admin)");
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        showAlert(AlertType.ERROR, "Hata", "Rezervasyon Sistemi (Admin) ekranı açılamadı: " + e.getMessage());
-                    }
-                } else {
-                    showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
-                }
-            });
-            rezervasyonSistemiBtn.setDisable(!isAdmin);
-            if (!isAdmin) {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
-            } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-width: 2; -fx-border-radius: 15;");
-            }
+            rezervasyonSistemiBtn.setDisable(true);
+            rezervasyonSistemiBtn.setVisible(false);
         }
     }
     
@@ -366,12 +345,6 @@ public class masaverezervasyonController {
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
-            
-            // Mevcut sayfayı kapat
-            if (anasayfa != null) {
-                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                currentStage.close();
-            }
             
             stage.show();
         } catch (IOException e) {
@@ -698,12 +671,8 @@ public class masaverezervasyonController {
         
         // Admin yetkisi durumuna göre butonları ayarla
         if (rezervasyonSistemiBtn != null) {
-            rezervasyonSistemiBtn.setDisable(!isAdmin);  // Admin ise aktif, değilse pasif
-            if (!isAdmin) {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #404040; -fx-background-radius: 15;");
-            } else {
-                rezervasyonSistemiBtn.setStyle("-fx-background-color: #2D2D2D; -fx-background-radius: 15; -fx-border-color: #FFD700; -fx-border-width: 2; -fx-border-radius: 15;");
-            }
+            rezervasyonSistemiBtn.setDisable(true);
+            rezervasyonSistemiBtn.setVisible(false);
         }
         
         // Admin paneli butonunu ayarla

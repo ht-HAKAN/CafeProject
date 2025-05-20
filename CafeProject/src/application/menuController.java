@@ -19,7 +19,6 @@ public class menuController {
     @FXML private Button masalarverezervasyon;
     @FXML private Button adminpanel;
     @FXML private Button menuGoruntuleButton;
-    @FXML private Button menuYonetButton;
 
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
@@ -66,15 +65,8 @@ public class menuController {
         } else {
             adminpanel.setStyle("-fx-background-color: #2D2D2D;");
         }
-        menuGoruntuleButton.setOnAction(e -> sayfaAc("menuGoruntule.fxml", "Menüyü Görüntüle"));
-        menuYonetButton.setOnAction(e -> {
-            if (isAdmin) {
-                sayfaAc("menuYonet.fxml", "Menü Yönetimi");
-            } else {
-                showAlert("Yetki Hatası", "Bu sekmeyi görüntülemek için yetkiniz yok!", AlertType.WARNING);
-            }
-        });
-        menuYonetButton.setDisable(!isAdmin);
+        // Menü sekmesi açılır açılmaz ürünler penceresini aç
+        sayfaAc("menuGoruntule.fxml", "Menüyü Görüntüle");
     }
 
     public void setKullaniciAdi(String kullaniciAdi) {
@@ -85,9 +77,6 @@ public class menuController {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
         updateAdminPanelButton();
-        if (menuYonetButton != null) {
-            menuYonetButton.setDisable(!isAdmin);
-        }
     }
 
     public void updateAdminPanelButton() {
@@ -107,39 +96,16 @@ public class menuController {
         }
     }
 
-    private void sayfaAc(String fxmlDosya, String baslik) {
+    private void sayfaAc(String fxml, String baslik) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            if (fxmlDosya.equals("siparisler.fxml") || fxmlDosya.equals("siparis.fxml")) {
-                fxmlDosya = "siparislerAdmin.fxml";
-            }
-            loader.setLocation(menuController.class.getResource(fxmlDosya));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
-            Object controller = loader.getController();
-            if (controller instanceof masaverezervasyonController) {
-                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
-                ((masaverezervasyonController) controller).setAdmin(isAdmin);
-            } else if (controller instanceof AdminPanelController) {
-                ((AdminPanelController) controller).setAdminName(kullaniciAdi);
-                ((AdminPanelController) controller).setAdmin(isAdmin);
-            } else if (controller instanceof AnaSayfaController) {
-                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
-                ((AnaSayfaController) controller).setAdmin(isAdmin);
-            } else if (controller instanceof siparisController) {
-                ((siparisController) controller).setKullaniciAdi(kullaniciAdi);
-                ((siparisController) controller).setAdmin(isAdmin);
-            }
             Stage stage = new Stage();
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             stage.show();
-            if (!fxmlDosya.equals("menuGoruntule.fxml") && !fxmlDosya.equals("menuYonet.fxml")) {
-                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                currentStage.close();
-            }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Hata", "Sayfa açılamadı: " + e.getMessage(), AlertType.ERROR);
         }
     }
 

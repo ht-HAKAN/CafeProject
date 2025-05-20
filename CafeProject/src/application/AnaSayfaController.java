@@ -31,7 +31,7 @@ public class AnaSayfaController {
         });
 
         menu.setOnAction(event -> {
-            sayfaAc("menu.fxml", "Menü");
+            sayfaAc("menuGoruntule.fxml", "Menü");
         });
 
         siparisler.setOnAction(event -> {
@@ -173,10 +173,6 @@ public class AnaSayfaController {
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             stage.show();
-            
-            // Mevcut sayfayı kapat
-            Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Hata", "Sayfa açılamadı: " + e.getMessage(), AlertType.ERROR);

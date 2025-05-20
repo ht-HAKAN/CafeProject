@@ -1,140 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
+<AnchorPane prefHeight="300.0" prefWidth="291.0" style="-fx-background-color: #232323;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminPanelController">
    <children>
-      <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
+      <VBox layoutX="40.0" layoutY="30.0" spacing="24">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="772.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/icones-d-administration-jaunes.png" />
-               </image>
-            </ImageView>
-            <Text fx:id="adminWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Admin!">
+            <Text fill="WHITE" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Admin Panel Sistemi">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="79.0" layoutY="54.0" text="ADMİN PANEL">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/symbole-administrateur-jaune.png" />
-               </image>
-            </ImageView>
-            <Text fill="WHITE" layoutX="245.0" layoutY="53.0" text="- Personel Düzenle">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Text>
+            <VBox spacing="14">
+               <children>
+                  <Button fx:id="menuYonetimiBtn" prefWidth="200.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 8;" text="Menü Yönetimi" />
+                  <Button fx:id="rezervasyonYonetimiBtn" prefWidth="200.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 8;" text="Rezervasyon Yönetimi" />
+                  <Button fx:id="siparisYonetimiBtn" prefWidth="200.0" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 8;" text="Sipariş Yönetimi" />
+                  <Button fx:id="personelYonetimiBtn" prefWidth="200.0" style="-fx-background-color: #c99825; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 8;" text="Personel Yönetimi" />
+               </children>
+            </VBox>
          </children>
-      </Pane>
-      
-      <Pane layoutY="-4.0" prefHeight="616.0" prefWidth="208.0" style="-fx-background-color: #1C1C1C;">
-         <children>
-            <ImageView fitHeight="100.0" fitWidth="55.0" layoutX="8.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/coffee-31496_1280.png" />
-               </image>
-            </ImageView>
-            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="GELİŞİM KAFE">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/menu.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="55.0" layoutX="-1.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/shopping-cart.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="8.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/symbole-administrateur-jaune.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="anasayfa" layoutX="54.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: #1C1C1C;" text="Ana Sayfa" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="menu" layoutX="46.0" layoutY="169.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Menü" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="siparisler" layoutX="46.0" layoutY="221.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Siparişler" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="masalarverezervasyon" layoutX="46.0" layoutY="279.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Masalar" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="adminpanel" layoutX="51.0" layoutY="335.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Admin Panel" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      
-      <!-- Personel Ekleme Alanı -->
-      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
-         <!-- Form Alanı -->
-         <TextField fx:id="adField" layoutX="30.0" layoutY="133.0" prefHeight="31.0" prefWidth="149.0" promptText="Ad" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
-         <TextField fx:id="soyadField" layoutX="30.0" layoutY="173.0" prefHeight="31.0" prefWidth="149.0" promptText="Soyad" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
-         <TextField fx:id="kullaniciAdiField" layoutX="30.0" layoutY="213.0" prefHeight="31.0" prefWidth="149.0" promptText="Kullanıcı Adı" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
-         <PasswordField fx:id="sifreField" layoutX="30.0" layoutY="253.0" prefHeight="31.0" prefWidth="149.0" promptText="Şifre" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
-         <TextField fx:id="rolField" layoutX="30.0" layoutY="293.0" prefHeight="31.0" prefWidth="149.0" promptText="Rol" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
-         <TextField fx:id="telefonField" layoutX="30.0" layoutY="333.0" prefHeight="31.0" prefWidth="149.0" promptText="Telefon" style="-fx-background-color: #3A3A3A; -fx-text-fill: white; -fx-prompt-text-fill: #CCCCCC; -fx-background-radius: 10;" />
-
-         <!-- Listeleme Alanı -->
-         <ListView fx:id="personelListView" layoutX="190.0" layoutY="82.0" prefHeight="284.0" prefWidth="595.0" style="-fx-background-color: #333333; -fx-border-color: #FFD700; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px; -fx-text-fill: white;">
-            <placeholder>
-               <Label style="-fx-text-fill: #AAAAAA; -fx-font-size: 14px;" text="Henüz personel eklenmedi" />
-            </placeholder>
-         </ListView>
-
-         <!-- Butonlar -->
-         <Button fx:id="addButton" layoutX="30.0" layoutY="393.0" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #FFD700; -fx-text-fill: black; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);" text="➕  Personel Ekle" />
-         <Button fx:id="updateButton" layoutX="155.0" layoutY="393.0" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #1E90FF; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);" text="🔄 Güncelle" />
-         <Button fx:id="deleteButton" layoutX="280.0" layoutY="393.0" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #FF6347; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);" text="🗑 Personel Sil" />
-         <Text fill="WHITE" layoutX="41.0" layoutY="108.0" text="Personel Bilgileri">
-            <font>
-               <Font name="System Bold" size="15.0" />
-            </font>
-         </Text>
-      </Pane>
+      </VBox>
    </children>
 </AnchorPane>

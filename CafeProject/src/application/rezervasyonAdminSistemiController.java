@@ -174,7 +174,7 @@ public class rezervasyonAdminSistemiController {
         if (menu != null) {
             menu.setStyle(buttonStyle);
             menu.setOnAction(event -> {
-                sayfaAc("menu.fxml", "Menü");
+                sayfaAc("menuGoruntule.fxml", "Menü");
             });
         }
         
@@ -250,12 +250,6 @@ public class rezervasyonAdminSistemiController {
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             stage.show();
-            
-            // Mevcut sayfayı kapat
-            if (anasayfa != null && anasayfa.getScene() != null) {
-                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-                currentStage.close();
-            }
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(AlertType.ERROR, "Hata", "Sayfa açılamadı: " + e.getMessage());

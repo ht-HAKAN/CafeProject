@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="313.0" prefWidth="724.0" style="-fx-background-color: #232323; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PersonelYonetimiController">
+    <children>
+        <VBox layoutX="20.0" layoutY="20.0" spacing="12">
+            <children>
+                <Text fill="#FFD700" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Personel Yönetimi" />
+                <HBox spacing="16">
+                    <children>
+                        <VBox spacing="8">
+                            <children>
+                                <TextField fx:id="adField" promptText="Ad" />
+                                <TextField fx:id="soyadField" promptText="Soyad" />
+                                <TextField fx:id="kullaniciAdField" promptText="Kullanıcı Adı" />
+                                <PasswordField fx:id="sifreField" promptText="Şifre" />
+                                <TextField fx:id="rolField" promptText="Rol (örn: Garson, Patron)" />
+                                <TextField fx:id="telefonField" prefWidth="149.0" promptText="Telefon" />
+                            </children>
+                        </VBox>
+                        <TableView fx:id="personelTable" prefHeight="167.0" prefWidth="516.0">
+                            <columns>
+                                <TableColumn fx:id="adColumn" prefWidth="85.0" text="Ad" />
+                                <TableColumn fx:id="soyadColumn" prefWidth="104.0" text="Soyad" />
+                                <TableColumn fx:id="kullaniciAdColumn" prefWidth="125.0" text="Kullanıcı Adı" />
+                                <TableColumn fx:id="rolColumn" prefWidth="91.0" text="Rol" />
+                                <TableColumn fx:id="telefonColumnT" prefWidth="111.0" text="Telefon" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <children>
+                        <Button fx:id="ekleBtn" style="-fx-background-color: #FFD700; -fx-font-weight: bold;" text="+ Personel Ekle" />
+                        <Button fx:id="guncelleBtn" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="Güncelle" />
+                        <Button fx:id="silBtn" style="-fx-background-color: #FF5252; -fx-text-fill: white; -fx-font-weight: bold;" text="Personel Sil" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
