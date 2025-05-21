@@ -56,6 +56,7 @@ public class UrunFormController implements Initializable {
         iptalButton.setOnAction(e -> iptal());
     }
 
+    // .
     private void resimSec() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Resim Seç");

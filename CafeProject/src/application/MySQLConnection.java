@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/cafeproject"; // Veritabanı ismi
+    private static final String URL = "jdbc:mysql://localhost:3306/cafeproject"; // Veritabanının ismi
     private static final String USER = "root"; // Kullanıcı adı
     private static final String PASSWORD = ""; // Şifre 
 

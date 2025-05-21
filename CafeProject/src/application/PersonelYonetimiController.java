@@ -110,6 +110,7 @@ public class PersonelYonetimiController {
             uyariGoster("Hata", "Tüm alanları doldurun!");
             return false;
         }
+        // telefon numarası numara kontrol
         if (!telefon.matches("\\d{10,11}")) {
             uyariGoster("Hata", "Telefon numarası 10 veya 11 haneli olmalı ve sadece rakam içermelidir!");
             return false;

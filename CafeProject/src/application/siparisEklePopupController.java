@@ -26,7 +26,7 @@ public class siparisEklePopupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Ürünleri ComboBox'a yükle
+        // Ürünleri ComboBoxa yükle
         try {
             Connection conn = MySQLConnection.connect();
             Statement stmt = conn.createStatement();

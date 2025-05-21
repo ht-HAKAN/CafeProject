@@ -74,12 +74,12 @@ public class siparisDetayPopupController implements Initializable {
     private void hesapKes() {
         try {
             Connection conn = MySQLConnection.connect();
-            // Siparişleri kapalı yap
+            // Siparişleri kapalı yap ve uygula
             PreparedStatement stmt = conn.prepareStatement("UPDATE siparisler SET durum = 'kapali' WHERE masa_id = ? AND durum = 'aktif'");
             stmt.setInt(1, masaId);
             stmt.executeUpdate();
             stmt.close();
-            // Masayı kirli yap
+            // Masayı kirli yap ve uygula
             PreparedStatement masaStmt = conn.prepareStatement("UPDATE masalar SET durum = 'kirli' WHERE masa_id = ?");
             masaStmt.setInt(1, masaId);
             masaStmt.executeUpdate();
@@ -112,7 +112,6 @@ public class siparisDetayPopupController implements Initializable {
         }
     }
 
-    // Sipariş satırı modeli
     public static class SiparisRow {
         private final SimpleStringProperty urunAdi;
         private final SimpleIntegerProperty miktar;

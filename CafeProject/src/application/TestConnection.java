@@ -14,7 +14,7 @@ public class TestConnection {
 
                 // Bağlantı başarılıysa veritabanında bir sorgu çalıştır
                 Statement statement = connection.createStatement();
-                String query = "SELECT 1"; // Basit bir sorgu çalıştır
+                String query = "SELECT 1"; // Basit bir sorgu 
                 ResultSet resultSet = statement.executeQuery(query);
 
                 if (resultSet.next()) {

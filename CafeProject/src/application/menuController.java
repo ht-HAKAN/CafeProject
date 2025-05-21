@@ -23,6 +23,7 @@ public class menuController {
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
 
+    //Menu Controller
     public void initialize() {
         updateWelcomeText();
         updateAdminPanelButton();

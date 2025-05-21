@@ -30,7 +30,7 @@ public class siparisController {
         updateWelcomeText();
         updateAdminPanelButton();
 
-        // Siparişler panelini yükle
+        // Siparişler panelini yükleme
         try {
             Parent siparislerRoot = FXMLLoader.load(getClass().getResource("siparislerAdmin.fxml"));
             icerikPanel.getChildren().setAll(siparislerRoot);

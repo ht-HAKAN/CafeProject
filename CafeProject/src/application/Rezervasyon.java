@@ -11,7 +11,8 @@ public class Rezervasyon {
     private int kisiSayisi;
     private String notlar;
     private String masaNo;
-
+ 
+    // rezervasyon verisi
     public Rezervasyon(String ad, String soyad, String telefon, LocalDate tarih, String saat, int kisiSayisi, String masaNo) {
         this.ad = ad;
         this.soyad = soyad;

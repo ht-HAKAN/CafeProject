@@ -78,7 +78,8 @@ public class siparislerAdminController implements Initializable {
         }
         updatePanel(null);
     }
-
+ 
+    // Ürünleri yükleme
     private void loadUrunler() {
         urunComboBox.getItems().clear();
         try (Connection conn = MySQLConnection.connect()) {
@@ -416,7 +417,6 @@ public class siparislerAdminController implements Initializable {
         alert.showAndWait();
     }
 
-    // Yardımcı veri modeli
     private static class MasaSecim {
         int masaId; String masaNo; int kapasite; String durum; String konum;
         MasaSecim(int id, String no, int kap, String dr, String kn) { masaId = id; masaNo = no; kapasite = kap; durum = dr; konum = kn; }

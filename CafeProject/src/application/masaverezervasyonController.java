@@ -92,24 +92,18 @@ public class masaverezervasyonController {
     
     @FXML
     public void initialize() {
-        // Combobox'ları doldur
         setupComboBoxes();
         
-        // Sol menü butonlarına tıklama olaylarını ekle
         setupMenuButtons();
         
-        // Ana içerik butonlarına tıklama olaylarını ekle
         setupContentButtons();
         
-        // Masa butonları ve grid'i ayarla
         loadMasalar();
         
-        // Buton olaylarını ayarla
         setupButtonActions();
     }
     
     private void setupComboBoxes() {
-        // Durum ComboBox
         ObservableList<String> durumlar = FXCollections.observableArrayList(
             "BOŞ", "DOLU", "KİRLİ"
         );
@@ -122,7 +116,6 @@ public class masaverezervasyonController {
                                  "-fx-background-color: #2D2D2D; -fx-border-color: #FFD700; " +
                                  "-fx-border-width: 2; -fx-border-radius: 3; -fx-prompt-text-fill: white;");
             
-            // Button cell (seçili öğe) stilini ayarla
             durumComboBox.setButtonCell(new ListCell<String>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {

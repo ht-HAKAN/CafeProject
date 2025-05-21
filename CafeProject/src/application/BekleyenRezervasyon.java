@@ -29,4 +29,4 @@ public class BekleyenRezervasyon {
     public String getSaat() { return saat; }
     public String getKisiSayisi() { return kisiSayisi; }
     public String getNotlar() { return notlar; }
-} 
+}  

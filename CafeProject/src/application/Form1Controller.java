@@ -90,17 +90,17 @@ public class Form1Controller {
         }
     }
 
-    // Admin paneline geçiş - parametreli
+    // Admin paneline geçiş
     private void anaEkranaGec(String kullaniciAdi, boolean isAdmin) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
             Parent root = loader.load();
             
-            // AnaSayfaController'a erişim
+            // AnaSayfaController  erişim
             AnaSayfaController controller = loader.getController();
             
-            // Admin adını ve yetkisini controller'a aktar
+            // Admin adını ve yetkisini controller aktar
             controller.setKullaniciAdi(kullaniciAdi);
             controller.setAdmin(isAdmin);
             
@@ -120,19 +120,19 @@ public class Form1Controller {
         }
     }
 
-    // Kullanıcı paneline geçiş - parametreli 
+    // Kullanıcı paneline geçiş
     private void kullaniciEkraninaGec(String kullaniciAdi) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Form1Controller.class.getResource("AnaSayfa.fxml"));
             Parent root = loader.load();
             
-            // AnaSayfaController'a erişim
+            // AnaSayfaControllera erişim
             AnaSayfaController controller = loader.getController();
             
-            // Kullanıcı adını ve yetkisini controller'a aktar
+            // Kullanıcı adını ve yetkisini controllera aktar
             controller.setKullaniciAdi(kullaniciAdi);
-            controller.setAdmin(false); // Normal kullanıcı, admin değil
+            controller.setAdmin(false); // Normal kullanıcı admin değil
             
             Stage stage = new Stage();
             stage.setTitle("Ana Sayfa");

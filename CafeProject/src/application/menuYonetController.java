@@ -67,7 +67,7 @@ public class menuYonetController implements Initializable {
                 }
                 kart.setTop(ustKisim);
 
-                // Alt kısım: yazılar ve butonlar
+                // Alt kısım: yazı ve butonlar
                 VBox altKisim = new VBox(4);
                 altKisim.setAlignment(Pos.CENTER);
                 Text ad = new Text(rs.getString("ad"));
@@ -136,7 +136,7 @@ public class menuYonetController implements Initializable {
                 }
                 @Override
                 public void onIptal() {
-                    // Gerekirse pencereyi kapatabilirsin, şimdilik boş bırakıldı.
+                	// şimdilik boş bırakıldı
                 }
             });
             Stage stage = new Stage();

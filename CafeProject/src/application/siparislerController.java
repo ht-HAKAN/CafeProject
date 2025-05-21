@@ -71,10 +71,8 @@ public class siparislerController implements Initializable {
                         }
                     } else if ("dolu".equals(durum.toLowerCase())) {
                         System.out.println("Sipariş detayı popup: " + masaAdi);
-                        // siparisDetayPopup(masaId, masaAdi);
                     } else if ("kirli".equals(durum.toLowerCase())) {
                         System.out.println("Masayı temizle popup: " + masaAdi);
-                        // masaTemizlePopup(masaId, masaAdi);
                     }
                 });
                 masaGrid.add(kart, col, row);

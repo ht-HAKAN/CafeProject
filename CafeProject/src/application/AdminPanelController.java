@@ -39,10 +39,9 @@ public class AdminPanelController {
     }
 
     public void setAdmin(boolean isAdmin) {
-        // Admin yetkisiyle ilgili işlemler burada yapılabilir.
     }
-
+    
     public void setAdminName(String name) {
-        // Admin adını panelde göstermek için kullanılabilir.
+    	
     }
 }

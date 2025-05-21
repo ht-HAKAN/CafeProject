@@ -55,7 +55,7 @@ public class KullaniciKayitController {
         });
     }
 
-    // Hata veya bilgi mesajlarının gösterilmesi
+    // Hata veya bilgi mesajlarının gösterilmesi kodu
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

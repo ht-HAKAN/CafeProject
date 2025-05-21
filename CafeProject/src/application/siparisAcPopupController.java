@@ -22,7 +22,7 @@ public class siparisAcPopupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Ürünleri ComboBox'a yükle
+        // Ürünleri ComboBoxa yükle
         try (Connection conn = MySQLConnection.connect()) {
             String sql = "SELECT ad FROM menu_urunler";
             PreparedStatement stmt = conn.prepareStatement(sql);

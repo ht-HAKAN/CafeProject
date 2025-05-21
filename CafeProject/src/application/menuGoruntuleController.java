@@ -52,7 +52,7 @@ public class menuGoruntuleController implements Initializable {
                 }
                 kart.setTop(ustKisim);
 
-                // Alt kısım: yazılar
+                // Alt kısım
                 VBox altKisim = new VBox(6);
                 altKisim.setAlignment(Pos.CENTER);
                 Text ad = new Text(rs.getString("ad"));

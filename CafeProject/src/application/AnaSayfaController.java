@@ -63,7 +63,6 @@ public class AnaSayfaController {
                 adminpanel.setDisable(true);
                 adminpanel.setStyle("-fx-background-color: #404040; -fx-text-fill: #808080; -fx-opacity: 0.7;");
                 
-                // Tooltip ekle
                 javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Bu özelliği kullanmak için admin yetkisine sahip olmanız gerekiyor.");
                 tooltip.setStyle("-fx-font-size: 12px; -fx-background-color: #2D2D2D; -fx-text-fill: white;");
                 adminpanel.setTooltip(tooltip);
@@ -94,20 +93,17 @@ public class AnaSayfaController {
                     }
                 }
             } catch (Exception e) {
-                // Hata durumunda sessizce devam et
                 System.out.println("Rezervasyon butonu güncellenirken hata: " + e.getMessage());
             }
         }
     }
 
-    // Karşılama metnini güncelle
     private void updateWelcomeText() {
         if (kullaniciWelcomeText != null) {
             kullaniciWelcomeText.setText("Merhaba, " + kullaniciAdi + "!");
         }
     }
 
-    // Sayfa açma yardımcı fonksiyonu
     private void sayfaAc(String fxmlDosya, String baslik) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -146,7 +142,7 @@ public class AnaSayfaController {
         }
     }
     
-    // Uyarı mesajı gösteren fonksiyon
+    // Uyarı mesajı gösterme
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

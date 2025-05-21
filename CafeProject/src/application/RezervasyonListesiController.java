@@ -54,4 +54,4 @@ public class RezervasyonListesiController {
         }
         tableView.setItems(list);
     }
-}
+} 

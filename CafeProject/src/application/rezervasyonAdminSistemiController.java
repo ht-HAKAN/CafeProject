@@ -67,7 +67,6 @@ public class rezervasyonAdminSistemiController {
     @FXML private Button temizleButton;
     @FXML private Button rezervasyonSilButton;
     
-    // Masa Grid
     @FXML private GridPane masalarGrid;
     
     // Kullanıcı bilgisi

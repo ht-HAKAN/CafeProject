@@ -100,7 +100,7 @@ public class BekleyenRezervasyonlarController {
 
     private void onaylaRezervasyon(BekleyenRezervasyon rez) {
         try (Connection conn = MySQLConnection.connect()) {
-            // 1. Boş bir masa bul
+            // 1. Boş bir masa bulma
             String masaSql = "SELECT masa_id FROM masalar WHERE durum = 'bos' LIMIT 1";
             PreparedStatement masaStmt = conn.prepareStatement(masaSql);
             ResultSet masaRs = masaStmt.executeQuery();
