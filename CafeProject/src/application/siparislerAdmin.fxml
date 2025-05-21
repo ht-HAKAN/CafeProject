@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="741.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparislerAdminController">
+<AnchorPane prefHeight="774.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.siparislerAdminController">
    <children>
       <!-- Üst Panel -->
       <Pane layoutX="0.0" layoutY="0.0" prefHeight="80.0" prefWidth="1200.0" style="-fx-background-color: #1C1C1C;">
