@@ -149,7 +149,6 @@ public class PersonelYonetimiController {
         telefonField.clear();
     }
 
-    // Personel model class'ı (inner class)
     public static class Personel {
         private final javafx.beans.property.SimpleStringProperty ad, soyad, kullaniciAd, sifre, rol, telefon;
         public Personel(String ad, String soyad, String kullaniciAd, String sifre, String rol, String telefon) {
