@@ -74,7 +74,7 @@
             <HBox spacing="10">
                <children>
                   <Button fx:id="hesapKesButton" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: #FFD700; -fx-text-fill: #232323; -fx-font-weight: bold; -fx-background-radius: 8;" text="Hesap Kes" />
-                  <Button fx:id="temizleButton" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #404040; -fx-text-fill: white; -fx-background-radius: 8;" text="Temizle" />
+                  <Button fx:id="temizleButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #404040; -fx-text-fill: white; -fx-background-radius: 8;" text="Masayı Temizle" />
                </children>
             </HBox>
          </children>
