@@ -12,7 +12,7 @@
    <children>
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
-            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Kullanıcı!">
+            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="688.0" layoutY="58.0" text="Merhaba, Kullanıcı!">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

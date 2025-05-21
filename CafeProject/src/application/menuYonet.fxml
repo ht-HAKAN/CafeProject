@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #232323; -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuYonetController">
+<AnchorPane prefHeight="672.0" prefWidth="1159.0" style="-fx-background-color: #232323; -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuYonetController">
     <children>
         <Text layoutX="40.0" layoutY="50.0" style="-fx-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" text="Menü Yönetimi / Ürün Ekle Sil" />
-        <Button fx:id="urunEkleButton" layoutX="720.0" layoutY="21.0" prefWidth="140.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;" text="Ürün Ekle" />
-        <ScrollPane fx:id="urunScrollPane" fitToHeight="true" fitToWidth="true" layoutX="40.0" layoutY="70.0" prefHeight="500.0" prefWidth="820.0" style="-fx-background: transparent; -fx-background-color: transparent;">
+        <Button fx:id="urunEkleButton" layoutX="1005.0" layoutY="21.0" prefWidth="140.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10;" text="Ürün Ekle" />
+        <ScrollPane fx:id="urunScrollPane" fitToHeight="true" fitToWidth="true" layoutX="40.0" layoutY="70.0" prefHeight="595.0" prefWidth="1113.0" style="-fx-background: transparent; -fx-background-color: transparent;">
             <content>
-                <GridPane fx:id="urunGrid" hgap="30.0" style="-fx-background-color: transparent; -fx-padding: 20 20 20 20;" vgap="30.0" />
+                <GridPane fx:id="urunGrid" hgap="30.0" prefHeight="598.0" prefWidth="1090.0" style="-fx-background-color: transparent; -fx-padding: 20 20 20 20;" vgap="30.0" />
             </content>
         </ScrollPane>
     </children>

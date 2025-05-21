@@ -4,22 +4,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.masaverezervasyonController">
+<AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.masaverezervasyonController">
    <children>
       <!-- Üst Panel -->
       <Pane layoutX="206.0" layoutY="-4.0" prefHeight="80.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C;">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="772.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/icones-d-administration-jaunes.png" />
-               </image>
-            </ImageView>
-            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="662.0" layoutY="59.0" text="Merhaba, Admin!">
+            <Text fx:id="kullaniciWelcomeText" fill="WHITE" layoutX="700.0" layoutY="58.0" text="Merhaba, Admin!">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -60,11 +55,6 @@
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/symbole-administrateur-jaune.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
@@ -80,7 +70,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="masalarverezervasyon" layoutX="41.0" layoutY="221.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Masalar" textFill="WHITE">
+            <Button fx:id="masalarverezervasyon" layoutX="41.0" layoutY="221.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" style="-fx-background-color: #1C1C1C;" text="Rezervasyon" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -93,20 +83,25 @@
          </children>
       </Pane>
       
-      <!-- Ana İçerik - Alt Kısımdaki Butonlar -->
-      <HBox alignment="CENTER" layoutX="208.0" layoutY="520.0" prefHeight="50.0" prefWidth="818.0" spacing="20">
+            <!-- Ana İçerik - Alt Kısımdaki Butonlar -->
+      <HBox alignment="CENTER" layoutX="104.0" layoutY="533.0" prefHeight="50.0" prefWidth="915.0" spacing="20">
          <children>
-            <Button fx:id="rezervasyonListesiBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Rezervasyon Listesi" textFill="WHITE">
+            <Button fx:id="rezervasyonListesiBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Onaylanmış Rezervasyonlar" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
             </Button>
             <Button fx:id="rezervasyonYapBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #2C2C2C; -fx-border-color: #FFD700; -fx-border-radius: 5;" text="Rezervasyon Yap" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
             </Button>
          </children>
       </HBox>
+      <ImageView fitHeight="449.0" fitWidth="690.0" layoutX="256.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/istockphoto-1297364206-612x612.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
