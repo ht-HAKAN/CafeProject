@@ -17,7 +17,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="26.0" layoutY="63.0" text="Ana Sayfa" wrappingWidth="116.2265625">
+            <Text fill="WHITE" layoutY="62.0" text="Ana Sayfa" wrappingWidth="116.2265625">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -52,11 +52,6 @@
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/symbole-administrateur-jaune.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="7.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/icone-d-ecriture-de-texte-png-symbole-jaune.png" />
@@ -86,9 +81,14 @@
       </Pane>
       
       <!-- Personel Ekleme Alanı -->
-      <Pane layoutX="225.0" layoutY="76.0" prefHeight="538.0" prefWidth="805.0" style="-fx-background-color: #2C2C2C; -fx-background-radius: 10;">
+      <Pane layoutX="198.0" layoutY="76.0" prefHeight="538.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C; -fx-background-radius: 10;">
          <children>
-            <ImageView fitHeight="500.0" fitWidth="230.0" layoutX="281.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+            <Text fill="WHITE" layoutX="219.0" layoutY="39.0" text="GELİŞİM KAFEYE HOŞ GELDİNİZ!" wrappingWidth="401.2265625">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="300.0" fitWidth="201.0" layoutX="310.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/coffee-31496_1280.png" />
                </image>
