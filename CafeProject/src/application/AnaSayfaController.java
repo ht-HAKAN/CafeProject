@@ -26,9 +26,9 @@ public class AnaSayfaController {
     private boolean isAdmin = false;
 
     public void initialize() {
-        anasayfa.setOnAction(event -> sayfaAc("AnaSayfa.fxml", "Ana Sayfa"));
+        anasayfa.setOnAction(event -> setContent("AnaSayfa.fxml"));
         menu.setOnAction(event -> sayfaAc("menuGoruntule.fxml", "Menüyü Görüntüle"));
-        masalarverezervasyon.setOnAction(event -> sayfaAc("masaverezervasyon.fxml", "Masa ve Rezervasyon"));
+        masalarverezervasyon.setOnAction(event -> setContent("masaverezervasyon.fxml"));
         adminpanel.setOnAction(event -> {
             if (isAdmin) {
                 sayfaAc("adminpanel.fxml", "Admin Panel");
@@ -139,6 +139,25 @@ public class AnaSayfaController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Hata", "Sayfa açılamadı: " + e.getMessage(), AlertType.ERROR);
+        }
+    }
+    
+    private void setContent(String fxmlDosya) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlDosya));
+            Parent content = loader.load();
+            Object controller = loader.getController();
+            if (controller instanceof masaverezervasyonController) {
+                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
+                ((masaverezervasyonController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof AnaSayfaController) {
+                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
+                ((AnaSayfaController) controller).setAdmin(isAdmin);
+            }
+            rootPane.getChildren().setAll(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Hata", "Sayfa yüklenemedi: " + e.getMessage(), AlertType.ERROR);
         }
     }
     

@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.sql.*;
@@ -81,6 +82,8 @@ public class masaverezervasyonController {
     // Kullanıcı bilgisi
     private String kullaniciAdi = "Kullanıcı";
     private boolean isAdmin = false;
+    
+    private AnchorPane rootPane;
     
     public masaverezervasyonController() {
         try {
@@ -222,27 +225,17 @@ public class masaverezervasyonController {
     // Sol menü butonlarını ayarlayan metod
     private void setupMenuButtons() {
         if (anasayfa != null) {
-            anasayfa.setOnAction(event -> {
-                sayfaAc("AnaSayfa.fxml", "Ana Sayfa");
-            });
+            anasayfa.setOnAction(event -> setContent("AnaSayfa.fxml"));
         }
-        
         if (menu != null) {
-            menu.setOnAction(event -> {
-                sayfaAc("menuGoruntule.fxml", "Menü");
-            });
+            menu.setOnAction(event -> sayfaAc("menuGoruntule.fxml", "Menü"));
         }
-        
         if (siparisler != null) {
-            siparisler.setOnAction(event -> {
-                sayfaAc("siparislerAdmin.fxml", "Siparişler");
-            });
+            siparisler.setOnAction(event -> sayfaAc("siparislerAdmin.fxml", "Siparişler"));
         }
-        
         if (masalarverezervasyon != null) {
-            // Zaten bu sayfadayız
+           
         }
-        
         if (adminpanel != null) {
             adminpanel.setOnAction(event -> {
                 if (isAdmin) {
@@ -251,8 +244,6 @@ public class masaverezervasyonController {
                     showAlert(AlertType.WARNING, "Yetki Hatası", "Bu sekmeyi görüntülemek için admin yetkisine sahip olmanız gerekiyor!");
                 }
             });
-            
-            // Admin değilse butonu devre dışı bırak ve stilini ayarla
             adminpanel.setDisable(!isAdmin);
             if (!isAdmin) {
                 adminpanel.setStyle("-fx-background-color: #404040;");
@@ -329,13 +320,38 @@ public class masaverezervasyonController {
             stage.setTitle(baslik);
             stage.setScene(new Scene(root));
             stage.show();
-            // Mevcut pencereyi kapat
-            Stage currentStage = (Stage) anasayfa.getScene().getWindow();
-            currentStage.close();
+            // Sadece ana sayfa veya rezervasyonlar arası geçişte pencereyi kapat
+            if (fxmlDosya.equals("AnaSayfa.fxml") || fxmlDosya.equals("masaverezervasyon.fxml")) {
+                Stage currentStage = (Stage) anasayfa.getScene().getWindow();
+                currentStage.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Hata: " + e.getMessage() + " - Dosya yolu: " + fxmlDosya);
             showAlert(AlertType.ERROR, "Hata", "Sayfa açılamadı: " + e.getMessage());
+        }
+    }
+    
+    private void setContent(String fxmlDosya) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlDosya));
+            Parent content = loader.load();
+            Object controller = loader.getController();
+            if (controller instanceof masaverezervasyonController) {
+                ((masaverezervasyonController) controller).setKullaniciAdi(kullaniciAdi);
+                ((masaverezervasyonController) controller).setAdmin(isAdmin);
+            } else if (controller instanceof AnaSayfaController) {
+                ((AnaSayfaController) controller).setKullaniciAdi(kullaniciAdi);
+                ((AnaSayfaController) controller).setAdmin(isAdmin);
+            }
+            // rootPane'i bul
+            if (rootPane == null) {
+                rootPane = (AnchorPane) anasayfa.getScene().getRoot();
+            }
+            rootPane.getChildren().setAll(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Hata", "Sayfa yüklenemedi: " + e.getMessage());
         }
     }
     
