@@ -2,15 +2,15 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1087.0" style="-fx-background-color: #232323; -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuGoruntuleController">
+<AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #232323; -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuGoruntuleController">
     <children>
         <Text layoutX="40.0" layoutY="50.0" style="-fx-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" text="Menü" />
-        <ScrollPane fx:id="urunScrollPane" fitToHeight="true" fitToWidth="true" layoutX="40.0" layoutY="70.0" prefHeight="500.0" prefWidth="1015.0" style="-fx-background: transparent; -fx-background-color: transparent;">
+        <ScrollPane fx:id="urunScrollPane" fitToHeight="false" fitToWidth="true" layoutX="25.0" layoutY="70.0" prefHeight="600.0" prefWidth="700.0" style="-fx-background: transparent; -fx-background-color: transparent;" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
             <content>
-                <GridPane fx:id="urunGrid" hgap="30.0" prefHeight="485.0" prefWidth="1001.0" style="-fx-background-color: transparent; -fx-padding: 20 20 20 20;" vgap="30.0" />
+                <FlowPane fx:id="urunFlow" hgap="12.0" vgap="12.0" style="-fx-background-color: transparent; -fx-padding: 10 10 10 10;" />
             </content>
         </ScrollPane>
     </children>
