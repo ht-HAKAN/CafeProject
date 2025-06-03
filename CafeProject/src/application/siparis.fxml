@@ -37,7 +37,7 @@
                   <Image url="@../../images/coffee-31496_1280.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="GELİŞİM KAFE">
+            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="TUNA KAFE">
                <font>
                   <Font size="19.0" />
                </font>

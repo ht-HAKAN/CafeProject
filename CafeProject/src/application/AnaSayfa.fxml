@@ -32,7 +32,7 @@
                   <Image url="@../../images/coffee-31496_1280.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="GELİŞİM KAFE">
+            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="TUNA KAFE">
                <font>
                   <Font size="19.0" />
                </font>
@@ -83,16 +83,21 @@
       <!-- Personel Ekleme Alanı -->
       <Pane layoutX="198.0" layoutY="76.0" prefHeight="538.0" prefWidth="821.0" style="-fx-background-color: #1C1C1C; -fx-background-radius: 10;">
          <children>
-            <Text fill="WHITE" layoutX="219.0" layoutY="39.0" text="GELİŞİM KAFEYE HOŞ GELDİNİZ!" wrappingWidth="401.2265625">
+            <Text fill="WHITE" layoutX="215.0" layoutY="99.0" text="TUNA KAFE'YE HOŞGELDİNİZ" wrappingWidth="321.2265625">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
             </Text>
-            <ImageView fitHeight="300.0" fitWidth="201.0" layoutX="310.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="300.0" fitWidth="201.0" layoutX="275.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/coffee-31496_1280.png" />
                </image>
             </ImageView>
+            <Text fill="WHITE" layoutX="215.0" layoutY="426.0" text="UYGULAMAMIZIN TASARIMI GÜNCELLENECEKTİR." wrappingWidth="542.2265625">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
          </children></Pane>
    </children>
 </AnchorPane>

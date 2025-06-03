@@ -7,8 +7,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 
 <AnchorPane prefHeight="607.0" prefWidth="1026.0" style="-fx-background-color: #1C1C1C;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.menuController">
    <children>
@@ -39,7 +37,7 @@
                   <Image url="@../../images/coffee-31496_1280.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="GELİŞİM KAFE">
+            <Text fill="WHITE" layoutX="69.0" layoutY="62.0" text="TUNA KAFE">
                <font>
                   <Font size="19.0" />
                </font>
