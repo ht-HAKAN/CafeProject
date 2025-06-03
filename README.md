@@ -43,11 +43,11 @@ Bu projenin geliştirilmesinde değerli rehberliği ve destekleri için ünivers
 ---
 
 🛜 **Kullanılan Teknolojiler**  
-Java 17+  
-JavaFX   
-SceneBuilder  
-CSS (JavaFX arayüz tasarımı için)  
-XAMPP - MySQL
+- Java 17+  
+- JavaFX   
+- SceneBuilder  
+- CSS (JavaFX arayüz tasarımı için)  
+- XAMPP - MySQL
 
 ---
 
