@@ -46,7 +46,6 @@ Bu projenin geliştirilmesinde değerli rehberliği ve destekleri için ünivers
 - Java 17+  
 - JavaFX   
 - SceneBuilder  
-- CSS (JavaFX arayüz tasarımı için)  
 - XAMPP - MySQL
 
 ---
